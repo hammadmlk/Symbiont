@@ -9,7 +9,7 @@ allprojects {
     
     version = "1.0"
     ext.appName = "symbiont"
-    ext.gdxVersion = "0.9.9-SNAPSHOT"
+    ext.gdxVersion = "0.9.9"
     
     repositories {
         mavenCentral()
