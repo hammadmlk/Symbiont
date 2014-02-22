@@ -13,7 +13,8 @@ public class SymbiontMain extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+        Texture.setEnforcePotImages(false);
+		img = new Texture("ball.png");
 	}
 
 	@Override
