@@ -2,6 +2,12 @@ Baby-Elephants
 ==============
 Here is the beginning of our Android game, Symbiont.
 
+IRC
+===
+
+
+[Join us on IRC](https://kiwiirc.com/client/ec2-54-201-201-86.us-west-2.compute.amazonaws.com/?#symbiont-dev).
+
 Getting Started
 ===============
 
