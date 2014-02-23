@@ -100,13 +100,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if(pointer < 5){
-            touches[pointer].vector.x = screenX;
-            touches[pointer].vector.y = screenY;
-            camera.unproject(touches[pointer].vector);
-            touches[pointer].touched = true;
-        }
-        return true;
+        return touchDragged(screenX, screenY, pointer);
     }
 
     @Override
@@ -121,8 +115,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // TODO Auto-generated method stub
-        return false;
+        if(pointer < 5){
+            touches[pointer].vector.x = screenX;
+            touches[pointer].vector.y = screenY;
+            camera.unproject(touches[pointer].vector);
+            touches[pointer].touched = true;
+        }
+        return true;
     }
 
     @Override
