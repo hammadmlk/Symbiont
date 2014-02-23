@@ -135,7 +135,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         fixtureDef.shape = circle;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
+        fixtureDef.restitution = 1f; // Make it bounce a lot
 
         // Create our fixture and attach it to the body
         Fixture fixture = body.createFixture(fixtureDef);
@@ -143,7 +143,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
-        groundBodyDef.position.set(new Vector2(0, 10));
+        groundBodyDef.position.set(new Vector2(0, 0));
 
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
@@ -152,22 +152,22 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape groundBox = new PolygonShape();
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(camera.viewportWidth, 10.0f);
+        groundBox.setAsBox(camera.viewportWidth, 0f);
         // Create a fixture from our polygon shape and add it to our ground body
-        groundBody.createFixture(groundBox, 0.0f);
+        groundBody.createFixture(groundBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(10,0));
+        leftWallDef.position.set(new Vector2(0,0));
         Body leftWallBody = world.createBody(leftWallDef);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(10f, camera.viewportHeight);
+        leftWallBox.setAsBox(0f, camera.viewportHeight);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth - 10,0));
+        rightWallDef.position.set(new Vector2(camera.viewportWidth - 0,0));
         Body rightWallBody = world.createBody(rightWallDef);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(10f, camera.viewportHeight);
+        rightWallBox.setAsBox(0f, camera.viewportHeight);
         rightWallBody.createFixture(rightWallBox, 0f);
     }
 
@@ -194,33 +194,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 		// clear the window
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        debugRenderer.render(world, camera.combined);
 
         batch.begin();
         renderBackground();
-       // batch.draw(textureRegion,0,0);
         batch.end();
-        
-        
-        
-        if (touches[0].touched && touches[1].touched) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(1, 0, 0, 1);
-            shapeRenderer.line(
-                    touches[0].vector.x,
-                    touches[0].vector.y,
-                    touches[1].vector.x,
-                    touches[1].vector.y
-            );
-            shapeRenderer.end();
-        }
 
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.line( 5,5,5,screenHeight);//left wall
-        shapeRenderer.line(screenWidth-5, 5,screenWidth-5,screenHeight); //rigth wall
-        shapeRenderer.end();
-        
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
@@ -240,7 +218,43 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         	}
         }
         
+        Body trampolineBody = null;
+        if (touches[0].touched && touches[1].touched &&
+                new Vector2(
+                    touches[1].vector.x - touches[0].vector.x,
+                    touches[1].vector.y - touches[0].vector.y
+                ).len() > 1) {
+            trampolineBody = setUpTrampoline();
+        }
+        debugRenderer.render(world, camera.combined);
         world.step(1/60f, 6, 2);
+        if (trampolineBody != null)
+            tearDownTrampoline(trampolineBody);
+    }
+
+    public Body setUpTrampoline() {
+        BodyDef trampolineDef = new BodyDef();
+        trampolineDef.type = BodyDef.BodyType.StaticBody;
+        trampolineDef.position.set(new Vector2(touches[0].vector.x, touches[0].vector.y));
+        Vector2[] points = new Vector2[4];
+        float trampoline_width = 10;
+        points[0] = new Vector2(0,0);
+        points[1] = new Vector2(touches[1].vector.x - touches[0].vector.x, touches[1].vector.y - touches[0].vector.y);
+        Vector2 normal = new Vector2(-points[1].y, points[1].x);
+        normal.nor();
+        normal.x *= trampoline_width;
+        normal.y *= trampoline_width;
+        points[2] = new Vector2(points[1].x + normal.x, points[1].y + normal.y);
+        points[3] = normal;
+        Body trampolineBody = world.createBody(trampolineDef);
+        PolygonShape trampolineBox = new PolygonShape();
+        trampolineBox.set(points);
+        trampolineBody.createFixture(trampolineBox, 0f);
+        return trampolineBody;
+    }
+
+    public void tearDownTrampoline(Body trampoline) {
+        world.destroyBody(trampoline);
     }
 
     @Override
