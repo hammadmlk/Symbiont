@@ -173,7 +173,14 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         	Ball o = (Ball) b.getUserData();
         	if (o != null) {
         		batch.begin();
-        		batch.draw(o.img, b.getPosition().x - o.img.getWidth()/2, b.getPosition().y - o.img.getHeight()/2);
+        		float originX = b.getPosition().x - o.img.getWidth()/2;
+        		float originY = b.getPosition().y - o.img.getHeight()/2;
+        		batch.draw(o.img, originX, originY, o.img.getWidth()/2, o.img.getHeight()/2,
+        				o.img.getWidth(), o.img.getHeight(), 1f, 1f, (float) (b.getAngle()*180/Math.PI), 
+        				0, 0, 140, 140, false, false);
+        		/*
+        		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
+        		float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
         		batch.end();
         	}
         }
