@@ -76,9 +76,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
-
-
         
+        loadTextures();       
 
         world = new World(new Vector2(0, -10), true);
 
@@ -105,7 +104,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     }
     
     private void renderBackground(){
-    	loadTextures();
     	batch.draw(textureBackgroundRegion,0,0);
     }
 
