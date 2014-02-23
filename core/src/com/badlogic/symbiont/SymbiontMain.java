@@ -130,7 +130,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         fixtureDef.shape = circle;
         fixtureDef.density = 0.5f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
+        fixtureDef.restitution = 1f; // Make it bounce a lot
 
         // Create our fixture and attach it to the body
         Fixture fixture = body.createFixture(fixtureDef);
@@ -147,22 +147,22 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape groundBox = new PolygonShape();
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(camera.viewportWidth, 10.0f);
+        groundBox.setAsBox(camera.viewportWidth, 0f);
         // Create a fixture from our polygon shape and add it to our ground body
-        groundBody.createFixture(groundBox, 0.0f);
+        groundBody.createFixture(groundBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(10,0));
+        leftWallDef.position.set(new Vector2(0,0));
         Body leftWallBody = world.createBody(leftWallDef);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(10f, camera.viewportHeight);
+        leftWallBox.setAsBox(0f, camera.viewportHeight);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth - 10,0));
+        rightWallDef.position.set(new Vector2(camera.viewportWidth - 0,0));
         Body rightWallBody = world.createBody(rightWallDef);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(10f, camera.viewportHeight);
+        rightWallBox.setAsBox(0f, camera.viewportHeight);
         rightWallBody.createFixture(rightWallBox, 0f);
     }
 
@@ -185,11 +185,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         batch.begin();
         renderBackground();
-       // batch.draw(textureRegion,0,0);
         batch.end();
-        
-        
-        
+              
         if (touches[0].touched && touches[1].touched) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1, 0, 0, 1);
@@ -201,12 +198,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             );
             shapeRenderer.end();
         }
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.line( 5,5,5,screenHeight);//left wall
-        shapeRenderer.line(screenWidth-5, 5,screenWidth-5,screenHeight); //rigth wall
-        shapeRenderer.end();
         
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
