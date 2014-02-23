@@ -181,24 +181,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         //clear the window 
     	Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        debugRenderer.render(world, camera.combined);
 
         batch.begin();
         renderBackground();
         batch.end();
-              
-        if (touches[0].touched && touches[1].touched) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-            shapeRenderer.setColor(1, 0, 0, 1);
-            shapeRenderer.line(
-                    touches[0].vector.x,
-                    touches[0].vector.y,
-                    touches[1].vector.x,
-                    touches[1].vector.y
-            );
-            shapeRenderer.end();
-        }
-        
+
         Array<Body> bodies = new Array<Body>();
         world.getBodies(bodies);
 
@@ -218,7 +205,43 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         	}
         }
         
+        Body trampolineBody = null;
+        if (touches[0].touched && touches[1].touched &&
+                new Vector2(
+                    touches[1].vector.x - touches[0].vector.x,
+                    touches[1].vector.y - touches[0].vector.y
+                ).len() > 1) {
+            trampolineBody = setUpTrampoline();
+        }
+        debugRenderer.render(world, camera.combined);
         world.step(1/60f, 6, 2);
+        if (trampolineBody != null)
+            tearDownTrampoline(trampolineBody);
+    }
+
+    public Body setUpTrampoline() {
+        BodyDef trampolineDef = new BodyDef();
+        trampolineDef.type = BodyDef.BodyType.StaticBody;
+        trampolineDef.position.set(new Vector2(touches[0].vector.x, touches[0].vector.y));
+        Vector2[] points = new Vector2[4];
+        float trampoline_width = 10;
+        points[0] = new Vector2(0,0);
+        points[1] = new Vector2(touches[1].vector.x - touches[0].vector.x, touches[1].vector.y - touches[0].vector.y);
+        Vector2 normal = new Vector2(-points[1].y, points[1].x);
+        normal.nor();
+        normal.x *= trampoline_width;
+        normal.y *= trampoline_width;
+        points[2] = new Vector2(points[1].x + normal.x, points[1].y + normal.y);
+        points[3] = normal;
+        Body trampolineBody = world.createBody(trampolineDef);
+        PolygonShape trampolineBox = new PolygonShape();
+        trampolineBox.set(points);
+        trampolineBody.createFixture(trampolineBox, 0f);
+        return trampolineBody;
+    }
+
+    public void tearDownTrampoline(Body trampoline) {
+        world.destroyBody(trampoline);
     }
 
     @Override
