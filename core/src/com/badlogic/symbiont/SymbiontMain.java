@@ -10,18 +10,32 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
+    private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
+
     private Texture texture;
     private TextureRegion textureRegion;
-    private Sprite sprite;
+    private TextureRegion textureBackgroundRegion;
+    private Texture backgroundTexture;
+    //private Sprite sprite;
     
     
+
+    
+    int screenWidth;
+    int screenHeight;
+
+    private World world;
+
+
     class TouchInfo {
         public Vector3 vector = new Vector3();
         public boolean touched = false;
@@ -36,25 +50,104 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         // Create a full-screen camera:
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         // Set it to an orthographic projection with "y down" (the first boolean parameter)
-        camera.setToOrtho(true, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Texture.setEnforcePotImages(false);
         texture = new Texture(Gdx.files.internal("ball.png"));
         textureRegion = new TextureRegion(texture);
-        textureRegion.flip(false, true);
-        //sprite = new Sprite(texture);
-        //sprite.setPosition(100,180);
         shapeRenderer = new ShapeRenderer();
+        debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
 
+
         
+
+        world = new World(new Vector2(0, -10), true);
+
+        //Texture.setEnforcePotImages(false);
+
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
-            touches[i] = new TouchInfo();
+            touches[i] = new TouchInfo(); 
         }
+
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+
+        setUpPhysics();
+    }
+    
+    private void loadTextures(){
+    	Texture.setEnforcePotImages(false);
+    
+    	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+    	textureBackgroundRegion = new TextureRegion(backgroundTexture);
+    }
+    
+    private void renderBackground(){
+    	loadTextures();
+    	batch.draw(textureBackgroundRegion,0,0);
+    }
+
+    private void setUpPhysics() {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        Vector3 middle = new Vector3(
+                Gdx.graphics.getWidth() / 2,
+                Gdx.graphics.getHeight() / 2,
+                0
+        );
+        camera.unproject(middle);
+        bodyDef.position.set(middle.x, middle.y);
+        bodyDef.linearVelocity.set(50f, 0f);
+        Body body = world.createBody(bodyDef);
+
+        // Create a circle shape and set its radius to 6
+        CircleShape circle = new CircleShape();
+        circle.setRadius(6f);
+
+        // Create a fixture definition to apply our shape to
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = circle;
+        fixtureDef.density = 0.5f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.6f; // Make it bounce a little bit
+
+        // Create our fixture and attach it to the body
+        Fixture fixture = body.createFixture(fixtureDef);
+        // Create our body definition
+
+        BodyDef groundBodyDef = new BodyDef();
+        // Set its world position
+        groundBodyDef.position.set(new Vector2(0, 10));
+
+        // Create a body from the definition and add it to the world
+        Body groundBody = world.createBody(groundBodyDef);
+
+        // Create a polygon shape
+        PolygonShape groundBox = new PolygonShape();
+        // Set the polygon shape as a box which is twice the size of our view port and 20 high
+        // (setAsBox takes half-width and half-height as arguments)
+        groundBox.setAsBox(camera.viewportWidth, 10.0f);
+        // Create a fixture from our polygon shape and add it to our ground body
+        groundBody.createFixture(groundBox, 0.0f);
+
+        BodyDef leftWallDef = new BodyDef();
+        leftWallDef.position.set(new Vector2(10,0));
+        Body leftWallBody = world.createBody(leftWallDef);
+        PolygonShape leftWallBox = new PolygonShape();
+        leftWallBox.setAsBox(10f, camera.viewportHeight);
+        leftWallBody.createFixture(leftWallBox, 0f);
+
+        BodyDef rightWallDef = new BodyDef();
+        rightWallDef.position.set(new Vector2(camera.viewportWidth - 10,0));
+        Body rightWallBody = world.createBody(rightWallDef);
+        PolygonShape rightWallBox = new PolygonShape();
+        rightWallBox.setAsBox(10f, camera.viewportHeight);
+        rightWallBody.createFixture(rightWallBox, 0f);
     }
 
     @Override
@@ -63,6 +156,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         texture.dispose();
         textureRegion.getTexture().dispose();
         shapeRenderer.dispose();
+        debugRenderer.dispose();
+        world.dispose();
     }
 
     @Override
@@ -70,8 +165,10 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         //clear the window 
     	Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+        debugRenderer.render(world, camera.combined);
 
         batch.begin();
+        renderBackground();
         batch.draw(textureRegion,0,0);
         batch.end();
         
@@ -88,6 +185,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             );
             shapeRenderer.end();
         }
+
+        world.step(1/60f, 6, 2);
     }
 
     @Override
