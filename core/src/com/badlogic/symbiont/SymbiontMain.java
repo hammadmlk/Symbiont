@@ -70,8 +70,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 0
         );
         camera.unproject(middle);
-        // bodyDef.position.set(middle.x, middle.y);
         bodyDef.position.set(middle.x, middle.y);
+        bodyDef.linearVelocity.set(50f, 0f);
         Body body = world.createBody(bodyDef);
 
         // Create a circle shape and set its radius to 6
@@ -103,6 +103,20 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         groundBox.setAsBox(camera.viewportWidth, 10.0f);
         // Create a fixture from our polygon shape and add it to our ground body
         groundBody.createFixture(groundBox, 0.0f);
+
+        BodyDef leftWallDef = new BodyDef();
+        leftWallDef.position.set(new Vector2(10,0));
+        Body leftWallBody = world.createBody(leftWallDef);
+        PolygonShape leftWallBox = new PolygonShape();
+        leftWallBox.setAsBox(10f, camera.viewportHeight);
+        leftWallBody.createFixture(leftWallBox, 0f);
+
+        BodyDef rightWallDef = new BodyDef();
+        rightWallDef.position.set(new Vector2(camera.viewportWidth - 10,0));
+        Body rightWallBody = world.createBody(rightWallDef);
+        PolygonShape rightWallBox = new PolygonShape();
+        rightWallBox.setAsBox(10f, camera.viewportHeight);
+        rightWallBody.createFixture(rightWallBox, 0f);
     }
 
     @Override
@@ -130,12 +144,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             );
             shapeRenderer.end();
         }
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.line( 5,5,5,screenHeight);//left wall
-        shapeRenderer.line(screenWidth-5, 5,screenWidth-5,screenHeight); //rigth wall
-        shapeRenderer.end();
 
         world.step(1/60f, 6, 2);
     }
