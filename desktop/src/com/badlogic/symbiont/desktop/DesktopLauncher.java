@@ -7,7 +7,7 @@ import com.badlogic.symbiont.SymbiontMain;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.title = "Symbion";
+		config.title = "Symbiont";
 		config.width = 480;
 		config.height = 800;
 		new LwjglApplication(new SymbiontMain(), config);
