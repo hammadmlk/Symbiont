@@ -30,7 +30,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private Texture texture;
     private TextureRegion textureRegion;
-    private TextureRegion textureBackgroundRegion;
+    private TextureRegion backgroundTextureRegion;
     private Texture backgroundTexture;
     //private Sprite sprite;
     
@@ -69,9 +69,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch();
-        Texture.setEnforcePotImages(false);
-        texture = new Texture(Gdx.files.internal("ball.png"));
-        textureRegion = new TextureRegion(texture);
         shapeRenderer = new ShapeRenderer();
         debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
@@ -96,15 +93,18 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         setUpPhysics();
     }
     
-    private void loadTextures(){
-    	Texture.setEnforcePotImages(false);
-    
+    private void loadTextures() {
+        Texture.setEnforcePotImages(false);
+
+        texture = new Texture(Gdx.files.internal("ball.png"));
+        textureRegion = new TextureRegion(texture);
+        
     	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
-    	textureBackgroundRegion = new TextureRegion(backgroundTexture);
+    	backgroundTextureRegion = new TextureRegion(backgroundTexture);
     }
     
-    private void renderBackground(){
-    	batch.draw(textureBackgroundRegion,0,0);
+    private void renderBackground() {
+    	batch.draw(backgroundTextureRegion,0,0);
     }
 
     private void setUpPhysics() {
