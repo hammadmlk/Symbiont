@@ -130,8 +130,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
-        return false;
+        return touchDragged(screenX, screenY, 1);
     }
 
     @Override
