@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -22,6 +23,14 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
+	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
+	private static final int VIRTUAL_WIDTH = 480;
+    private static final int VIRTUAL_HEIGHT = 800;
+	private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH
+			/ (float) VIRTUAL_HEIGHT;
+
+    private Rectangle viewport;
+	
     // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
@@ -34,14 +43,10 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private Texture backgroundTexture;
     //private Sprite sprite;
     
-    
-
-    
     int screenWidth;
     int screenHeight;
 
     private World world;
-
 
     class TouchInfo {
         public Vector3 vector = new Vector3();
@@ -65,7 +70,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         // Create a full-screen camera:
         camera = new OrthographicCamera();
         // Set it to an orthographic projection with "y down" (the first boolean parameter)
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch();
@@ -178,8 +183,16 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void render() {
-        //clear the window 
-    	Gdx.gl.glClearColor(1, 1, 1, 1);
+		// update camera
+		camera.update();
+		camera.apply(Gdx.gl10);
+
+		// set viewport
+		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
+				(int) viewport.width, (int) viewport.height);
+
+		// clear the window
+		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         debugRenderer.render(world, camera.combined);
 
@@ -232,7 +245,29 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void resize(int width, int height) {
+    	// calculate new viewport
+        float aspectRatio = (float)width/(float)height;
+        float scale = 1f;
+        Vector2 crop = new Vector2(0f, 0f);
+        
+        if(aspectRatio > ASPECT_RATIO)
+        {
+            scale = (float)height/(float)VIRTUAL_HEIGHT;
+            crop.x = (width - VIRTUAL_WIDTH*scale)/2f;
+        }
+        else if(aspectRatio < ASPECT_RATIO)
+        {
+            scale = (float)width/(float)VIRTUAL_WIDTH;
+            crop.y = (height - VIRTUAL_HEIGHT*scale)/2f;
+        }
+        else
+        {
+            scale = (float)width/(float)VIRTUAL_WIDTH;
+        }
 
+        float w = (float)VIRTUAL_WIDTH*scale;
+        float h = (float)VIRTUAL_HEIGHT*scale;
+        viewport = new Rectangle(crop.x, crop.y, w, h);
     }
 
     @Override
