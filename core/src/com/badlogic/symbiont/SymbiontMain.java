@@ -117,7 +117,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         );
         camera.unproject(middle);
         bodyDef.position.set(middle.x, middle.y);
-        bodyDef.linearVelocity.set(50f, 0f);
+        bodyDef.linearVelocity.set(50f, 250f);
         Body body = world.createBody(bodyDef);
         body.setUserData(alien);
 
@@ -150,6 +150,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         groundBox.setAsBox(camera.viewportWidth, 0f);
         // Create a fixture from our polygon shape and add it to our ground body
         groundBody.createFixture(groundBox, 0f);
+        
+        BodyDef topWallDef = new BodyDef();
+        topWallDef.position.set(new Vector2(0, camera.viewportHeight));
+        Body topWallBody = world.createBody(topWallDef);
+        PolygonShape topWallBox = new PolygonShape();
+        topWallBox.setAsBox(camera.viewportWidth, 0f);
+        topWallBody.createFixture(topWallBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
         leftWallDef.position.set(new Vector2(0,0));
@@ -159,7 +166,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth - 0,0));
+        rightWallDef.position.set(new Vector2(camera.viewportWidth, 0));
         Body rightWallBody = world.createBody(rightWallDef);
         PolygonShape rightWallBox = new PolygonShape();
         rightWallBox.setAsBox(0f, camera.viewportHeight);
