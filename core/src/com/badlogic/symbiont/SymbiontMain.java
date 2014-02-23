@@ -10,7 +10,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -23,11 +25,21 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private ShapeRenderer shapeRenderer;
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
+
+    private Texture texture;
+    private TextureRegion textureRegion;
+    private TextureRegion textureBackgroundRegion;
+    private Texture backgroundTexture;
+    //private Sprite sprite;
+    
+    
+
     
     int screenWidth;
     int screenHeight;
 
     private World world;
+
 
     class TouchInfo {
         public Vector3 vector = new Vector3();
@@ -55,14 +67,21 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Texture.setEnforcePotImages(false);
+        texture = new Texture(Gdx.files.internal("ball.png"));
+        textureRegion = new TextureRegion(texture);
         shapeRenderer = new ShapeRenderer();
         debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
         shapeRenderer.setProjectionMatrix(camera.combined);
 
+
+        
+
         world = new World(new Vector2(0, -10), true);
 
-        Texture.setEnforcePotImages(false);
+        //Texture.setEnforcePotImages(false);
+
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
             touches[i] = new TouchInfo(); 
@@ -74,6 +93,18 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         alien = new Ball();
 
         setUpPhysics();
+    }
+    
+    private void loadTextures(){
+    	Texture.setEnforcePotImages(false);
+    
+    	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+    	textureBackgroundRegion = new TextureRegion(backgroundTexture);
+    }
+    
+    private void renderBackground(){
+    	loadTextures();
+    	batch.draw(textureBackgroundRegion,0,0);
     }
 
     private void setUpPhysics() {
@@ -138,6 +169,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
+        texture.dispose();
+        textureRegion.getTexture().dispose();
         shapeRenderer.dispose();
         debugRenderer.dispose();
         world.dispose();
@@ -145,10 +178,18 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        //clear the window 
+    	Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         debugRenderer.render(world, camera.combined);
 
+        batch.begin();
+        renderBackground();
+       // batch.draw(textureRegion,0,0);
+        batch.end();
+        
+        
+        
         if (touches[0].touched && touches[1].touched) {
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1, 0, 0, 1);
