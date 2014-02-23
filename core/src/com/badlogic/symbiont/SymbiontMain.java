@@ -38,6 +38,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     	public Vector3 position = new Vector3();
     	public Vector3 velocity = new Vector3();
     	public Texture img = new Texture("ball.png");
+    	public float scale = 0.5f;
     }
 
     private TouchInfo[] touches = new TouchInfo[2];
@@ -91,7 +92,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         // Create a circle shape and set its radius to 6
         CircleShape circle = new CircleShape();
-        circle.setRadius(alien.img.getWidth() / 2);
+        circle.setRadius(alien.img.getWidth() * alien.scale / 2);
 
         // Create a fixture definition to apply our shape to
         FixtureDef fixtureDef = new FixtureDef();
@@ -176,8 +177,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         		float originX = b.getPosition().x - o.img.getWidth()/2;
         		float originY = b.getPosition().y - o.img.getHeight()/2;
         		batch.draw(o.img, originX, originY, o.img.getWidth()/2, o.img.getHeight()/2,
-        				o.img.getWidth(), o.img.getHeight(), 1f, 1f, (float) (b.getAngle()*180/Math.PI), 
-        				0, 0, 140, 140, false, false);
+        				o.img.getWidth(), o.img.getHeight(), o.scale, o.scale, (float) (b.getAngle()*180/Math.PI), 
+        				0, 0, o.img.getWidth(), o.img.getHeight(), false, false);
         		/*
         		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
         		float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
