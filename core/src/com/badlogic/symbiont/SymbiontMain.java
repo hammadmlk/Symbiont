@@ -7,20 +7,21 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
     private SpriteBatch batch;
+    private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
-	Texture img;
 
     class TouchInfo {
         public Vector3 vector = new Vector3();
         public boolean touched = false;
     }
 
-    private TouchInfo[] touches = new TouchInfo[5];
+    private TouchInfo[] touches = new TouchInfo[2];
 
     @Override
     public void create() {
@@ -33,12 +34,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        shapeRenderer = new ShapeRenderer();
         batch.setProjectionMatrix(camera.combined);
+        shapeRenderer.setProjectionMatrix(camera.combined);
 
         Texture.setEnforcePotImages(false);
-		img = new Texture("ball.png");
         Gdx.input.setInputProcessor(this);
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 2; i++){
             touches[i] = new TouchInfo();
         }
     }
@@ -46,7 +48,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
-        img.dispose();
+        shapeRenderer.dispose();
     }
 
     @Override
@@ -54,15 +56,17 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-
-        for (TouchInfo touch : touches) {
-            if(touch.touched) {
-                batch.draw(img, touch.vector.x - img.getWidth() / 2 , touch.vector.y - img.getWidth() / 2);
-            }
+        if (touches[0].touched && touches[1].touched) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+            shapeRenderer.setColor(1, 0, 0, 1);
+            shapeRenderer.line(
+                    touches[0].vector.x,
+                    touches[0].vector.y,
+                    touches[1].vector.x,
+                    touches[1].vector.y
+            );
+            shapeRenderer.end();
         }
-
-        batch.end();
     }
 
     @Override
@@ -105,7 +109,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(pointer < 5){
+        if(pointer < 2){
             touches[pointer].vector.x = 0;
             touches[pointer].vector.y = 0;
             touches[pointer].touched = false;
@@ -115,7 +119,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if(pointer < 5){
+        if(pointer < 2){
             touches[pointer].vector.x = screenX;
             touches[pointer].vector.y = screenY;
             camera.unproject(touches[pointer].vector);
