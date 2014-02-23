@@ -1,5 +1,9 @@
 package com.badlogic.symbiont;
 
+import java.util.Iterator;
+
+import javax.swing.text.html.parser.Entity;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -13,6 +17,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Array;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
@@ -40,8 +45,15 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         public Vector3 vector = new Vector3();
         public boolean touched = false;
     }
+    
+    class Ball {
+    	public Vector3 position = new Vector3();
+    	public Vector3 velocity = new Vector3();
+    	public Texture img = new Texture("ball.png");
+    }
 
     private TouchInfo[] touches = new TouchInfo[2];
+    private Ball alien;
 
     @Override
     public void create() {
@@ -76,6 +88,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+        
+        alien = new Ball();
 
         setUpPhysics();
     }
@@ -96,18 +110,19 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         Vector3 middle = new Vector3(
-                Gdx.graphics.getWidth() / 2,
-                Gdx.graphics.getHeight() / 2,
+        		screenWidth / 2,
+        		screenHeight / 2,
                 0
         );
         camera.unproject(middle);
         bodyDef.position.set(middle.x, middle.y);
         bodyDef.linearVelocity.set(50f, 0f);
         Body body = world.createBody(bodyDef);
+        body.setUserData(alien);
 
         // Create a circle shape and set its radius to 6
         CircleShape circle = new CircleShape();
-        circle.setRadius(6f);
+        circle.setRadius(alien.img.getWidth() / 2);
 
         // Create a fixture definition to apply our shape to
         FixtureDef fixtureDef = new FixtureDef();
@@ -186,6 +201,31 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             shapeRenderer.end();
         }
 
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0, 0, 0, 1);
+        shapeRenderer.line( 5,5,5,screenHeight);//left wall
+        shapeRenderer.line(screenWidth-5, 5,screenWidth-5,screenHeight); //rigth wall
+        shapeRenderer.end();
+        
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+
+        for (Body b : bodies) {
+        	Ball o = (Ball) b.getUserData();
+        	if (o != null) {
+        		batch.begin();
+        		float originX = b.getPosition().x - o.img.getWidth()/2;
+        		float originY = b.getPosition().y - o.img.getHeight()/2;
+        		batch.draw(o.img, originX, originY, o.img.getWidth()/2, o.img.getHeight()/2,
+        				o.img.getWidth(), o.img.getHeight(), 1f, 1f, (float) (b.getAngle()*180/Math.PI), 
+        				0, 0, 140, 140, false, false);
+        		/*
+        		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
+        		float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
+        		batch.end();
+        	}
+        }
+        
         world.step(1/60f, 6, 2);
     }
 
