@@ -184,7 +184,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         batch.begin();
         renderBackground();
-        batch.draw(textureRegion,0,0);
+       // batch.draw(textureRegion,0,0);
         batch.end();
         
         
