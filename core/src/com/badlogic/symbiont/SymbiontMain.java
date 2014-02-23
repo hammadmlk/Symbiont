@@ -138,7 +138,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
-        groundBodyDef.position.set(new Vector2(0, 10));
+        groundBodyDef.position.set(new Vector2(0, 0));
 
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
