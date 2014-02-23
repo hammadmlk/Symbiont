@@ -234,7 +234,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             trampolineBody = setUpTrampoline();
         }
         debugRenderer.render(world, camera.combined);
-        world.step(1/60f, 6, 2);
+        world.step(1/30f, 6, 2);
         if (trampolineBody != null)
             tearDownTrampoline(trampolineBody);
     }
