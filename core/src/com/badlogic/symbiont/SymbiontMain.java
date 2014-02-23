@@ -199,7 +199,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 				(int) viewport.width, (int) viewport.height);
 
 		// clear the window
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
