@@ -15,6 +15,9 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private SpriteBatch batch;
     private ShapeRenderer shapeRenderer;
     private OrthographicCamera camera;
+    
+    int screenWidth;
+    int screenHeight;
 
     class TouchInfo {
         public Vector3 vector = new Vector3();
@@ -41,8 +44,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         Texture.setEnforcePotImages(false);
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
-            touches[i] = new TouchInfo();
+            touches[i] = new TouchInfo(); 
         }
+        
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
     }
 
     @Override
@@ -55,8 +61,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
+        
+        
+        
+        
         if (touches[0].touched && touches[1].touched) {
+        	//does not work properly on desktop
+        	//System.out.println("two fingers touch detected"); 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1, 0, 0, 1);
             shapeRenderer.line(
@@ -66,7 +77,19 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                     touches[1].vector.y
             );
             shapeRenderer.end();
+            
         }
+        
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(0, 0, 0, 1);
+        shapeRenderer.line( 5,5,5,screenHeight);//left wall
+        shapeRenderer.line(screenWidth-5, 5,screenWidth-5,screenHeight); //rigth wall
+        shapeRenderer.end();
+        
+        
+        
+        
+        
     }
 
     @Override
