@@ -34,11 +34,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
 
-    private Texture texture;
+    private Texture ballTexture;
     private Texture backgroundTexture;
 
-    int screenWidth;
-    int screenHeight;
+    private int screenWidth;
+    private int screenHeight;
 
     private World world;
 
@@ -48,7 +48,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     }
     
     class Ball {
-    	public Texture img = new Texture("ball.png");
+    	public Texture img = ballTexture;
     	public float scale = 0.5f;
     }
 
@@ -63,7 +63,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         // Create a full-screen camera:
         camera = new OrthographicCamera();
-        // Set it to an orthographic projection with "y down" (the first boolean parameter)
         camera.setToOrtho(false, VIRTUAL_WIDTH / PIXELS_PER_METER, VIRTUAL_HEIGHT / PIXELS_PER_METER);
         camera.update();
         // Create a full screen sprite renderer and use the above camera
@@ -74,8 +73,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         loadTextures();       
 
         world = new World(new Vector2(0, -10), true);
-
-        //Texture.setEnforcePotImages(false);
 
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
@@ -93,7 +90,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private void loadTextures() {
         Texture.setEnforcePotImages(false);
 
-        texture = new Texture(Gdx.files.internal("ball.png"));
+        ballTexture = new Texture(Gdx.files.internal("ball.png"));
 
     	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
     }
@@ -170,7 +167,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
-        texture.dispose();
+        ballTexture.dispose();
         debugRenderer.dispose();
         world.dispose();
     }
@@ -226,7 +223,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             tearDownTrampoline(trampolineBody);
     }
 
-    public Body setUpTrampoline() {
+    private Body setUpTrampoline() {
         BodyDef trampolineDef = new BodyDef();
         trampolineDef.type = BodyDef.BodyType.StaticBody;
         trampolineDef.position.set(new Vector2(touches[0].vector.x, touches[0].vector.y));
@@ -247,7 +244,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         return trampolineBody;
     }
 
-    public void tearDownTrampoline(Body trampoline) {
+    private void tearDownTrampoline(Body trampoline) {
         world.destroyBody(trampoline);
     }
 
