@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -30,19 +28,15 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 			/ (float) VIRTUAL_HEIGHT;
 
     private Rectangle viewport;
-	
+
     // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
     private SpriteBatch batch;
-    private ShapeRenderer shapeRenderer;
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
 
     private Texture texture;
-    private TextureRegion textureRegion;
-    private TextureRegion backgroundTextureRegion;
     private Texture backgroundTexture;
-    //private Sprite sprite;
-    
+
     int screenWidth;
     int screenHeight;
 
@@ -54,8 +48,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     }
     
     class Ball {
-    	public Vector3 position = new Vector3();
-    	public Vector3 velocity = new Vector3();
     	public Texture img = new Texture("ball.png");
     	public float scale = 0.5f;
     }
@@ -74,11 +66,9 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
         debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        
+
         loadTextures();       
 
         world = new World(new Vector2(0, -10), true);
@@ -102,10 +92,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         Texture.setEnforcePotImages(false);
 
         texture = new Texture(Gdx.files.internal("ball.png"));
-        textureRegion = new TextureRegion(texture);
-        
+
     	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
-    	backgroundTextureRegion = new TextureRegion(backgroundTexture);
     }
     
     private void renderBackground() {
@@ -182,8 +170,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     public void dispose() {
         batch.dispose();
         texture.dispose();
-        textureRegion.getTexture().dispose();
-        shapeRenderer.dispose();
         debugRenderer.dispose();
         world.dispose();
     }
