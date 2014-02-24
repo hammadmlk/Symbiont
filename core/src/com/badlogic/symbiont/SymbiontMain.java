@@ -55,6 +55,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private TouchInfo[] touches = new TouchInfo[2];
     private Ball alien;
 
+    private static final float PIXELS_PER_METER = 50f;
+
     @Override
     public void create() {
         // shouts out to http://stackoverflow.com/questions/16514152/libgdx-coordinate-system-differences-between-rendering-and-touch-input
@@ -62,7 +64,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         // Create a full-screen camera:
         camera = new OrthographicCamera();
         // Set it to an orthographic projection with "y down" (the first boolean parameter)
-        camera.setToOrtho(false, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        camera.setToOrtho(false, VIRTUAL_WIDTH / PIXELS_PER_METER, VIRTUAL_HEIGHT / PIXELS_PER_METER);
         camera.update();
         // Create a full screen sprite renderer and use the above camera
         batch = new SpriteBatch();
@@ -97,7 +99,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     }
     
     private void renderBackground() {
-    	batch.draw(backgroundTextureRegion,0,0);
+        batch.draw(backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
     }
 
     private void setUpPhysics() {
@@ -105,18 +107,17 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         Vector3 middle = new Vector3(
         		screenWidth / 2,
-        		screenHeight / 2,
+                0,
                 0
         );
         camera.unproject(middle);
         bodyDef.position.set(middle.x, middle.y);
-        bodyDef.linearVelocity.set(50f, 250f);
+        bodyDef.linearVelocity.set(5f, 5f);
         Body body = world.createBody(bodyDef);
         body.setUserData(alien);
 
-        // Create a circle shape and set its radius to 6
         CircleShape circle = new CircleShape();
-        circle.setRadius(alien.img.getWidth() * alien.scale / 2);
+        circle.setRadius(alien.img.getWidth() * alien.scale / 2 / PIXELS_PER_METER);
 
         // Create a fixture definition to apply our shape to
         FixtureDef fixtureDef = new FixtureDef();
@@ -202,7 +203,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         		float originX = b.getPosition().x - o.img.getWidth()/2;
         		float originY = b.getPosition().y - o.img.getHeight()/2;
         		batch.draw(o.img, originX, originY, o.img.getWidth()/2, o.img.getHeight()/2,
-        				o.img.getWidth(), o.img.getHeight(), o.scale, o.scale, (float) (b.getAngle()*180/Math.PI), 
+        				o.img.getWidth(), o.img.getHeight(), o.scale / PIXELS_PER_METER, o.scale / PIXELS_PER_METER, (float) (b.getAngle()*180/Math.PI),
         				0, 0, o.img.getWidth(), o.img.getHeight(), false, false);
         		/*
         		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
@@ -216,11 +217,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 new Vector2(
                     touches[1].vector.x - touches[0].vector.x,
                     touches[1].vector.y - touches[0].vector.y
-                ).len() > 1) {
+                ).len() > 1 / PIXELS_PER_METER) {
             trampolineBody = setUpTrampoline();
         }
         debugRenderer.render(world, camera.combined);
-        world.step(1/30f, 6, 2);
+        world.step(1/60f, 6, 2);
         if (trampolineBody != null)
             tearDownTrampoline(trampolineBody);
     }
@@ -230,7 +231,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         trampolineDef.type = BodyDef.BodyType.StaticBody;
         trampolineDef.position.set(new Vector2(touches[0].vector.x, touches[0].vector.y));
         Vector2[] points = new Vector2[4];
-        float trampoline_width = 10;
+        float trampoline_width = 10 / PIXELS_PER_METER;
         points[0] = new Vector2(0,0);
         points[1] = new Vector2(touches[1].vector.x - touches[0].vector.x, touches[1].vector.y - touches[0].vector.y);
         Vector2 normal = new Vector2(-points[1].y, points[1].x);
