@@ -6,7 +6,6 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -72,8 +71,10 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
-        initializeGameState();
-        setUpPhysics();
+        FileHandle gamestateFile = Gdx.files.external("gamestate.json");
+        String rawGameStateJSON = gamestateFile.readString();
+        gameState = GameState.fromJSON(rawGameStateJSON);
+        gameState.addToWorld(world);
     }
     
     private void renderBackground() {
@@ -104,51 +105,68 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         alienFixtureModel.restitution = 1f;
         gameState.alien.fixtureModels.add(alienFixtureModel);
 
+        gameState.bottomWall = new PhysicsEntity();
+        gameState.bottomWall.position.set(0,0);
+        FixtureModel bottomFixtureModel = new FixtureModel();
+        ShapeModel bottomShapeModel = new ShapeModel();
+        bottomShapeModel.type = Shape.Type.Polygon;
+        bottomShapeModel.vertices = new Vector2[] {
+                new Vector2(0, - 10 / PIXELS_PER_METER),
+                new Vector2(0, 0),
+                new Vector2(camera.viewportWidth, 0),
+                new Vector2(camera.viewportWidth, -10 / PIXELS_PER_METER)
+        };
+        bottomFixtureModel.shape = bottomShapeModel;
+        gameState.bottomWall.fixtureModels.add(bottomFixtureModel);
+
+        gameState.topWall = new PhysicsEntity();
+        gameState.topWall.position.set(0,camera.viewportHeight);
+        FixtureModel topFixtureModel = new FixtureModel();
+        ShapeModel topShapeModel = new ShapeModel();
+        topShapeModel.type = Shape.Type.Polygon;
+        topShapeModel.vertices = new Vector2[] {
+                new Vector2(0, 0),
+                new Vector2(0, 10 / PIXELS_PER_METER),
+                new Vector2(camera.viewportWidth, 10 / PIXELS_PER_METER),
+                new Vector2(camera.viewportWidth, 0)
+        };
+        topFixtureModel.shape = topShapeModel;
+        gameState.topWall.fixtureModels.add(topFixtureModel);
+
+        gameState.leftWall = new PhysicsEntity();
+        gameState.leftWall.position.set(0,0);
+        FixtureModel leftFixtureModel = new FixtureModel();
+        ShapeModel leftShapeModel = new ShapeModel();
+        leftShapeModel.type = Shape.Type.Polygon;
+        leftShapeModel.vertices = new Vector2[] {
+                new Vector2(0, 0),
+                new Vector2(-10 / PIXELS_PER_METER, 0),
+                new Vector2(-10 / PIXELS_PER_METER, camera.viewportHeight),
+                new Vector2(0, camera.viewportHeight)
+        };
+        leftFixtureModel.shape = leftShapeModel;
+        gameState.leftWall.fixtureModels.add(leftFixtureModel);
+
+        gameState.rightWall = new PhysicsEntity();
+        gameState.rightWall.position.set(camera.viewportWidth,0);
+        FixtureModel rightFixtureModel = new FixtureModel();
+        ShapeModel rightShapeModel = new ShapeModel();
+        rightShapeModel.type = Shape.Type.Polygon;
+        rightShapeModel.vertices = new Vector2[] {
+                new Vector2(0, 0),
+                new Vector2(0, camera.viewportHeight),
+                new Vector2(10 / PIXELS_PER_METER, camera.viewportHeight),
+                new Vector2(10 / PIXELS_PER_METER, 0)
+        };
+        rightFixtureModel.shape = rightShapeModel;
+        gameState.rightWall.fixtureModels.add(rightFixtureModel);
+
+
+
         gameState.addToWorld(world);
 
         FileHandle gamestateFile = Gdx.files.external("gamestate.json");
         gamestateFile.writeString(gameState.toJSON(), false);
-    }
-
-    private void setUpPhysics() {
-
-        BodyDef groundBodyDef = new BodyDef();
-        // Set its world position
-        groundBodyDef.position.set(new Vector2(0, 0));
-
-        // Create a body from the definition and add it to the world
-        Body groundBody = world.createBody(groundBodyDef);
-
-        // Create a polygon shape
-        PolygonShape groundBox = new PolygonShape();
-        // Set the polygon shape as a box which is twice the size of our view port and 20 high
-        // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(camera.viewportWidth, 0f);
-        // Create a fixture from our polygon shape and add it to our ground body
-        groundBody.createFixture(groundBox, 0f);
-        
-        BodyDef topWallDef = new BodyDef();
-        topWallDef.position.set(new Vector2(0, camera.viewportHeight));
-        Body topWallBody = world.createBody(topWallDef);
-        PolygonShape topWallBox = new PolygonShape();
-        topWallBox.setAsBox(camera.viewportWidth, 0f);
-        topWallBody.createFixture(topWallBox, 0f);
-
-        BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(0,0));
-        Body leftWallBody = world.createBody(leftWallDef);
-        PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(0f, camera.viewportHeight);
-        leftWallBody.createFixture(leftWallBox, 0f);
-
-        BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth, 0));
-        Body rightWallBody = world.createBody(rightWallDef);
-        PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(0f, camera.viewportHeight);
-        rightWallBody.createFixture(rightWallBox, 0f);
-
-
     }
 
     @Override
@@ -181,7 +199,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         for (Body b : bodies) {
         	PhysicsEntity o = (PhysicsEntity) b.getUserData();
-        	if (o != null) {
+        	if (o != null && o.img != null) {
         		batch.begin();
         		float originX = b.getPosition().x - o.img.getWidth()/2;
         		float originY = b.getPosition().y - o.img.getHeight()/2;
@@ -205,6 +223,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         }
         debugRenderer.render(world, camera.combined);
         world.step(1/60f, 6, 2);
+        // TODO update models
         if (trampolineBody != null)
             tearDownTrampoline(trampolineBody);
     }

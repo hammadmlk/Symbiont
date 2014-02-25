@@ -24,10 +24,10 @@ public class GameState {
 
     public void addToWorld(World world) {
         alien.addToWorld(world);
-        if (leftWall != null) leftWall.addToWorld(world);
-        if (rightWall != null) rightWall.addToWorld(world);
-        if (bottomWall != null) bottomWall.addToWorld(world);
-        if (topWall != null) topWall.addToWorld(world);
+        leftWall.addToWorld(world);
+        rightWall.addToWorld(world);
+        bottomWall.addToWorld(world);
+        topWall.addToWorld(world);
     }
 
 }

@@ -29,12 +29,12 @@ public class ShapeModel {
             case Edge:
                 throw new UnsupportedOperationException("not implemented)");
             case Polygon:
-                throw new UnsupportedOperationException("not implemented)");
-            case Chain:
                 PolygonShape polygonShape = new PolygonShape();
                 polygonShape.setRadius(radius);
                 polygonShape.set(vertices);
                 return polygonShape;
+            case Chain:
+                throw new UnsupportedOperationException("not implemented)");
         }
         return null;
     }
