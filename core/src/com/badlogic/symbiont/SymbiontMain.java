@@ -87,6 +87,29 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void render() {
+        // set up trampoline
+        Body trampolineBody = null;
+        if (touches[0].touched && touches[1].touched &&
+                new Vector2(
+                        touches[1].vector.x - touches[0].vector.x,
+                        touches[1].vector.y - touches[0].vector.y
+                ).len() > 1 / PIXELS_PER_METER) {
+            trampolineBody = setUpTrampoline();
+        }
+
+        // step physics engine
+        world.step(1/60f, 6, 2);
+
+        // update game state
+        Array<Body> bodies = new Array<Body>();
+        world.getBodies(bodies);
+        for (Body b : bodies) {
+            if (b.getUserData() instanceof PhysicsEntity) {
+                PhysicsEntity o = (PhysicsEntity) b.getUserData();
+                o.update(b);
+            }
+        }
+
 		// update camera
 		camera.update();
 		camera.apply(Gdx.gl10);
@@ -99,40 +122,27 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        // render background
         batch.begin();
         renderBackground();
         batch.end();
 
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
+        // render game state
+        float originX = gameState.alien.position.x - gameState.alien.getImg().getWidth()/2;
+        float originY = gameState.alien.position.y - gameState.alien.getImg().getHeight()/2;
+        batch.begin();
+        batch.draw(gameState.alien.getImg(), originX, originY, gameState.alien.getImg().getWidth()/2, gameState.alien.getImg().getHeight()/2,
+                gameState.alien.getImg().getWidth(), gameState.alien.getImg().getHeight(), gameState.alien.scale / PIXELS_PER_METER, gameState.alien.scale / PIXELS_PER_METER, (float) (gameState.alien.angle*180/Math.PI),
+                0, 0, gameState.alien.getImg().getWidth(), gameState.alien.getImg().getHeight(), false, false);
+        /*
+        Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
+        float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
+        batch.end();
 
-        for (Body b : bodies) {
-        	PhysicsEntity o = (PhysicsEntity) b.getUserData();
-        	if (o != null && o.getImg() != null) {
-        		batch.begin();
-        		float originX = b.getPosition().x - o.getImg().getWidth()/2;
-        		float originY = b.getPosition().y - o.getImg().getHeight()/2;
-        		batch.draw(o.getImg(), originX, originY, o.getImg().getWidth()/2, o.getImg().getHeight()/2,
-        				o.getImg().getWidth(), o.getImg().getHeight(), o.scale / PIXELS_PER_METER, o.scale / PIXELS_PER_METER, (float) (b.getAngle()*180/Math.PI),
-        				0, 0, o.getImg().getWidth(), o.getImg().getHeight(), false, false);
-        		/*
-        		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
-        		float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
-        		batch.end();
-        	}
-        }
-        
-        Body trampolineBody = null;
-        if (touches[0].touched && touches[1].touched &&
-                new Vector2(
-                    touches[1].vector.x - touches[0].vector.x,
-                    touches[1].vector.y - touches[0].vector.y
-                ).len() > 1 / PIXELS_PER_METER) {
-            trampolineBody = setUpTrampoline();
-        }
+        // debug render
         debugRenderer.render(world, camera.combined);
-        world.step(1/60f, 6, 2);
-        // TODO update models
+
+        // tear down trampoline
         if (trampolineBody != null)
             tearDownTrampoline(trampolineBody);
     }
