@@ -2,8 +2,7 @@ package com.badlogic.symbiont.models;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +58,9 @@ public class PhysicsEntity {
     /** Does this body start out active? **/
     public boolean active = true;
 
+    /** Scale the gravity applied to this body. **/
+    public float gravityScale = 1;
+
     /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      * @param body
@@ -68,5 +70,31 @@ public class PhysicsEntity {
         linearVelocity = body.getLinearVelocity();
         angle = body.getAngle();
         angularVelocity = body.getAngularVelocity();
+    }
+
+    public void addToWorld(World world) {
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(position.x, position.y);
+        bodyDef.type = type;
+        bodyDef.linearVelocity.set(linearVelocity.x, linearVelocity.y);
+        bodyDef.linearDamping = linearDamping;
+        bodyDef.active = active;
+        bodyDef.allowSleep = allowSleep;
+        bodyDef.angle = angle;
+        bodyDef.angularDamping = angularDamping;
+        bodyDef.angularVelocity = angularVelocity;
+        bodyDef.awake = awake;
+        bodyDef.bullet = bullet;
+        bodyDef.fixedRotation = fixedRotation;
+        bodyDef.gravityScale = gravityScale;
+
+        Body body = world.createBody(bodyDef);
+        body.setUserData(this);
+
+        for (FixtureModel fixtureModel : fixtureModels) {
+            FixtureDef fixtureDef = fixtureModel.getFixtureDef();
+            body.createFixture(fixtureDef);
+            fixtureDef.shape.dispose();
+        }
     }
 }

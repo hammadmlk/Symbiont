@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 public class ShapeModel {
 
     public Shape.Type type;
-    public Vector2 position;
+    public Vector2 position = new Vector2();
     public float radius;
     public Vector2[] vertices;
 

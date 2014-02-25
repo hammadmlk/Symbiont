@@ -3,6 +3,7 @@ package com.badlogic.symbiont;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,15 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.symbiont.models.FixtureModel;
+import com.badlogic.symbiont.models.PhysicsEntity;
+import com.badlogic.symbiont.models.GameState;
+import com.badlogic.symbiont.models.ShapeModel;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
@@ -34,9 +32,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
 
-    private Texture ballTexture;
-    private Texture backgroundTexture;
-
     private int screenWidth;
     private int screenHeight;
 
@@ -47,19 +42,16 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         public boolean touched = false;
     }
     
-    class Ball {
-    	public Texture img = ballTexture;
-    	public float scale = 0.5f;
-    }
-
     private TouchInfo[] touches = new TouchInfo[2];
-    private Ball alien;
+
+    private GameState gameState;
 
     private static final float PIXELS_PER_METER = 50f;
 
     @Override
     public void create() {
         // shouts out to http://stackoverflow.com/questions/16514152/libgdx-coordinate-system-differences-between-rendering-and-touch-input
+
 
         // Create a full-screen camera:
         camera = new OrthographicCamera();
@@ -70,8 +62,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         debugRenderer = new Box2DDebugRenderer();
         batch.setProjectionMatrix(camera.combined);
 
-        loadTextures();       
-
         world = new World(new Vector2(0, -10), true);
 
         Gdx.input.setInputProcessor(this);
@@ -81,52 +71,46 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        
-        alien = new Ball();
 
+        initializeGameState();
         setUpPhysics();
     }
     
-    private void loadTextures() {
-        Texture.setEnforcePotImages(false);
-
-        ballTexture = new Texture(Gdx.files.internal("ball.png"));
-
-    	backgroundTexture = new Texture(Gdx.files.internal("background.png"));
-    }
-    
     private void renderBackground() {
-        batch.draw(backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
+        batch.draw(Assets.backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
     }
 
-    private void setUpPhysics() {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+    private void initializeGameState() {
+        gameState = new GameState();
+        gameState.alien = new PhysicsEntity();
+        gameState.alien.img = Assets.ballTexture;
+        gameState.alien.scale = .5f;
+        gameState.alien.type = BodyDef.BodyType.DynamicBody;
         Vector3 middle = new Vector3(
-        		screenWidth / 2,
+                screenWidth / 2,
                 0,
                 0
         );
         camera.unproject(middle);
-        bodyDef.position.set(middle.x, middle.y);
-        bodyDef.linearVelocity.set(5f, 5f);
-        Body body = world.createBody(bodyDef);
-        body.setUserData(alien);
+        gameState.alien.position.set(middle.x, middle.y);
+        gameState.alien.linearVelocity.set(5f, 5f);
+        FixtureModel alienFixtureModel = new FixtureModel();
+        ShapeModel alienShapeModel = new ShapeModel();
+        alienShapeModel.type = Shape.Type.Circle;
+        alienShapeModel.radius = Assets.ballTexture.getWidth() * gameState.alien.scale / 2 / PIXELS_PER_METER;
+        alienFixtureModel.shape = alienShapeModel;
+        alienFixtureModel.density = .5f;
+        alienFixtureModel.friction = .4f;
+        alienFixtureModel.restitution = 1f;
+        gameState.alien.fixtureModels.add(alienFixtureModel);
 
-        CircleShape circle = new CircleShape();
-        circle.setRadius(alien.img.getWidth() * alien.scale / 2 / PIXELS_PER_METER);
+        gameState.addToWorld(world);
 
-        // Create a fixture definition to apply our shape to
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = circle;
-        fixtureDef.density = 0.5f;
-        fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 1f; // Make it bounce a lot
+        FileHandle gamestateFile = Gdx.files.external("gamestate.json");
+        gamestateFile.writeString(gameState.toJSON(), false);
+    }
 
-        // Create our fixture and attach it to the body
-        Fixture fixture = body.createFixture(fixtureDef);
-        circle.dispose();
-        // Create our body definition
+    private void setUpPhysics() {
 
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
@@ -163,12 +147,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape rightWallBox = new PolygonShape();
         rightWallBox.setAsBox(0f, camera.viewportHeight);
         rightWallBody.createFixture(rightWallBox, 0f);
+
+
     }
 
     @Override
     public void dispose() {
         batch.dispose();
-        ballTexture.dispose();
         debugRenderer.dispose();
         world.dispose();
     }
@@ -195,7 +180,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         world.getBodies(bodies);
 
         for (Body b : bodies) {
-        	Ball o = (Ball) b.getUserData();
+        	PhysicsEntity o = (PhysicsEntity) b.getUserData();
         	if (o != null) {
         		batch.begin();
         		float originX = b.getPosition().x - o.img.getWidth()/2;
