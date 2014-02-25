@@ -125,6 +125,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         // Create our fixture and attach it to the body
         Fixture fixture = body.createFixture(fixtureDef);
+        circle.dispose();
         // Create our body definition
 
         BodyDef groundBodyDef = new BodyDef();
@@ -241,6 +242,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape trampolineBox = new PolygonShape();
         trampolineBox.set(points);
         trampolineBody.createFixture(trampolineBox, 0f);
+        trampolineBox.dispose();
         return trampolineBody;
     }
 
