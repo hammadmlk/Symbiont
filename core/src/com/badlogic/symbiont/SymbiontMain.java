@@ -123,8 +123,12 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         // render background
+        // disable blending optimization as recommended here
+        // https://github.com/libgdx/libgdx/wiki/Spritebatch%2C-textureregions%2C-and-sprite#wiki-blending
         batch.begin();
+        batch.disableBlending();
         renderBackground();
+        batch.enableBlending();
         batch.end();
 
         // render game state
