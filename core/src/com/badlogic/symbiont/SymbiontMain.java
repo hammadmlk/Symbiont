@@ -135,12 +135,24 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         float originX = gameState.alien.position.x - gameState.alien.getImg().getWidth()/2;
         float originY = gameState.alien.position.y - gameState.alien.getImg().getHeight()/2;
         batch.begin();
-        batch.draw(gameState.alien.getImg(), originX, originY, gameState.alien.getImg().getWidth()/2, gameState.alien.getImg().getHeight()/2,
-                gameState.alien.getImg().getWidth(), gameState.alien.getImg().getHeight(), gameState.alien.scale / PIXELS_PER_METER, gameState.alien.scale / PIXELS_PER_METER, (float) (gameState.alien.angle*180/Math.PI),
-                0, 0, gameState.alien.getImg().getWidth(), gameState.alien.getImg().getHeight(), false, false);
-        /*
-        Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
-        float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/
+        batch.draw(
+                gameState.alien.getImg(),                      // Texture texture
+                originX,                                       // float x
+                originY,                                       // float y
+                gameState.alien.getImg().getWidth()/2,         // float originX
+                gameState.alien.getImg().getHeight()/2,        // float originY
+                gameState.alien.getImg().getWidth(),           // float width
+                gameState.alien.getImg().getHeight(),          // float height
+                gameState.alien.scale / PIXELS_PER_METER,      // float scaleX
+                gameState.alien.scale / PIXELS_PER_METER,      // float scaleY
+                (float) Math.toDegrees(gameState.alien.angle), // float rotation
+                0,                                             // int srcX
+                0,                                             // int srcY
+                gameState.alien.getImg().getWidth(),           // int srcWidth
+                gameState.alien.getImg().getHeight(),          // srcHeight
+                false,                                         // boolean flipX
+                false                                          // boolean flipY
+        );
         batch.end();
 
         // debug render
