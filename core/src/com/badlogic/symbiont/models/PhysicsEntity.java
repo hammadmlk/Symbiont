@@ -3,12 +3,14 @@ package com.badlogic.symbiont.models;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.symbiont.Assets;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsEntity {
-    public TextureModel textureModel;
+    public transient Texture texture;
+    public String textureName;
     public float scale;
     public enum Type {ALIEN, WALL};
     public Type entityType;
@@ -62,10 +64,16 @@ public class PhysicsEntity {
     public float gravityScale = 1;
 
     /**
+     * Don't want to serialize this cyclic reference, so mark it transient
+     */
+    public transient Body body;
+
+    /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      * @param body
      */
     public void update(Body body) {
+        this.body = body;
         position = body.getPosition();
         linearVelocity = body.getLinearVelocity();
         angle = body.getAngle();
@@ -99,6 +107,11 @@ public class PhysicsEntity {
     }
 
     public Texture getImg() {
-        return textureModel == null ? null : textureModel.img;
+        if (textureName == null)
+            return null;
+        if (texture == null) {
+            texture = Assets.textureDictionary.get(textureName);
+        }
+        return texture;
     }
 }
