@@ -68,105 +68,14 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
-        FileHandle gamestateFile = Gdx.files.external("gamestate.json");
+        FileHandle gamestateFile = Gdx.files.internal("levels/gamestate.json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
-//        initializeGameState();
     }
     
     private void renderBackground() {
         batch.draw(Assets.backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
-    }
-
-    private void initializeGameState() {
-        gameState = new GameState();
-        gameState.alien = new PhysicsEntity();
-        TextureModel ball = new TextureModel();
-        ball.textureKey = "ball";
-        gameState.alien.textureModel = ball;
-        gameState.alien.scale = .5f;
-        gameState.alien.type = BodyDef.BodyType.DynamicBody;
-        Vector3 middle = new Vector3(
-                screenWidth / 2,
-                0,
-                0
-        );
-        camera.unproject(middle);
-        gameState.alien.position.set(middle.x, middle.y);
-        gameState.alien.linearVelocity.set(5f, 5f);
-        FixtureModel alienFixtureModel = new FixtureModel();
-        ShapeModel alienShapeModel = new ShapeModel();
-        alienShapeModel.type = Shape.Type.Circle;
-        alienShapeModel.radius = Assets.ballTexture.getWidth() * gameState.alien.scale / 2 / PIXELS_PER_METER;
-        alienFixtureModel.shape = alienShapeModel;
-        alienFixtureModel.density = .5f;
-        alienFixtureModel.friction = .4f;
-        alienFixtureModel.restitution = 1f;
-        gameState.alien.fixtureModels.add(alienFixtureModel);
-
-        gameState.bottomWall = new PhysicsEntity();
-        gameState.bottomWall.position.set(0,0);
-        FixtureModel bottomFixtureModel = new FixtureModel();
-        ShapeModel bottomShapeModel = new ShapeModel();
-        bottomShapeModel.type = Shape.Type.Polygon;
-        bottomShapeModel.vertices = new Vector2[] {
-                new Vector2(0, - 10 / PIXELS_PER_METER),
-                new Vector2(0, 0),
-                new Vector2(camera.viewportWidth, 0),
-                new Vector2(camera.viewportWidth, -10 / PIXELS_PER_METER)
-        };
-        bottomFixtureModel.shape = bottomShapeModel;
-        gameState.bottomWall.fixtureModels.add(bottomFixtureModel);
-
-        gameState.topWall = new PhysicsEntity();
-        gameState.topWall.position.set(0,camera.viewportHeight);
-        FixtureModel topFixtureModel = new FixtureModel();
-        ShapeModel topShapeModel = new ShapeModel();
-        topShapeModel.type = Shape.Type.Polygon;
-        topShapeModel.vertices = new Vector2[] {
-                new Vector2(0, 0),
-                new Vector2(0, 10 / PIXELS_PER_METER),
-                new Vector2(camera.viewportWidth, 10 / PIXELS_PER_METER),
-                new Vector2(camera.viewportWidth, 0)
-        };
-        topFixtureModel.shape = topShapeModel;
-        gameState.topWall.fixtureModels.add(topFixtureModel);
-
-        gameState.leftWall = new PhysicsEntity();
-        gameState.leftWall.position.set(0,0);
-        FixtureModel leftFixtureModel = new FixtureModel();
-        ShapeModel leftShapeModel = new ShapeModel();
-        leftShapeModel.type = Shape.Type.Polygon;
-        leftShapeModel.vertices = new Vector2[] {
-                new Vector2(0, 0),
-                new Vector2(-10 / PIXELS_PER_METER, 0),
-                new Vector2(-10 / PIXELS_PER_METER, camera.viewportHeight),
-                new Vector2(0, camera.viewportHeight)
-        };
-        leftFixtureModel.shape = leftShapeModel;
-        gameState.leftWall.fixtureModels.add(leftFixtureModel);
-
-        gameState.rightWall = new PhysicsEntity();
-        gameState.rightWall.position.set(camera.viewportWidth,0);
-        FixtureModel rightFixtureModel = new FixtureModel();
-        ShapeModel rightShapeModel = new ShapeModel();
-        rightShapeModel.type = Shape.Type.Polygon;
-        rightShapeModel.vertices = new Vector2[] {
-                new Vector2(0, 0),
-                new Vector2(0, camera.viewportHeight),
-                new Vector2(10 / PIXELS_PER_METER, camera.viewportHeight),
-                new Vector2(10 / PIXELS_PER_METER, 0)
-        };
-        rightFixtureModel.shape = rightShapeModel;
-        gameState.rightWall.fixtureModels.add(rightFixtureModel);
-
-
-
-        gameState.addToWorld(world);
-
-        FileHandle gamestateFile = Gdx.files.external("gamestate.json");
-        gamestateFile.writeString(gameState.toJSON(), false);
     }
 
     @Override

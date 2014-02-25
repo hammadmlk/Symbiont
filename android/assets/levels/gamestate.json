@@ -1,0 +1,122 @@
+{
+rightWall: {
+	fixtureModels: [
+		{
+			shape: {
+				vertices: [
+					{},
+					{
+						y: 16
+					},
+					{
+						x: 0.2,
+						y: 16
+					},
+					{
+						x: 0.2
+					}
+				],
+				type: Polygon
+			}
+		}
+	],
+	position: {
+		x: 9.6
+	}
+},
+alien: {
+	linearVelocity: {
+		x: 5,
+		y: 5
+	},
+	scale: 0.5,
+	textureModel: {
+		textureKey: ball
+	},
+	fixtureModels: [
+		{
+			shape: {
+				radius: 0.7,
+				type: Circle
+			},
+			density: 0.5,
+			restitution: 1,
+			friction: 0.4
+		}
+	],
+	position: {
+		x: 4.8,
+		y: 15.98
+	},
+	type: DynamicBody
+},
+leftWall: {
+	fixtureModels: [
+		{
+			shape: {
+				vertices: [
+					{},
+					{
+						x: -0.2
+					},
+					{
+						x: -0.2,
+						y: 16
+					},
+					{
+						y: 16
+					}
+				],
+				type: Polygon
+			}
+		}
+	]
+},
+bottomWall: {
+	fixtureModels: [
+		{
+			shape: {
+				vertices: [
+					{
+						y: -0.2
+					},
+					{},
+					{
+						x: 9.6
+					},
+					{
+						x: 9.6,
+						y: -0.2
+					}
+				],
+				type: Polygon
+			}
+		}
+	]
+},
+topWall: {
+	fixtureModels: [
+		{
+			shape: {
+				vertices: [
+					{},
+					{
+						y: 0.2
+					},
+					{
+						x: 9.6,
+						y: 0.2
+					},
+					{
+						x: 9.6
+					}
+				],
+				type: Polygon
+			}
+		}
+	],
+	position: {
+		y: 16
+	}
+}
+}

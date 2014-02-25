@@ -1,8 +1,12 @@
 #! /bin/sh
 
-if [ -d android/assets ] ; then
+if [ -d android/assets/non-git ] ; then
     echo already set up
     exit 0
+fi
+
+if [ -L android/assets ] ; then
+    rm android/assets
 fi
 
 if [ -d ~/Dropbox/CS4152\ Assets ] ; then
@@ -12,4 +16,5 @@ else
     read ASSETS
 fi
 
-ln -s "$ASSETS" android/assets
+mkdir -p android/assets
+ln -s "$ASSETS" android/assets/non-git

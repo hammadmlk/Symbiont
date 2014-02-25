@@ -15,8 +15,8 @@ public class Assets {
 
     static {
         Texture.setEnforcePotImages(false);
-        ballTexture = new Texture(Gdx.files.internal("ball.png"));
-        backgroundTexture = new Texture(Gdx.files.internal("background.png"));
+        ballTexture = new Texture(Gdx.files.internal("non-git/ball.png"));
+        backgroundTexture = new Texture(Gdx.files.internal("non-git/background.png"));
 
         textureDictionary = new HashMap<String, Texture>();
 
