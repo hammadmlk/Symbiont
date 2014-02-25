@@ -12,10 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.symbiont.models.FixtureModel;
-import com.badlogic.symbiont.models.PhysicsEntity;
-import com.badlogic.symbiont.models.GameState;
-import com.badlogic.symbiont.models.ShapeModel;
+import com.badlogic.symbiont.models.*;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
@@ -75,6 +72,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
+//        initializeGameState();
     }
     
     private void renderBackground() {
@@ -84,7 +82,9 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private void initializeGameState() {
         gameState = new GameState();
         gameState.alien = new PhysicsEntity();
-        gameState.alien.img = Assets.ballTexture;
+        TextureModel ball = new TextureModel();
+        ball.textureKey = "ball";
+        gameState.alien.textureModel = ball;
         gameState.alien.scale = .5f;
         gameState.alien.type = BodyDef.BodyType.DynamicBody;
         Vector3 middle = new Vector3(
@@ -199,13 +199,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         for (Body b : bodies) {
         	PhysicsEntity o = (PhysicsEntity) b.getUserData();
-        	if (o != null && o.img != null) {
+        	if (o != null && o.getImg() != null) {
         		batch.begin();
-        		float originX = b.getPosition().x - o.img.getWidth()/2;
-        		float originY = b.getPosition().y - o.img.getHeight()/2;
-        		batch.draw(o.img, originX, originY, o.img.getWidth()/2, o.img.getHeight()/2,
-        				o.img.getWidth(), o.img.getHeight(), o.scale / PIXELS_PER_METER, o.scale / PIXELS_PER_METER, (float) (b.getAngle()*180/Math.PI),
-        				0, 0, o.img.getWidth(), o.img.getHeight(), false, false);
+        		float originX = b.getPosition().x - o.getImg().getWidth()/2;
+        		float originY = b.getPosition().y - o.getImg().getHeight()/2;
+        		batch.draw(o.getImg(), originX, originY, o.getImg().getWidth()/2, o.getImg().getHeight()/2,
+        				o.getImg().getWidth(), o.getImg().getHeight(), o.scale / PIXELS_PER_METER, o.scale / PIXELS_PER_METER, (float) (b.getAngle()*180/Math.PI),
+        				0, 0, o.getImg().getWidth(), o.getImg().getHeight(), false, false);
         		/*
         		Texture texture, float x, float y, float originX, float originY, float width, float height, float scaleX,
         		float scaleY, float rotation, int srcX, int srcY, int srcWidth, int srcHeight, boolean flipX, boolean flipY*/

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhysicsEntity {
-    public Texture img;
+    public TextureModel textureModel;
     public float scale;
     public enum Type {ALIEN, WALL};
     public Type entityType;
@@ -96,5 +96,9 @@ public class PhysicsEntity {
             body.createFixture(fixtureDef);
             fixtureDef.shape.dispose();
         }
+    }
+
+    public Texture getImg() {
+        return textureModel == null ? null : textureModel.img;
     }
 }
