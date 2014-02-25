@@ -7,4 +7,4 @@ ECHO Where is your CS4152 Assets folder?
 set /p ASSETS=: 
 
 :LINK
-mklink /j %~dp0\android\assets %ASSETS%
+mklink /j %~dp0\android\assets\non-git %ASSETS%
