@@ -11,7 +11,7 @@ public class AlienContactListener implements ContactListener
 {
     PhysicsEntity alien;
     PhysicsEntity other;
-    
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fixtureA = contact.getFixtureA();
@@ -26,7 +26,7 @@ public class AlienContactListener implements ContactListener
         } else {
             alien = b; other = a;
         }
-        
+
         if (other.entityType == PhysicsEntity.Type.WALL && other.breakingPoint != -1 &&
                 alien.linearVelocity.len() > other.breakingPoint) {
             other.toBeDestroyed = true;
@@ -35,7 +35,7 @@ public class AlienContactListener implements ContactListener
 
     @Override
     public void endContact(Contact contact) {
-        
+
     }
 
     @Override

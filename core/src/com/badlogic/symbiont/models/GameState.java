@@ -13,7 +13,7 @@ public class GameState {
     public PhysicsEntity rightWall;
     public PhysicsEntity bottomWall;
     public PhysicsEntity topWall;
-    
+
     public List<PhysicsEntity> obstacles;
 
     public static GameState fromJSON(String serialized) {
@@ -33,7 +33,7 @@ public class GameState {
         bottomWall.addToWorld(world);
         topWall.addToWorld(world);
         for (PhysicsEntity o : obstacles) {
-        o.addToWorld(world);
+            o.addToWorld(world);
         }
     }
 
