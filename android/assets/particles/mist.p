@@ -40,8 +40,8 @@ shape: square
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 10.0
-highMax: 10.0
+highMin: 9.0
+highMax: 9.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -50,8 +50,8 @@ timeline0: 0.0
 - Spawn Height - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 10.0
-highMax: 10.0
+highMin: 16.0
+highMax: 16.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -85,7 +85,18 @@ timelineCount: 2
 timeline0: 0.0
 timeline1: 0.9931507
 - Angle - 
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 360.0
+highMax: 360.0
+relative: false
+scalingCount: 2
+scaling0: 0.0
+scaling1: 1.0
+timelineCount: 2
+timeline0: 0.0
+timeline1: 1.0
 - Rotation - 
 active: false
 - Wind - 
@@ -107,10 +118,10 @@ highMax: 1.0
 relative: false
 scalingCount: 2
 scaling0: 0.0
-scaling1: 0.033707865
+scaling1: 0.056179777
 timelineCount: 2
 timeline0: 0.0
-timeline1: 0.1010101
+timeline1: 0.101500444
 - Options - 
 attached: false
 continuous: true

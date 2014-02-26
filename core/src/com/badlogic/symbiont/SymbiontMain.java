@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.models.*;
+import com.badlogic.symbiont.views.MistView;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
@@ -32,8 +33,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private int screenWidth;
     private int screenHeight;
 
-    ParticleEffect mistEffect;
-
     private World world;
 
     class TouchInfo {
@@ -44,6 +43,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private TouchInfo[] touches = new TouchInfo[2];
 
     private GameState gameState;
+
+    private MistView mistView;
 
     private static final float PIXELS_PER_METER = 50f;
 
@@ -71,14 +72,12 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
+        mistView = new MistView(camera);
+
         FileHandle gamestateFile = Gdx.files.internal("levels/gamestate.json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
-
-        mistEffect = new ParticleEffect();
-        FileHandle particleDir = Gdx.files.internal("particles");
-        mistEffect.load(Gdx.files.internal("particles/mist.p"), particleDir);
     }
     
     private void renderBackground() {
@@ -162,9 +161,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         );
         batch.end();
 
-        batch.begin();
-        mistEffect.draw(batch, 1/60f);
-        batch.end();
+        mistView.render(batch);
 
         // debug render
         debugRenderer.render(world, camera.combined);
