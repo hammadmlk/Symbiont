@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.models.*;
+import com.badlogic.symbiont.views.MistView;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
@@ -42,6 +44,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private GameState gameState;
 
+    private MistView mistView;
+
     private static final float PIXELS_PER_METER = 50f;
 
     @Override
@@ -67,6 +71,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
+
+        mistView = new MistView(camera);
 
         FileHandle gamestateFile = Gdx.files.internal("levels/gamestate.json");
         String rawGameStateJSON = gamestateFile.readString();
@@ -154,6 +160,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 false                                          // boolean flipY
         );
         batch.end();
+
+        mistView.render(batch);
 
         // debug render
         debugRenderer.render(world, camera.combined);
