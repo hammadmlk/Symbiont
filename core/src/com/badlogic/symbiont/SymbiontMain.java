@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -30,6 +31,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private int screenWidth;
     private int screenHeight;
+
+    ParticleEffect mistEffect;
 
     private World world;
 
@@ -72,6 +75,10 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
+
+        mistEffect = new ParticleEffect();
+        FileHandle particleDir = Gdx.files.internal("particles");
+        mistEffect.load(Gdx.files.internal("particles/mist.p"), particleDir);
     }
     
     private void renderBackground() {
@@ -153,6 +160,10 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 false,                                         // boolean flipX
                 false                                          // boolean flipY
         );
+        batch.end();
+
+        batch.begin();
+        mistEffect.draw(batch, 1/60f);
         batch.end();
 
         // debug render
