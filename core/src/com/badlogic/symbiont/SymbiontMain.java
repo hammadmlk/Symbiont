@@ -59,6 +59,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
 
         world = new World(new Vector2(0, -10), true);
+        world.setContactListener(new AlienContactListener());
 
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
@@ -106,7 +107,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         for (Body b : bodies) {
             if (b.getUserData() instanceof PhysicsEntity) {
                 PhysicsEntity o = (PhysicsEntity) b.getUserData();
-                o.update(b);
+                if (o.toBeDestroyed) {
+                	world.destroyBody(b);
+                } else {
+                	o.update(b);
+                }
             }
         }
 

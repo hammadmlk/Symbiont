@@ -46,7 +46,8 @@ alien: {
 		x: 4.8,
 		y: 15.98
 	},
-	type: DynamicBody
+	type: DynamicBody,
+    entityType: ALIEN
 },
 leftWall: {
 	fixtureModels: [
@@ -116,5 +117,35 @@ topWall: {
 	position: {
 		y: 16
 	}
-}
+},
+obstacles: [
+    {
+        fixtureModels: [
+            {
+                shape: {
+                    vertices: [
+                        {},
+                        {
+                            y: 1
+                        },
+                        {
+                            x: 3,
+                            y: 1
+                        },
+                        {
+                            x: 3
+                        }
+                    ],
+                    type: Polygon
+                }
+            }
+        ],
+        position: {
+            x: 2,
+            y: 2
+        },
+        entityType: WALL,
+        breakingPoint: 8
+    }
+]
 }
