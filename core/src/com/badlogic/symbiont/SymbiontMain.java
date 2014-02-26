@@ -15,11 +15,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.models.*;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
-	// Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
-	private static final int VIRTUAL_WIDTH = 480;
+    // Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
+    private static final int VIRTUAL_WIDTH = 480;
     private static final int VIRTUAL_HEIGHT = 800;
-	private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH
-			/ (float) VIRTUAL_HEIGHT;
+    private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH
+            / (float) VIRTUAL_HEIGHT;
 
     private Rectangle viewport;
 
@@ -37,7 +37,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         public Vector3 vector = new Vector3();
         public boolean touched = false;
     }
-    
+
     private TouchInfo[] touches = new TouchInfo[2];
 
     private GameState gameState;
@@ -59,6 +59,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.setProjectionMatrix(camera.combined);
 
         world = new World(new Vector2(0, -10), true);
+        world.setContactListener(new AlienContactListener());
 
         Gdx.input.setInputProcessor(this);
         for(int i = 0; i < 2; i++){
@@ -73,7 +74,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
     }
-    
+
     private void renderBackground() {
         batch.draw(Assets.backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
     }
@@ -93,7 +94,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 new Vector2(
                         touches[1].vector.x - touches[0].vector.x,
                         touches[1].vector.y - touches[0].vector.y
-                ).len() > 1 / PIXELS_PER_METER) {
+                        ).len() > 1 / PIXELS_PER_METER) {
             trampolineBody = setUpTrampoline();
         }
 
@@ -106,20 +107,24 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         for (Body b : bodies) {
             if (b.getUserData() instanceof PhysicsEntity) {
                 PhysicsEntity o = (PhysicsEntity) b.getUserData();
-                o.update(b);
+                if (o.toBeDestroyed) {
+                    world.destroyBody(b);
+                } else {
+                    o.update(b);
+                }
             }
         }
 
-		// update camera
-		camera.update();
-		camera.apply(Gdx.gl10);
+        // update camera
+        camera.update();
+        camera.apply(Gdx.gl10);
 
-		// set viewport
-		Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
-				(int) viewport.width, (int) viewport.height);
+        // set viewport
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
+                (int) viewport.width, (int) viewport.height);
 
-		// clear the window
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+        // clear the window
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         // render background
@@ -152,7 +157,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 gameState.alien.getImg().getHeight(),          // srcHeight
                 false,                                         // boolean flipX
                 false                                          // boolean flipY
-        );
+                );
         batch.end();
 
         // debug render
@@ -191,11 +196,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-    	// calculate new viewport
+        // calculate new viewport
         float aspectRatio = (float)width/(float)height;
         float scale = 1f;
         Vector2 crop = new Vector2(0f, 0f);
-        
+
         if(aspectRatio > ASPECT_RATIO)
         {
             scale = (float)height/(float)VIRTUAL_HEIGHT;

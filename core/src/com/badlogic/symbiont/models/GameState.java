@@ -1,5 +1,7 @@
 package com.badlogic.symbiont.models;
 
+import java.util.List;
+
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 
@@ -11,6 +13,8 @@ public class GameState {
     public PhysicsEntity rightWall;
     public PhysicsEntity bottomWall;
     public PhysicsEntity topWall;
+
+    public List<PhysicsEntity> obstacles;
 
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
@@ -28,6 +32,9 @@ public class GameState {
         rightWall.addToWorld(world);
         bottomWall.addToWorld(world);
         topWall.addToWorld(world);
+        for (PhysicsEntity o : obstacles) {
+            o.addToWorld(world);
+        }
     }
 
 }
