@@ -33,7 +33,7 @@ public class GameState {
         bottomWall.addToWorld(world);
         topWall.addToWorld(world);
         for (PhysicsEntity o : obstacles) {
-        	o.addToWorld(world);
+        o.addToWorld(world);
         }
     }
 
