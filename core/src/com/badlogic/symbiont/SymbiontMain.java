@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.controllers.AlienContactListener;
 import com.badlogic.symbiont.models.*;
 import com.badlogic.symbiont.views.MistView;
+import com.badlogic.symbiont.views.PhysicsEntityView;
 
 public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     // Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
@@ -46,7 +47,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private MistView mistView;
 
-    private static final float PIXELS_PER_METER = 50f;
+    public static final float PIXELS_PER_METER = 50f;
 
     @Override
     public void create() {
@@ -142,28 +143,18 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.enableBlending();
         batch.end();
 
-        // render game state
-        float originX = gameState.alien.position.x - gameState.alien.getImg().getWidth()/2;
-        float originY = gameState.alien.position.y - gameState.alien.getImg().getHeight()/2;
         batch.begin();
-        batch.draw(
-                gameState.alien.getImg(),                      // Texture texture
-                originX,                                       // float x
-                originY,                                       // float y
-                gameState.alien.getImg().getWidth()/2,         // float originX
-                gameState.alien.getImg().getHeight()/2,        // float originY
-                gameState.alien.getImg().getWidth(),           // float width
-                gameState.alien.getImg().getHeight(),          // float height
-                gameState.alien.scale / PIXELS_PER_METER,      // float scaleX
-                gameState.alien.scale / PIXELS_PER_METER,      // float scaleY
-                (float) Math.toDegrees(gameState.alien.angle), // float rotation
-                0,                                             // int srcX
-                0,                                             // int srcY
-                gameState.alien.getImg().getWidth(),           // int srcWidth
-                gameState.alien.getImg().getHeight(),          // srcHeight
-                false,                                         // boolean flipX
-                false                                          // boolean flipY
-                );
+        PhysicsEntityView.render(batch, gameState.alien);
+        for (PhysicsEntity entity : gameState.obstacles) {
+            PhysicsEntityView.render(batch, entity);
+        }
+        for (PhysicsEntity entity : gameState.plants) {
+            PhysicsEntityView.render(batch, entity);
+        }
+        batch.end();
+
+        // render game state
+        batch.begin();
         batch.end();
 
         mistView.render(batch);

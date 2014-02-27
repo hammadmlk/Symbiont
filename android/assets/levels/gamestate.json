@@ -147,5 +147,25 @@ obstacles: [
         entityType: WALL,
         breakingPoint: 8
     }
+],
+plants: [
+{
+	textureName: temp-plant,
+    scale: 0.4,
+	fixtureModels: [
+		{
+			shape: {
+				radius: 1,
+				type: Circle
+			},
+            isSensor: true
+		}
+	],
+	position: {
+		x: 4.8,
+		y: 12
+	},
+    entityType: PLANT
+},
 ]
 }
