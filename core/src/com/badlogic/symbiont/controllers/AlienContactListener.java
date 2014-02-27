@@ -31,6 +31,9 @@ public class AlienContactListener implements ContactListener
                 alien.linearVelocity.len() > other.breakingPoint) {
             other.toBeDestroyed = true;
         }
+        if (other.entityType == PhysicsEntity.Type.PLANT) {
+            other.toBeDestroyed = true;
+        }
     }
 
     @Override

@@ -96,13 +96,13 @@
 	},
 	{
 		"linearVelocity": {
-			"x": 2.2658536,
-			"y": -7.333331
+			"x": 0,
+			"y": -5
 		},
 		"textureName": "ball",
 		"position": {
-			"x": 5.4042253,
-			"y": 13.683071
+			"x": 7,
+			"y": 13
 		},
 		"angle": 1.0713408,
 		"fixtureModels": [
@@ -118,8 +118,7 @@
 		],
 		"scale": 0.5,
 		"type": "DynamicBody",
-		"entityType": "ALIEN",
-		"angularVelocity": 4.017528
+		"entityType": "ALIEN"
 	},
 	{
 		"position": {
