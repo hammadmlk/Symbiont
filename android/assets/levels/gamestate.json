@@ -1,5 +1,6 @@
 {
-rightWall: {
+entities: [
+{
 	fixtureModels: [
 		{
 			shape: {
@@ -23,33 +24,7 @@ rightWall: {
 	position: {
 		x: 9.6
 	}
-},
-alien: {
-	linearVelocity: {
-		x: 5,
-		y: 5
-	},
-	scale: 0.5,
-	textureName: ball,
-	fixtureModels: [
-		{
-			shape: {
-				radius: 0.7,
-				type: Circle
-			},
-			density: 0.5,
-			restitution: 1,
-			friction: 0.4
-		}
-	],
-	position: {
-		x: 4.8,
-		y: 15.98
-	},
-	type: DynamicBody,
-    entityType: ALIEN
-},
-leftWall: {
+},{
 	fixtureModels: [
 		{
 			shape: {
@@ -70,8 +45,7 @@ leftWall: {
 			}
 		}
 	]
-},
-bottomWall: {
+},{
 	fixtureModels: [
 		{
 			shape: {
@@ -92,8 +66,7 @@ bottomWall: {
 			}
 		}
 	]
-},
-topWall: {
+},{
 	fixtureModels: [
 		{
 			shape: {
@@ -118,27 +91,51 @@ topWall: {
 		y: 16
 	}
 },
-obstacles: [
-    {
-        fixtureModels: [
-            {
-                shape: {
-                    vertices: [
-                        {},
-                        {
-                            y: 1
-                        },
-                        {
-                            x: 3,
-                            y: 1
-                        },
-                        {
-                            x: 3
-                        }
-                    ],
-                    type: Polygon
-                }
+{
+	linearVelocity: {
+		x: 5,
+		y: 5
+	},
+	scale: 0.5,
+	textureName: ball,
+	fixtureModels: [
+		{
+			shape: {
+				radius: 0.7,
+				type: Circle
+			},
+			density: 0.5,
+			restitution: 1,
+			friction: 0.4
+		}
+	],
+	position: {
+		x: 4.8,
+		y: 15.98
+	},
+	type: DynamicBody,
+    entityType: ALIEN
+},
+{
+    fixtureModels: [
+        {
+            shape: {
+                vertices: [
+                    {},
+                    {
+                        y: 1
+                    },
+                    {
+                        x: 3,
+                        y: 1
+                    },
+                    {
+                        x: 3
+                    }
+                ],
+                type: Polygon
             }
+        }
         ],
         position: {
             x: 2,
@@ -146,9 +143,7 @@ obstacles: [
         },
         entityType: WALL,
         breakingPoint: 8
-    }
-],
-plants: [
+},
 {
 	textureName: temp-plant,
     scale: 0.4,
@@ -166,6 +161,7 @@ plants: [
 		y: 12
 	},
     entityType: PLANT
-},
+}
+,
 ]
 }

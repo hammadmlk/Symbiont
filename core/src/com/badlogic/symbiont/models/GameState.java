@@ -8,16 +8,7 @@ import com.badlogic.gdx.utils.Json;
 
 public class GameState {
 
-    public PhysicsEntity alien;
-
-    public PhysicsEntity leftWall;
-    public PhysicsEntity rightWall;
-    public PhysicsEntity bottomWall;
-    public PhysicsEntity topWall;
-
-    public List<PhysicsEntity> obstacles = new ArrayList<PhysicsEntity>();
-
-    public List<PhysicsEntity> plants = new ArrayList<PhysicsEntity>();
+    public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
 
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
@@ -30,15 +21,7 @@ public class GameState {
     }
 
     public void addToWorld(World world) {
-        alien.addToWorld(world);
-        leftWall.addToWorld(world);
-        rightWall.addToWorld(world);
-        bottomWall.addToWorld(world);
-        topWall.addToWorld(world);
-        for (PhysicsEntity o : obstacles) {
-            o.addToWorld(world);
-        }
-        for (PhysicsEntity o : plants) {
+        for (PhysicsEntity o : entities) {
             o.addToWorld(world);
         }
     }

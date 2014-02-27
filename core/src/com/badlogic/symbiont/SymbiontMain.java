@@ -143,18 +143,11 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.enableBlending();
         batch.end();
 
-        batch.begin();
-        PhysicsEntityView.render(batch, gameState.alien);
-        for (PhysicsEntity entity : gameState.obstacles) {
-            PhysicsEntityView.render(batch, entity);
-        }
-        for (PhysicsEntity entity : gameState.plants) {
-            PhysicsEntityView.render(batch, entity);
-        }
-        batch.end();
-
         // render game state
         batch.begin();
+        for (PhysicsEntity entity : gameState.entities) {
+            PhysicsEntityView.render(batch, entity);
+        }
         batch.end();
 
         mistView.render(batch);
