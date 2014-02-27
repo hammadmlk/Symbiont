@@ -3,11 +3,17 @@ package com.badlogic.symbiont.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
+import com.badlogic.symbiont.Assets;
 
 public class GameState {
+
+    public String backgroundPath;
+
+    private transient Texture backgroundTexture;
 
     public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
 
@@ -39,4 +45,11 @@ public class GameState {
         }
     }
 
+    public Texture getBackgroundTexture() {
+        if (backgroundTexture != null) {
+            return backgroundTexture;
+        }
+        backgroundTexture = Assets.load(backgroundPath);
+        return backgroundTexture;
+    }
 }

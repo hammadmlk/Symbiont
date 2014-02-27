@@ -53,7 +53,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     public void create() {
         // shouts out to http://stackoverflow.com/questions/16514152/libgdx-coordinate-system-differences-between-rendering-and-touch-input
 
-
         // Create a full-screen camera:
         camera = new OrthographicCamera();
         camera.setToOrtho(false, VIRTUAL_WIDTH / PIXELS_PER_METER, VIRTUAL_HEIGHT / PIXELS_PER_METER);
@@ -83,7 +82,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     }
 
     private void renderBackground() {
-        batch.draw(Assets.backgroundTexture, 0, 0, camera.viewportWidth, camera.viewportHeight);
+        batch.draw(gameState.getBackgroundTexture(), 0, 0, camera.viewportWidth, camera.viewportHeight);
     }
 
     @Override

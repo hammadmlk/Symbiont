@@ -1,4 +1,5 @@
 {
+"backgroundPath": "non-git/background.png",
 "entities": [
 	{
 		"position": {
@@ -99,7 +100,7 @@
 			"x": 0,
 			"y": -5
 		},
-		"textureName": "ball",
+		"texturePath": "non-git/ball.png",
 		"position": {
 			"x": 7,
 			"y": 13
@@ -150,7 +151,7 @@
 	},
 	{
         "class": "com.badlogic.symbiont.models.Plant",
-		"textureName": "temp-plant",
+		"texturePath": "non-git/temp-plant.png",
 		"position": {
 			"x": 4.8,
 			"y": 12

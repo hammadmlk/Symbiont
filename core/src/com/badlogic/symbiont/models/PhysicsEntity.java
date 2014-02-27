@@ -10,7 +10,7 @@ import java.util.List;
 
 public class PhysicsEntity {
     public transient Texture texture;
-    public String textureName;
+    public String texturePath;
     public float scale = 1;
     public float breakingPoint = -1;
     public enum Type {ALIEN, WALL, PLANT};
@@ -109,10 +109,10 @@ public class PhysicsEntity {
     }
 
     public Texture getImg() {
-        if (textureName == null)
+        if (texturePath == null)
             return null;
         if (texture == null) {
-            texture = Assets.textureDictionary.get(textureName);
+            texture = Assets.load(texturePath);
         }
         return texture;
     }
