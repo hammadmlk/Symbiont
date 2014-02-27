@@ -1,167 +1,171 @@
 {
-entities: [
-{
-	fixtureModels: [
-		{
-			shape: {
-				vertices: [
-					{},
-					{
-						y: 16
-					},
-					{
-						x: 0.2,
-						y: 16
-					},
-					{
-						x: 0.2
-					}
-				],
-				type: Polygon
+"entities": [
+	{
+		"position": {
+			"x": 9.6
+		},
+		"fixtureModels": [
+			{
+				"shape": {
+					"vertices": [
+						{},
+						{
+							"y": 16
+						},
+						{
+							"x": 0.2,
+							"y": 16
+						},
+						{
+							"x": 0.2
+						}
+					],
+					"type": "Polygon"
+				}
 			}
-		}
-	],
-	position: {
-		x: 9.6
+		]
+	},
+	{
+		"fixtureModels": [
+			{
+				"shape": {
+					"vertices": [
+						{},
+						{
+							"x": -0.2
+						},
+						{
+							"x": -0.2,
+							"y": 16
+						},
+						{
+							"y": 16
+						}
+					],
+					"type": "Polygon"
+				}
+			}
+		]
+	},
+	{
+		"fixtureModels": [
+			{
+				"shape": {
+					"vertices": [
+						{
+							"y": -0.2
+						},
+						{},
+						{
+							"x": 9.6
+						},
+						{
+							"x": 9.6,
+							"y": -0.2
+						}
+					],
+					"type": "Polygon"
+				}
+			}
+		]
+	},
+	{
+		"position": {
+			"y": 16
+		},
+		"fixtureModels": [
+			{
+				"shape": {
+					"vertices": [
+						{},
+						{
+							"y": 0.2
+						},
+						{
+							"x": 9.6,
+							"y": 0.2
+						},
+						{
+							"x": 9.6
+						}
+					],
+					"type": "Polygon"
+				}
+			}
+		]
+	},
+	{
+		"linearVelocity": {
+			"x": 2.2658536,
+			"y": -7.333331
+		},
+		"textureName": "ball",
+		"position": {
+			"x": 5.4042253,
+			"y": 13.683071
+		},
+		"angle": 1.0713408,
+		"fixtureModels": [
+			{
+				"shape": {
+					"radius": 0.7,
+					"type": "Circle"
+				},
+				"density": 0.5,
+				"restitution": 1,
+				"friction": 0.4
+			}
+		],
+		"scale": 0.5,
+		"type": "DynamicBody",
+		"entityType": "ALIEN",
+		"angularVelocity": 4.017528
+	},
+	{
+		"position": {
+			"x": 2,
+			"y": 2
+		},
+		"breakingPoint": 8,
+		"fixtureModels": [
+			{
+				"shape": {
+					"vertices": [
+						{},
+						{
+							"y": 1
+						},
+						{
+							"x": 3,
+							"y": 1
+						},
+						{
+							"x": 3
+						}
+					],
+					"type": "Polygon"
+				}
+			}
+		],
+		"entityType": "WALL"
+	},
+	{
+		"textureName": "temp-plant",
+		"position": {
+			"x": 4.8,
+			"y": 12
+		},
+		"fixtureModels": [
+			{
+				"shape": {
+					"radius": 1,
+					"type": "Circle"
+				},
+				"isSensor": true
+			}
+		],
+		"scale": 0.4,
+		"entityType": "PLANT"
 	}
-},{
-	fixtureModels: [
-		{
-			shape: {
-				vertices: [
-					{},
-					{
-						x: -0.2
-					},
-					{
-						x: -0.2,
-						y: 16
-					},
-					{
-						y: 16
-					}
-				],
-				type: Polygon
-			}
-		}
-	]
-},{
-	fixtureModels: [
-		{
-			shape: {
-				vertices: [
-					{
-						y: -0.2
-					},
-					{},
-					{
-						x: 9.6
-					},
-					{
-						x: 9.6,
-						y: -0.2
-					}
-				],
-				type: Polygon
-			}
-		}
-	]
-},{
-	fixtureModels: [
-		{
-			shape: {
-				vertices: [
-					{},
-					{
-						y: 0.2
-					},
-					{
-						x: 9.6,
-						y: 0.2
-					},
-					{
-						x: 9.6
-					}
-				],
-				type: Polygon
-			}
-		}
-	],
-	position: {
-		y: 16
-	}
-},
-{
-	linearVelocity: {
-		x: 5,
-		y: 5
-	},
-	scale: 0.5,
-	textureName: ball,
-	fixtureModels: [
-		{
-			shape: {
-				radius: 0.7,
-				type: Circle
-			},
-			density: 0.5,
-			restitution: 1,
-			friction: 0.4
-		}
-	],
-	position: {
-		x: 4.8,
-		y: 15.98
-	},
-	type: DynamicBody,
-    entityType: ALIEN
-},
-{
-    fixtureModels: [
-        {
-            shape: {
-                vertices: [
-                    {},
-                    {
-                        y: 1
-                    },
-                    {
-                        x: 3,
-                        y: 1
-                    },
-                    {
-                        x: 3
-                    }
-                ],
-                type: Polygon
-            }
-        }
-        ],
-        position: {
-            x: 2,
-            y: 2
-        },
-        entityType: WALL,
-        breakingPoint: 8
-},
-{
-	textureName: temp-plant,
-    scale: 0.4,
-	fixtureModels: [
-		{
-			shape: {
-				radius: 1,
-				type: Circle
-			},
-            isSensor: true
-		}
-	],
-	position: {
-		x: 4.8,
-		y: 12
-	},
-    entityType: PLANT
-}
-,
 ]
 }

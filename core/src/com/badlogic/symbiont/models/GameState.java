@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 
 public class GameState {
 
@@ -17,6 +18,7 @@ public class GameState {
 
     public String toJSON() {
         Json json = new Json();
+        json.setOutputType(JsonWriter.OutputType.json);
         return json.prettyPrint(this);
     }
 
