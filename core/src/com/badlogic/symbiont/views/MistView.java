@@ -8,13 +8,17 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.symbiont.models.GameState;
+import com.badlogic.symbiont.models.Mist;
+import com.badlogic.symbiont.models.PhysicsEntity;
+import com.badlogic.symbiont.models.Plant;
 
 /*
     mad props to
     https://gist.github.com/mattdesl/6076849
  */
 public class MistView {
-  
+
 	ShapeRenderer shapes;
     ParticleEffect mistEffect;
 
@@ -26,7 +30,7 @@ public class MistView {
         mistEffect.load(Gdx.files.internal("particles/mist.p"), particleDir);
     }
 
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch, GameState gameState) {
 		//2. clear our depth buffer with 1.0
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
@@ -46,7 +50,18 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-		shapes.circle(5, 8, 3, 100);
+        for (PhysicsEntity e : gameState.entities) {
+            if (e.entityType == PhysicsEntity.Type.PLANT) {
+                Plant plant = (Plant) e;
+                for (Mist mist : plant.mist) {
+                    float x1 = mist.vertices[0];
+                    float y1 = mist.vertices[1];
+                    for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
+                        shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
+                    }
+                }
+            }
+        }
 
 		shapes.end();
 		
@@ -69,6 +84,7 @@ public class MistView {
 		//end/flush your batch
 		batch.end();
 
+        // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
 	}
 	

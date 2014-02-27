@@ -151,7 +151,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         }
         batch.end();
 
-        mistView.render(batch);
+        mistView.render(batch, gameState);
 
         // debug render
         debugRenderer.render(world, camera.combined);

@@ -150,6 +150,7 @@
 		"entityType": "WALL"
 	},
 	{
+        "class": "com.badlogic.symbiont.models.Plant",
 		"textureName": "temp-plant",
 		"position": {
 			"x": 4.8,
@@ -165,7 +166,10 @@
 			}
 		],
 		"scale": 0.4,
-		"entityType": "PLANT"
+		"entityType": "PLANT",
+        "mist": [{
+            "vertices": [0, 4, 9.6, 4, 9.6, 16, 0, 16]
+        }]
 	}
 ]
 }
