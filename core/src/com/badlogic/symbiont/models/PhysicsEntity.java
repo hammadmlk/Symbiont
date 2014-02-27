@@ -13,7 +13,7 @@ public class PhysicsEntity {
     public String textureName;
     public float scale;
     public float breakingPoint = -1;
-    public enum Type {ALIEN, WALL};
+    public enum Type {ALIEN, WALL, PLANT};
     public Type entityType;
     public boolean toBeDestroyed;
     public List<FixtureModel> fixtureModels = new ArrayList<FixtureModel>();
