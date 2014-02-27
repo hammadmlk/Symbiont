@@ -2,6 +2,7 @@ package com.badlogic.symbiont;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.symbiont.models.PhysicsEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +22,13 @@ public class Assets {
         Texture texture = new Texture(Gdx.files.internal(path));
         textureDictionary.put(path, texture);
         return texture;
+    }
+
+    public static void dispose() {
+        for (Texture texture : textureDictionary.values()) {
+            texture.dispose();
+        }
+        textureDictionary = new HashMap<String, Texture>();
     }
 
 }

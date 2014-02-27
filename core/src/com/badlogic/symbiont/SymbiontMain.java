@@ -90,6 +90,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.dispose();
         debugRenderer.dispose();
         world.dispose();
+        Assets.dispose();
     }
 
     @Override
