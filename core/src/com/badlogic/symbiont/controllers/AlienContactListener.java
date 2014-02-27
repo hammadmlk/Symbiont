@@ -1,11 +1,11 @@
-package com.badlogic.symbiont.models;
+package com.badlogic.symbiont.controllers;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.symbiont.models.PhysicsEntity;
 
 public class AlienContactListener implements ContactListener
 {

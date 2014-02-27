@@ -1,6 +1,5 @@
 package com.badlogic.symbiont.models;
 
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 /**
