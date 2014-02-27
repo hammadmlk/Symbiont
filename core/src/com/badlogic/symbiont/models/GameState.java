@@ -20,6 +20,17 @@ public class GameState {
         return json.prettyPrint(this);
     }
 
+    public void cleanDeadEntities() {
+        // TODO this might make the gc sad
+        List<PhysicsEntity> stillAlive = new ArrayList<PhysicsEntity>();
+        for (PhysicsEntity e : entities) {
+            if (!e.toBeDestroyed) {
+                stillAlive.add(e);
+            }
+        }
+        entities = stillAlive;
+    }
+
     public void addToWorld(World world) {
         for (PhysicsEntity o : entities) {
             o.addToWorld(world);
