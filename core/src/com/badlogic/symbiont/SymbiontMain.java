@@ -86,7 +86,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private void setUpWalls() {
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
-        groundBodyDef.position.set(new Vector2(0, 0));
+        groundBodyDef.position.set(new Vector2(camera.viewportWidth / 2, -1));
 
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
@@ -95,30 +95,30 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape groundBox = new PolygonShape();
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(camera.viewportWidth, 0f);
+        groundBox.setAsBox(camera.viewportWidth / 2 + 1, 1);
         // Create a fixture from our polygon shape and add it to our ground body
         groundBody.createFixture(groundBox, 0f);
 
         BodyDef topWallDef = new BodyDef();
-        topWallDef.position.set(new Vector2(0, camera.viewportHeight));
+        topWallDef.position.set(new Vector2(camera.viewportWidth / 2, camera.viewportHeight + 1));
         Body topWallBody = world.createBody(topWallDef);
         PolygonShape topWallBox = new PolygonShape();
-        topWallBox.setAsBox(camera.viewportWidth, 0f);
+        topWallBox.setAsBox(camera.viewportWidth / 2 + 1, 1f);
         topWallBody.createFixture(topWallBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(0,0));
+        leftWallDef.position.set(new Vector2(-1, camera.viewportHeight / 2));
         Body leftWallBody = world.createBody(leftWallDef);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(0f, camera.viewportHeight);
+        leftWallBox.setAsBox(1f, camera.viewportHeight / 2 + 1);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth, 0));
+        rightWallDef.position.set(new Vector2(camera.viewportWidth + 1, camera.viewportHeight / 2));
         Body rightWallBody = world.createBody(rightWallDef);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(0f, camera.viewportHeight);
-        rightWallBody.createFixture(rightWallBox, 0f);
+        rightWallBox.setAsBox(1f, camera.viewportHeight / 2 + 1);
+        rightWallBody.createFixture(rightWallBox, 1f);
     }
 
     private void renderBackground() {
