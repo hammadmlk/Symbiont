@@ -33,6 +33,10 @@
             "isSensor": true,
             "mist": [
                 {
+                    "position": {
+                        "x": 2.5,
+                        "y": 12.5
+                    },
                     "vertices": [
                         0,
                         4,
