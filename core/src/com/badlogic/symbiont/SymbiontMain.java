@@ -79,6 +79,46 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
+        
+        setUpWalls();
+    }
+
+    private void setUpWalls() {
+        BodyDef groundBodyDef = new BodyDef();
+        // Set its world position
+        groundBodyDef.position.set(new Vector2(0, 0));
+
+        // Create a body from the definition and add it to the world
+        Body groundBody = world.createBody(groundBodyDef);
+
+        // Create a polygon shape
+        PolygonShape groundBox = new PolygonShape();
+        // Set the polygon shape as a box which is twice the size of our view port and 20 high
+        // (setAsBox takes half-width and half-height as arguments)
+        groundBox.setAsBox(camera.viewportWidth, 0f);
+        // Create a fixture from our polygon shape and add it to our ground body
+        groundBody.createFixture(groundBox, 0f);
+
+        BodyDef topWallDef = new BodyDef();
+        topWallDef.position.set(new Vector2(0, camera.viewportHeight));
+        Body topWallBody = world.createBody(topWallDef);
+        PolygonShape topWallBox = new PolygonShape();
+        topWallBox.setAsBox(camera.viewportWidth, 0f);
+        topWallBody.createFixture(topWallBox, 0f);
+
+        BodyDef leftWallDef = new BodyDef();
+        leftWallDef.position.set(new Vector2(0,0));
+        Body leftWallBody = world.createBody(leftWallDef);
+        PolygonShape leftWallBox = new PolygonShape();
+        leftWallBox.setAsBox(0f, camera.viewportHeight);
+        leftWallBody.createFixture(leftWallBox, 0f);
+
+        BodyDef rightWallDef = new BodyDef();
+        rightWallDef.position.set(new Vector2(camera.viewportWidth, 0));
+        Body rightWallBody = world.createBody(rightWallDef);
+        PolygonShape rightWallBox = new PolygonShape();
+        rightWallBox.setAsBox(0f, camera.viewportHeight);
+        rightWallBody.createFixture(rightWallBox, 0f);
     }
 
     private void renderBackground() {
