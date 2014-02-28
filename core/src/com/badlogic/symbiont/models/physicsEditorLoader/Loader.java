@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class Loader {
 
-    private Map<String, RigidBody> rigidBodyMap;
+    private final Map<String, RigidBody> rigidBodyMap;
 
     public Loader(String file) {
         FileHandle fileHandle = Gdx.files.internal(file);

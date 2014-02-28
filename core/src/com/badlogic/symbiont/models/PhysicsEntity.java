@@ -7,6 +7,9 @@ import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntity {
+
+    public enum Type {ALIEN, WALL, PLANT}
+
     /**
      * All physics entities must have textures
      */
@@ -14,7 +17,6 @@ public class PhysicsEntity {
     public String name;
     public float scale = 1;
     public float breakingPoint = -1;
-    public enum Type {ALIEN, WALL, PLANT};
     public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
 

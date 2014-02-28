@@ -11,7 +11,7 @@ public class Assets {
 
     private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
-    public static Loader physicsLoader = new Loader("physics.json");
+    public static final Loader physicsLoader = new Loader("physics.json");
 
     static {
         Texture.setEnforcePotImages(false);

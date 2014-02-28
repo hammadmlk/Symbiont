@@ -19,8 +19,8 @@ import com.badlogic.symbiont.models.Plant;
  */
 public class MistView {
 
-	ShapeRenderer shapes;
-    ParticleEffect mistEffect;
+	final ShapeRenderer shapes;
+    final ParticleEffect mistEffect;
 
     public MistView(Camera camera) {
         shapes = new ShapeRenderer();
