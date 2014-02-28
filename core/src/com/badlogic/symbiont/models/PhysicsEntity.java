@@ -7,6 +7,9 @@ import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntity {
+    /**
+     * All physics entities must have textures
+     */
     public transient Texture texture;
     public String name;
     public float scale = 1;
@@ -127,11 +130,12 @@ public class PhysicsEntity {
     }
 
     public Texture getImg() {
-        if (Assets.physicsLoader.getRigidBody(name).imagePath == null)
-            return null;
-        if (texture == null) {
-            texture = Assets.load(Assets.physicsLoader.getRigidBody(name).imagePath);
+        if (texture != null) {
+            return texture;
         }
+        String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
+        texture = Assets.load(imgPath);
+        assert texture != null;
         return texture;
     }
 
