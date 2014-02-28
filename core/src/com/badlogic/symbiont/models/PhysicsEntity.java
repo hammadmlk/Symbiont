@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.symbiont.Assets;
+import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntity {
     public transient Texture texture;
@@ -13,6 +14,8 @@ public class PhysicsEntity {
     public enum Type {ALIEN, WALL, PLANT};
     public Type entityType;
     public boolean toBeDestroyed;
+
+    private Vector2 origin;
 
     /*
      * BodyDef fields. Can't use a BodyDef because fields are marked final
@@ -130,5 +133,14 @@ public class PhysicsEntity {
             texture = Assets.load(Assets.physicsLoader.getRigidBody(name).imagePath);
         }
         return texture;
+    }
+
+    public Vector2 getOrigin() {
+        if (origin != null)
+            return origin;
+        float combinedScale = scale * getImg().getWidth() / SymbiontMain.PIXELS_PER_METER;
+        Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
+        origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
+        return origin;
     }
 }
