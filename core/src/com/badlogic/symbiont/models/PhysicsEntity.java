@@ -12,7 +12,7 @@ public class PhysicsEntity {
     public float scale = 1;
     public float breakingPoint = -1;
     public enum Type {ALIEN, WALL, PLANT};
-    public Type entityType;
+    public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
 
     private Vector2 origin;

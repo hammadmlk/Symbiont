@@ -19,6 +19,14 @@
 		"type": "DynamicBody",
 		"entityType": "ALIEN"
 	},
+    {
+        "name": "branch",
+        "position": {
+            "x": 0,
+            "y": 1
+        },
+        "breakingPoint": 8
+    },
 	{
         "class": "com.badlogic.symbiont.models.Plant",
         "name": "plant",
