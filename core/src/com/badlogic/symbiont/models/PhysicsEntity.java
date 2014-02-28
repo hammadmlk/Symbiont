@@ -4,19 +4,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.symbiont.Assets;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntity {
+    /**
+     * All physics entities must have textures
+     */
     public transient Texture texture;
-    public String texturePath;
+    public String name;
     public float scale = 1;
     public float breakingPoint = -1;
     public enum Type {ALIEN, WALL, PLANT};
-    public Type entityType;
+    public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
-    public List<FixtureModel> fixtureModels = new ArrayList<FixtureModel>();
+
+    private Vector2 origin;
 
     /*
      * BodyDef fields. Can't use a BodyDef because fields are marked final
@@ -70,12 +72,28 @@ public class PhysicsEntity {
      */
     public transient Body body;
 
+    /*
+     * Here's all the fixtureDef stuff, we'll apply it to every fixture
+     * in this physics entity
+     */
+
+    /** The friction coefficient, usually in the range [0,1]. **/
+    public float friction = 0.2f;
+
+    /** The restitution (elasticity) usually in the range [0,1]. **/
+    public float restitution = 0;
+
+    /** The density, usually in kg/m^2. **/
+    public float density = 0;
+
+    /** A sensor shape collects contact information but never generates a collision response. */
+    public boolean isSensor = false;
+
     /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      * @param body
      */
     public void update(Body body) {
-        this.body = body;
         position = body.getPosition();
         linearVelocity = body.getLinearVelocity();
         angle = body.getAngle();
@@ -84,6 +102,7 @@ public class PhysicsEntity {
 
     public void addToWorld(World world) {
         BodyDef bodyDef = new BodyDef();
+        FixtureDef fixtureDef = new FixtureDef();
         bodyDef.position.set(position.x, position.y);
         bodyDef.type = type;
         bodyDef.linearVelocity.set(linearVelocity.x, linearVelocity.y);
@@ -97,23 +116,35 @@ public class PhysicsEntity {
         bodyDef.bullet = bullet;
         bodyDef.fixedRotation = fixedRotation;
         bodyDef.gravityScale = gravityScale;
+        fixtureDef.friction = friction;
+        fixtureDef.restitution = restitution;
+        fixtureDef.density = density;
+        fixtureDef.isSensor = isSensor;
 
         Body body = world.createBody(bodyDef);
         body.setUserData(this);
 
-        for (FixtureModel fixtureModel : fixtureModels) {
-            FixtureDef fixtureDef = fixtureModel.getFixtureDef();
-            body.createFixture(fixtureDef);
-            fixtureDef.shape.dispose();
-        }
+        this.body = body;
+
+        Assets.physicsLoader.attach(body, name, fixtureDef, scale, getImg().getWidth());
     }
 
     public Texture getImg() {
-        if (texturePath == null)
-            return null;
-        if (texture == null) {
-            texture = Assets.load(texturePath);
+        if (texture != null) {
+            return texture;
         }
+        String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
+        texture = Assets.load(imgPath);
+        assert texture != null;
         return texture;
+    }
+
+    public Vector2 getOrigin() {
+        if (origin != null)
+            return origin;
+        float combinedScale = scale * getImg().getWidth() / SymbiontMain.PIXELS_PER_METER;
+        Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
+        origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
+        return origin;
     }
 }
