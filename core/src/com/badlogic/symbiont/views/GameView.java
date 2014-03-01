@@ -9,6 +9,7 @@ import com.badlogic.symbiont.models.PhysicsEntity;
 public class GameView extends Actor {
 
     private MistView mistView = new MistView();
+    private DeflectorView deflectorView = new DeflectorView();
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     @Override
@@ -26,6 +27,8 @@ public class GameView extends Actor {
         }
 
         mistView.render(batch, SymbiontMain.gameState);
+
+        deflectorView.render(batch);
 
         // debug render
         if (SymbiontMain.debug) {
@@ -50,6 +53,7 @@ public class GameView extends Actor {
 
     public void dispose() {
         mistView.dispose();
+        deflectorView.dispose();
         debugRenderer.dispose();
     }
 }

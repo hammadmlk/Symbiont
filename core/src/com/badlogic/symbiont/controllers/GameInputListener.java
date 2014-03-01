@@ -2,22 +2,12 @@ package com.badlogic.symbiont.controllers;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.GameState;
 
 public class GameInputListener extends InputListener {
 
-    public class TouchInfo {
-        public float x;
-        public float y;
-        public boolean touched = false;
-    }
-
-    public TouchInfo[] touches;
-
     public GameInputListener() {
-        touches = new TouchInfo[2];
-        for(int i = 0; i < 2; i++){
-            touches[i] = new TouchInfo();
-        }
     }
 
     @Override
@@ -29,18 +19,20 @@ public class GameInputListener extends InputListener {
     @Override
     public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
         if(pointer < 2){
-            touches[pointer].x = 0;
-            touches[pointer].y = 0;
-            touches[pointer].touched = false;
+            SymbiontMain.gameState.touches[pointer].x = 0;
+            SymbiontMain.gameState.touches[pointer].y = 0;
+            SymbiontMain.gameState.touches[pointer].touched = false;
         }
+        SymbiontMain.gameState.touches[0].resetParticleEffect();
+        SymbiontMain.gameState.touches[1].resetParticleEffect();
     }
 
     @Override
     public void touchDragged(InputEvent event, float screenX, float screenY, int pointer) {
         if(pointer < 2){
-            touches[pointer].x = screenX;
-            touches[pointer].y = screenY;
-            touches[pointer].touched = true;
+            SymbiontMain.gameState.touches[pointer].x = screenX;
+            SymbiontMain.gameState.touches[pointer].y = screenY;
+            SymbiontMain.gameState.touches[pointer].touched = true;
         }
     }
 

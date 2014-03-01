@@ -30,7 +30,6 @@ public class SymbiontMain extends ApplicationAdapter {
 
     private Stage stage;
     private GameView gameView;
-    private GameInputListener gameInputListener;
 
     public static GameState gameState;
     public static World world;
@@ -39,7 +38,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     Skin skin;
 
-    public static boolean debug;
+    public static boolean debug = false;
 
     public static String toggleDebug() {
         if (debug) {
@@ -58,7 +57,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
         gameView = new GameView();
         gameView.setBounds(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-        gameInputListener = new GameInputListener();
+        GameInputListener gameInputListener = new GameInputListener();
         gameView.addListener(gameInputListener);
         stage.addActor(gameView);
 
@@ -90,6 +89,7 @@ public class SymbiontMain extends ApplicationAdapter {
 		stage.addActor(table);
 
 		// Create a button with the "default" TextButtonStyle. A 3rd parameter can be used to specify a name other than "default".
+        toggleDebug();
 		final TextButton button = new TextButton(toggleDebug(), skin);
         button.setHeight(1);
         button.setWidth(1);
@@ -100,10 +100,10 @@ public class SymbiontMain extends ApplicationAdapter {
 		// ClickListener could have been used, but would only fire when clicked. Also, canceling a ClickListener event won't
 		// revert the checked state.
 		button.addListener(new ChangeListener() {
-			public void changed (ChangeEvent event, Actor actor) {
-				button.setText(toggleDebug());
-			}
-		});
+            public void changed(ChangeEvent event, Actor actor) {
+                button.setText(toggleDebug());
+            }
+        });
 
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new AlienContactListener());
@@ -159,6 +159,7 @@ public class SymbiontMain extends ApplicationAdapter {
     @Override
     public void dispose() {
         stage.dispose();
+        skin.dispose();
         gameView.dispose();
         world.dispose();
         Assets.dispose();
@@ -171,10 +172,10 @@ public class SymbiontMain extends ApplicationAdapter {
 
         // set up trampoline
         Body trampolineBody = null;
-        if (gameInputListener.touches[0].touched && gameInputListener.touches[1].touched &&
+        if (gameState.touches[0].touched && gameState.touches[1].touched &&
                 new Vector2(
-                        gameInputListener.touches[1].x - gameInputListener.touches[0].x,
-                        gameInputListener.touches[1].y - gameInputListener.touches[0].y
+                        gameState.touches[1].x - gameState.touches[0].x,
+                        gameState.touches[1].y - gameState.touches[0].y
                         ).len() > 1) {
             trampolineBody = setUpTrampoline();
         }
@@ -208,26 +209,28 @@ public class SymbiontMain extends ApplicationAdapter {
         BodyDef trampolineDef = new BodyDef();
         trampolineDef.type = BodyDef.BodyType.StaticBody;
         trampolineDef.position.set(new Vector2(
-                gameInputListener.touches[0].x,
-                gameInputListener.touches[0].y
+                gameState.touches[0].x,
+                gameState.touches[0].y
             ).scl(1 / PIXELS_PER_METER)
         );
         Vector2[] points = new Vector2[4];
         float trampoline_width = 10 / PIXELS_PER_METER;
         points[0] = new Vector2(0,0);
         points[1] = new Vector2(
-                gameInputListener.touches[1].x - gameInputListener.touches[0].x,
-                gameInputListener.touches[1].y - gameInputListener.touches[0].y
+                gameState.touches[1].x - gameState.touches[0].x,
+                gameState.touches[1].y - gameState.touches[0].y
         ).scl(1 / PIXELS_PER_METER);
         Vector2 normal = new Vector2(-points[1].y, points[1].x);
         normal.nor();
-        normal.x *= trampoline_width;
-        normal.y *= trampoline_width;
+        normal.scl(trampoline_width);
         points[2] = new Vector2(
                 points[1].x + normal.x,
                 points[1].y + normal.y
         );
         points[3] = normal;
+        for (Vector2 point : points) {
+            point.sub(new Vector2(normal.x, normal.y).scl(.5f));
+        }
         Body trampolineBody = SymbiontMain.world.createBody(trampolineDef);
         PolygonShape trampolineBox = new PolygonShape();
         trampolineBox.set(points);

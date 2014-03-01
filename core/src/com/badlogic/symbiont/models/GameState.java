@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -18,6 +19,34 @@ public class GameState {
     public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
 
     public List<Mist> mists = new ArrayList<Mist>();
+
+    public class TouchInfo {
+        public float x;
+        public float y;
+        public boolean touched = false;
+
+        private ParticleEffect particleEffect;
+
+        public ParticleEffect getParticleEffect() {
+            if (particleEffect != null) {
+                return particleEffect;
+            }
+            particleEffect = Assets.getParticleEffect("deflector");
+            return particleEffect;
+        }
+
+        public void resetParticleEffect() {
+            getParticleEffect().reset();
+        }
+    }
+
+    public transient TouchInfo[] touches = new TouchInfo[2];
+
+    public GameState() {
+        for (int i = 0; i < 2; i++) {
+            touches[i] = new TouchInfo();
+        }
+    }
 
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
