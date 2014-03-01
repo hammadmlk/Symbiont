@@ -149,4 +149,11 @@ public class PhysicsEntity {
         origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
         return origin;
     }
+
+    /**
+     * use this to clean things up before dying
+     */
+    public void cleanUP() {
+
+    }
 }

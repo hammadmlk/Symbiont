@@ -162,7 +162,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 }
             }
         }
-		gameState.cleanDeadEntities();
 
         // update camera
         camera.update();

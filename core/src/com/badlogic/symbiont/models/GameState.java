@@ -17,9 +17,18 @@ public class GameState {
 
     public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
 
+    public List<Mist> mists = new ArrayList<Mist>();
+
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
-        return json.fromJson(GameState.class, serialized);
+        GameState gameState = json.fromJson(GameState.class, serialized);
+        for (PhysicsEntity o : gameState.entities) {
+            if (o.entityType == PhysicsEntity.Type.PLANT) {
+                Plant plant = (Plant) o;
+                plant.makeMistReferences(gameState.mists);
+            }
+        }
+        return gameState;
     }
 
     public String toJSON() {
@@ -28,15 +37,32 @@ public class GameState {
         return json.prettyPrint(this);
     }
 
-    public void cleanDeadEntities() {
+    public void cleanDeadEntities(float delta) {
         // TODO this might make the gc sad
         List<PhysicsEntity> stillAlive = new ArrayList<PhysicsEntity>();
         for (PhysicsEntity e : entities) {
             if (!e.toBeDestroyed) {
                 stillAlive.add(e);
+            } else {
+                e.cleanUP();
             }
         }
         entities = stillAlive;
+        // Also update mist I guess TODO refactor into controller
+        List<Mist> stillMisty = new ArrayList<Mist>();
+        for (Mist mist : mists) {
+            if (mist.fading) {
+                mist.secondsLeft -= delta;
+                if (mist.secondsLeft > 0) {
+                    stillMisty.add(mist);
+                } else {
+                    mist.getMistEffect().dispose();
+                }
+            } else {
+                stillMisty.add(mist);
+            }
+        }
+        mists = stillMisty;
     }
 
     public void addToWorld(World world) {
