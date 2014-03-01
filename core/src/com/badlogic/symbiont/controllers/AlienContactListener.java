@@ -23,8 +23,11 @@ public class AlienContactListener implements ContactListener
         }
         if (a.entityType == PhysicsEntity.Type.ALIEN) {
             alien = a; other = b;
-        } else {
+        } else if (b.entityType == PhysicsEntity.Type.ALIEN) {
             alien = b; other = a;
+        } else {
+            // only handle contact with alien
+            return;
         }
 
         if (other.entityType == PhysicsEntity.Type.WALL && other.breakingPoint != -1 &&

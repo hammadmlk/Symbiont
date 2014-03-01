@@ -28,9 +28,16 @@ public class GameView extends Actor {
         mistView.render(batch, SymbiontMain.gameState);
 
         // debug render
-        batch.end();
-        debugRenderer.render(SymbiontMain.world, batch.getProjectionMatrix());
-        batch.begin();
+        if (SymbiontMain.debug) {
+            batch.end();
+            debugRenderer.render(SymbiontMain.world, batch.getProjectionMatrix().cpy().scale(
+                    SymbiontMain.PIXELS_PER_METER,
+                    SymbiontMain.PIXELS_PER_METER,
+                    SymbiontMain.PIXELS_PER_METER
+                )
+            );
+            batch.begin();
+        }
     }
 
     /*

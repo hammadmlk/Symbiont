@@ -18,8 +18,8 @@ public class PhysicsEntityView {
                 origin.y,                                          // float originY
                 entity.getImg().getWidth(),                        // float width
                 entity.getImg().getHeight(),                       // float height
-                entity.scale / SymbiontMain.PIXELS_PER_METER,      // float scaleX
-                entity.scale / SymbiontMain.PIXELS_PER_METER,      // float scaleY
+                entity.scale,                                      // float scaleX
+                entity.scale,                                      // float scaleY
                 (float) Math.toDegrees(entity.angle),              // float rotation
                 0,                                                 // int srcX
                 0,                                                 // int srcY
