@@ -21,12 +21,14 @@ public class MistView {
 
 	final ShapeRenderer shapes;
 
-    public MistView(Camera camera) {
+    public MistView() {
         shapes = new ShapeRenderer();
-        shapes.setProjectionMatrix(camera.combined);
     }
 
 	public void render(SpriteBatch batch, GameState gameState) {
+        batch.end();
+
+        shapes.setProjectionMatrix(batch.getProjectionMatrix());
 		//2. clear our depth buffer with 1.0
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
@@ -73,9 +75,6 @@ public class MistView {
         for (Mist mist : gameState.mists) {
             mist.getMistEffect().draw(batch, 1 / 60f);
         }
-
-		//end/flush your batch
-		batch.end();
 
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
