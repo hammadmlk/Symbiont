@@ -36,12 +36,12 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private World world;
 
-    class TouchInfo {
+    public class TouchInfo {
         public Vector3 vector = new Vector3();
         public boolean touched = false;
     }
 
-    private TouchInfo[] touches = new TouchInfo[2];
+    public TouchInfo[] touches = new TouchInfo[2];
 
     private GameState gameState;
 
@@ -162,7 +162,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 }
             }
         }
-        gameState.cleanDeadEntities();
+		gameState.cleanDeadEntities();
 
         // update camera
         camera.update();
@@ -319,4 +319,14 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         // TODO Auto-generated method stub
         return false;
     }
+
+	public TouchInfo[] getTouches() {
+		return touches;
+	}
+
+	public void setTouches(TouchInfo[] touches) {
+		this.touches = touches;
+	}
+    
+    
 }
