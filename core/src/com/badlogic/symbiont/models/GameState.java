@@ -21,7 +21,14 @@ public class GameState {
 
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
-        return json.fromJson(GameState.class, serialized);
+        GameState gameState = json.fromJson(GameState.class, serialized);
+        for (PhysicsEntity o : gameState.entities) {
+            if (o.entityType == PhysicsEntity.Type.PLANT) {
+                Plant plant = (Plant) o;
+                plant.makeMistReferences(gameState.mists);
+            }
+        }
+        return gameState;
     }
 
     public String toJSON() {
@@ -58,18 +65,9 @@ public class GameState {
         mists = stillMisty;
     }
 
-    /**
-     * perform all initialization logic. Also
-     * gives plants their mist references
-     * @param world
-     */
     public void addToWorld(World world) {
         for (PhysicsEntity o : entities) {
             o.addToWorld(world);
-            if (o.entityType == PhysicsEntity.Type.PLANT) {
-                Plant plant = (Plant) o;
-                plant.makeMistReferences(mists);
-            }
         }
     }
 
