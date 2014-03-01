@@ -33,6 +33,14 @@ public class GameView extends Actor {
         batch.begin();
     }
 
+    /*
+     * This allows us to receive touch events from outside this actor
+     */
+    @Override
+    public Actor hit (float x, float y, boolean touchable) {
+        return this;
+    }
+
     public void dispose() {
         mistView.dispose();
         debugRenderer.dispose();
