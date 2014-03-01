@@ -20,14 +20,10 @@ import com.badlogic.symbiont.models.Plant;
 public class MistView {
 
 	final ShapeRenderer shapes;
-    final ParticleEffect mistEffect;
 
     public MistView(Camera camera) {
         shapes = new ShapeRenderer();
         shapes.setProjectionMatrix(camera.combined);
-        mistEffect = new ParticleEffect();
-        FileHandle particleDir = Gdx.files.internal("particles");
-        mistEffect.load(Gdx.files.internal("particles/mist.p"), particleDir);
     }
 
 	public void render(SpriteBatch batch, GameState gameState) {
@@ -50,16 +46,11 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-        for (PhysicsEntity e : gameState.entities) {
-            if (e.entityType == PhysicsEntity.Type.PLANT) {
-                Plant plant = (Plant) e;
-                for (Mist mist : plant.mist) {
-                    float x1 = mist.vertices[0];
-                    float y1 = mist.vertices[1];
-                    for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
-                        shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
-                    }
-                }
+        for (Mist mist : gameState.mists) {
+            float x1 = mist.vertices[0];
+            float y1 = mist.vertices[1];
+            for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
+                shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
             }
         }
 
@@ -79,7 +70,9 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 		
 		//push to the batch
-        mistEffect.draw(batch, 1 / 60f);
+        for (Mist mist : gameState.mists) {
+            mist.getMistEffect().draw(batch, 1 / 60f);
+        }
 
 		//end/flush your batch
 		batch.end();

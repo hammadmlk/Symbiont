@@ -36,7 +36,7 @@ active: false
 - Y Offset - 
 active: false
 - Spawn Shape - 
-shape: square
+shape: point
 - Spawn Width - 
 lowMin: 0.0
 lowMax: 0.0
@@ -63,20 +63,18 @@ lowMax: 0.0
 highMin: 10.0
 highMax: 10.0
 relative: false
-scalingCount: 3
-scaling0: 0.0
-scaling1: 0.30612245
-scaling2: 1.0
-timelineCount: 3
+scalingCount: 2
+scaling0: 0.1632653
+scaling1: 1.0
+timelineCount: 2
 timeline0: 0.0
-timeline1: 0.10958904
-timeline2: 1.0
+timeline1: 1.0
 - Velocity - 
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 0.6
-highMax: 6.0
+highMin: 0.0
+highMax: 5.0
 relative: false
 scalingCount: 2
 scaling0: 1.0
@@ -88,17 +86,24 @@ timeline1: 0.9931507
 active: true
 lowMin: 0.0
 lowMax: 0.0
-highMin: 360.0
+highMin: 0.0
 highMax: 360.0
 relative: false
-scalingCount: 2
-scaling0: 0.0
-scaling1: 1.0
-timelineCount: 2
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
 timeline0: 0.0
-timeline1: 1.0
 - Rotation - 
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
+highMin: 0.0
+highMax: 0.0
+relative: false
+scalingCount: 1
+scaling0: 1.0
+timelineCount: 1
+timeline0: 0.0
 - Wind - 
 active: false
 - Gravity - 
