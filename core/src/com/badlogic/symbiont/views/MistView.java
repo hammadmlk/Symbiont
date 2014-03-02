@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.Mist;
 import com.badlogic.symbiont.models.PhysicsEntity;

@@ -161,22 +161,24 @@ public class SymbiontMain extends ApplicationAdapter {
         }
 
         // step physics engine
-        world.step(1/60f, 6, 2);
+        if (gameState.started) {
+            world.step(1/60f, 6, 2);
 
-        // update game state
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-        for (Body b : bodies) {
-            if (b.getUserData() instanceof PhysicsEntity) {
-                PhysicsEntity o = (PhysicsEntity) b.getUserData();
-                if (o.toBeDestroyed) {
-                    world.destroyBody(b);
-                } else {
-                    o.update(b);
+            // update game state
+            Array<Body> bodies = new Array<Body>();
+            world.getBodies(bodies);
+            for (Body b : bodies) {
+                if (b.getUserData() instanceof PhysicsEntity) {
+                    PhysicsEntity o = (PhysicsEntity) b.getUserData();
+                    if (o.toBeDestroyed) {
+                        world.destroyBody(b);
+                    } else {
+                        o.update(b);
+                    }
                 }
             }
+            gameState.cleanDeadEntities(1 / 60f);
         }
-        gameState.cleanDeadEntities(1 / 60f);
 
         stage.draw();
 

@@ -42,6 +42,8 @@ public class GameState {
 
     public transient TouchInfo[] touches = new TouchInfo[2];
 
+    public boolean started = false;
+
     public GameState() {
         for (int i = 0; i < 2; i++) {
             touches[i] = new TouchInfo();

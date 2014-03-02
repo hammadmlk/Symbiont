@@ -3,7 +3,6 @@ package com.badlogic.symbiont.controllers;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.models.GameState;
 
 public class GameInputListener extends InputListener {
 
@@ -12,6 +11,7 @@ public class GameInputListener extends InputListener {
 
     @Override
     public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+        SymbiontMain.gameState.started = true;
         touchDragged(event, screenX, screenY, pointer);
         return true;
     }
