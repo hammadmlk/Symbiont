@@ -21,6 +21,8 @@
         },
         {
             "breakingPoint": 8,
+            "flipHorizontal": true,
+            "flipVertical": true,
             "name": "branch",
             "position": {
                 "x": 0,

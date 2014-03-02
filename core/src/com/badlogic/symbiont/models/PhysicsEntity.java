@@ -20,6 +20,10 @@ public class PhysicsEntity {
     public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
 
+    public boolean flipHorizontal = false;
+
+    public boolean flipVertical = false;
+
     private transient Vector2 origin;
 
     /*
@@ -134,7 +138,16 @@ public class PhysicsEntity {
 
         this.body = body;
 
-        Assets.physicsLoader.attach(body, name, fixtureDef, scale, getImg().getWidth());
+        Assets.physicsLoader.attach(
+                body,
+                name,
+                fixtureDef,
+                scale,
+                getImg().getWidth(),
+                getImg().getHeight(),
+                flipHorizontal,
+                flipVertical
+        );
     }
 
     public Texture getImg() {

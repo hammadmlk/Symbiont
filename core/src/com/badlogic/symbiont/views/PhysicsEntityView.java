@@ -25,8 +25,8 @@ public class PhysicsEntityView {
                 0,                                                 // int srcY
                 entity.getImg().getWidth(),                        // int srcWidth
                 entity.getImg().getHeight(),                       // srcHeight
-                false,                                             // boolean flipX
-                false                                              // boolean flipY
+                entity.flipHorizontal,                             // boolean flipX
+                entity.flipVertical                                // boolean flipY
         );
     }
 }
