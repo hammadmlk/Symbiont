@@ -41,6 +41,20 @@
             "entityType": "PLANT",
             "isSensor": true,
             "mistIDs": [
+                2
+            ],
+            "name": "plant",
+            "position": {
+                "x": 100,
+                "y": 300
+            },
+            "scale": 0.4
+        },
+        {
+            "class": "com.badlogic.symbiont.models.Plant",
+            "entityType": "PLANT",
+            "isSensor": true,
+            "mistIDs": [
                 1
             ],
             "name": "plant",
@@ -52,6 +66,23 @@
         }
     ],
     "mists": [
+        {
+            "id": 2,
+            "position": {
+                "x": 125.0,
+                "y": 325.0
+            },
+            "vertices": [
+                0,
+                200,
+                480.0,
+                200,
+                480.0,
+                800,
+                0,
+                800
+            ]
+        },
         {
             "id": 1,
             "position": {
