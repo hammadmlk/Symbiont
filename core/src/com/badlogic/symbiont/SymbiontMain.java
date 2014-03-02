@@ -240,7 +240,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         boolean flag2= mistDetection(touches[1].vector.x,touches[1].vector.y);
         
         System.out.println("mist detect1"+flag1);
-        System.out.println("mist detect2"+flag1);
+        System.out.println("mist detect2"+flag2);
         
         if(flag1==false || flag2==false) {
         
