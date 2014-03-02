@@ -2,7 +2,6 @@
     "backgroundPath": "non-git/background.png",
     "entities": [
         {
-            "angle": 1.0713408,
             "density": 0.5,
             "entityType": "ALIEN",
             "friction": 0.4,
@@ -13,7 +12,7 @@
             "name": "ball",
             "position": {
                 "x": 350,
-                "y": 650
+                "y": 600
             },
             "restitution": 1,
             "scale": 0.5,
@@ -22,10 +21,18 @@
         {
             "breakingPoint": 8,
             "flipHorizontal": true,
+            "name": "branch",
+            "position": {
+                "x": 224,
+                "y": 650
+            }
+        },
+        {
+            "breakingPoint": 8,
             "flipVertical": true,
             "name": "branch",
             "position": {
-                "x": 0,
+                "x": -50,
                 "y": 450
             }
         },
