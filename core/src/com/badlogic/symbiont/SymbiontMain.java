@@ -8,9 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.controllers.AlienContactListener;
@@ -26,6 +24,7 @@ public class SymbiontMain extends ApplicationAdapter {
     private GameView gameView;
 
     public static GameState gameState;
+    private String currentLevelFileName = "first";
     public static World world;
 
     public static final float PIXELS_PER_METER = 50;
@@ -65,8 +64,16 @@ public class SymbiontMain extends ApplicationAdapter {
         toggleDebug();
 		final TextButton debugToggleButton = new TextButton(toggleDebug(), skin);
         table.add(debugToggleButton);
-        final TextButton resetGameButton = new TextButton("Reset Game", skin);
-        table.add(resetGameButton);
+        final TextButton loadGameButton = new TextButton("Load Game:", skin);
+        table.add(loadGameButton);
+        final TextField levelPath = new TextField(currentLevelFileName, skin);
+        table.add(levelPath);
+        levelPath.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                currentLevelFileName = levelPath.getText();
+            }
+        });
 
 		debugToggleButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -74,21 +81,21 @@ public class SymbiontMain extends ApplicationAdapter {
             }
         });
 
-        resetGameButton.addListener(new ChangeListener() {
+        loadGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                resetGame();
+                loadGame();
             }
         });
 
-        resetGame();
+        loadGame();
     }
 
-    private void resetGame() {
+    private void loadGame() {
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new AlienContactListener());
 
-        FileHandle gamestateFile = Gdx.files.internal("levels/gamestate.json");
+        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
