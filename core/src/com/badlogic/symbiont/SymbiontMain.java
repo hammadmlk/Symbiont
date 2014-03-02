@@ -207,14 +207,14 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     
     
     private boolean mistDetection(float x, float y){
-		for(Mist mist: gameState.mists){
-    	Polygon mistShape = new Polygon(mist.vertices);
-    		if(touches[0].touched && touches[1].touched){
+    	if(touches[0].touched && touches[1].touched){
+    		for(Mist mist: gameState.mists){
+    			Polygon mistShape = new Polygon(mist.vertices);
     			if(mistShape.contains(x, y)){
     				return true;
-    			}
+    			}	
     		}
-		}
+    	}
     	
     	return false;
     	
