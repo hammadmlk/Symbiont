@@ -58,24 +58,33 @@ public class SymbiontMain extends ApplicationAdapter {
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
 		// Create a table that fills the screen. Everything else will go inside this table.
-		Table table = new Table();
+		Table table = new Table().top().left();
 		table.setFillParent(true);
 		stage.addActor(table);
 
         toggleDebug();
-		final TextButton button = new TextButton(toggleDebug(), skin);
-        table.add(button);
+		final TextButton debugToggleButton = new TextButton(toggleDebug(), skin);
+        table.add(debugToggleButton);
+        final TextButton resetGameButton = new TextButton("Reset Game", skin);
+        table.add(resetGameButton);
 
-		// Add a listener to the button. ChangeListener is fired when the button's checked state changes, eg when clicked,
-		// Button#setChecked() is called, via a key press, etc. If the event.cancel() is called, the checked state will be reverted.
-		// ClickListener could have been used, but would only fire when clicked. Also, canceling a ClickListener event won't
-		// revert the checked state.
-		button.addListener(new ChangeListener() {
+		debugToggleButton.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                button.setText(toggleDebug());
+                debugToggleButton.setText(toggleDebug());
             }
         });
 
+        resetGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                resetGame();
+            }
+        });
+
+        resetGame();
+    }
+
+    private void resetGame() {
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new AlienContactListener());
 
@@ -83,7 +92,7 @@ public class SymbiontMain extends ApplicationAdapter {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
-        
+
         setUpWalls();
     }
 
