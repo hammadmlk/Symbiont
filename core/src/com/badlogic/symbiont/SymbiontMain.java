@@ -68,10 +68,10 @@ public class SymbiontMain extends ApplicationAdapter {
         table.add(loadGameButton);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
         table.add(levelPath);
-        levelPath.addListener(new ChangeListener() {
+        levelPath.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                currentLevelFileName = levelPath.getText();
+            public void keyTyped(TextField textField, char key) {
+                currentLevelFileName = textField.getText();
             }
         });
 
