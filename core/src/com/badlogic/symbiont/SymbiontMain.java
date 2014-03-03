@@ -6,7 +6,9 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -49,6 +51,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private MistView mistView;
     
     private Mist mist;
+ // add plants animation
+    private TextureAtlas spriteSheet;
+    private Array<Sprite> skeleton;
+    
+    private int						currentFrame = 0;
+	private final float				frameLength = 0.3f;	//in seconds, how long a frame last
+	private float					animationElapsed = 0.0f;
 
     public static final float PIXELS_PER_METER = 50f;
 
@@ -84,6 +93,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         gameState.addToWorld(world);
         
         setUpWalls();
+        
+        drawPlantsAnimation();
     }
 
     private void setUpWalls() {
@@ -135,11 +146,24 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         world.dispose();
         mistView.dispose();
         Assets.dispose();
+        spriteSheet.dispose();
     }
 
     @Override
     public void render() {
-        // set up trampoline
+        // draw plants animation
+    	//Game logic
+    	float dt = Gdx.graphics.getDeltaTime();
+		animationElapsed += dt;
+		while(animationElapsed > frameLength){
+			animationElapsed -= frameLength;
+			currentFrame = (currentFrame == skeleton.size - 1) ? 0 : ++currentFrame;
+			//System.out.println("size"+skeleton.size);
+			//System.out.println("haha"+currentFrame);
+		}
+		
+    	
+    	// set up trampoline
         Body trampolineBody = null;
         if (touches[0].touched && touches[1].touched &&
                 new Vector2(
@@ -187,6 +211,13 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         batch.enableBlending();
         batch.end();
 
+        //draw plants animation
+       
+        	batch.begin();
+        	skeleton.get(currentFrame).draw(batch);
+            batch.end();
+        
+        
         // render game state
         batch.begin();
         for (PhysicsEntity entity : gameState.entities) {
@@ -204,6 +235,27 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
             tearDownTrampoline(trampolineBody);
     }
 
+    
+    private void drawPlantsAnimation(){
+    	TextureAtlas spriteSheet = new TextureAtlas(Gdx.files.internal("non-git/plants.txt"));
+    	skeleton = spriteSheet.createSprites("plants");
+    	 
+    	//don't forget to set the size of your sprites!
+    	for(int i=0; i<skeleton.size; i++){
+    	    skeleton.get(i).setSize(2.0f, 2.0f);
+    	    skeleton.get(i).setPosition(5.0f, 0.0f);
+    	    skeleton.get(i).rotate90(true);
+    	   
+    	}
+    	
+    	
+    	 
+    }
+    
+    
+    
+    
+    
     
     
     private boolean mistDetection(float x, float y){
@@ -242,7 +294,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         System.out.println("mist detect1"+flag1);
         System.out.println("mist detect2"+flag2);
         
-        if(flag1==false || flag2==false) {
+       // if(flag1==false || flag2==false) {
         
         Body trampolineBody = world.createBody(trampolineDef);
         
@@ -251,8 +303,8 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         trampolineBody.createFixture(trampolineBox, 0f);
         trampolineBox.dispose();
         return trampolineBody;
-        }
-        return null;
+       // }
+        //return null;
     }
 
     private void tearDownTrampoline(Body trampoline) {
