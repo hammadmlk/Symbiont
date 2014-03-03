@@ -40,8 +40,23 @@
             "class": "com.badlogic.symbiont.models.Plant",
             "entityType": "PLANT",
             "isSensor": true,
-            "mistIDs": [
-                2
+            "myMists": [
+                {
+                    "position": {
+                        "x": 125.0,
+                        "y": 325.0
+                    },
+                    "vertices": [
+                        0,
+                        200,
+                        480.0,
+                        200,
+                        480.0,
+                        800,
+                        0,
+                        800
+                    ]
+                }
             ],
             "name": "plant",
             "position": {
@@ -54,8 +69,23 @@
             "class": "com.badlogic.symbiont.models.Plant",
             "entityType": "PLANT",
             "isSensor": true,
-            "mistIDs": [
-                1
+            "myMists": [
+                {
+                    "position": {
+                        "x": 125.0,
+                        "y": 625.0
+                    },
+                    "vertices": [
+                        0,
+                        200,
+                        480.0,
+                        200,
+                        480.0,
+                        800,
+                        0,
+                        800
+                    ]
+                }
             ],
             "name": "plant",
             "position": {
@@ -63,42 +93,6 @@
                 "y": 600
             },
             "scale": 0.4
-        }
-    ],
-    "mists": [
-        {
-            "id": 2,
-            "position": {
-                "x": 125.0,
-                "y": 325.0
-            },
-            "vertices": [
-                0,
-                200,
-                480.0,
-                200,
-                480.0,
-                800,
-                0,
-                800
-            ]
-        },
-        {
-            "id": 1,
-            "position": {
-                "x": 125.0,
-                "y": 625.0
-            },
-            "vertices": [
-                0,
-                200,
-                480.0,
-                200,
-                480.0,
-                800,
-                0,
-                800
-            ]
         }
     ]
 }

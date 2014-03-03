@@ -5,12 +5,7 @@ import java.util.List;
 
 public class Plant extends PhysicsEntity {
 
-    /**
-     * use to find which mist belongs to this plant
-     */
-    public int[] mistIDs;
-
-    private transient List<Mist> myMists = new ArrayList<Mist>();
+    public List<Mist> myMists = new ArrayList<Mist>();
 
     public Plant() {
         entityType = Type.PLANT;
@@ -23,20 +18,4 @@ public class Plant extends PhysicsEntity {
         }
     }
 
-    private boolean mine(int id) {
-        for (int i : mistIDs) {
-            if (i == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void makeMistReferences(List<Mist> mists) {
-        for (Mist mist : mists) {
-            if (mine(mist.id)) {
-                myMists.add(mist);
-            }
-        }
-    }
 }

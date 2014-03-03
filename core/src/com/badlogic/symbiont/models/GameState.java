@@ -18,7 +18,7 @@ public class GameState {
 
     public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
 
-    public List<Mist> mists = new ArrayList<Mist>();
+    public transient List<Mist> mists = new ArrayList<Mist>();
 
     public class TouchInfo {
         public float x;
@@ -56,7 +56,7 @@ public class GameState {
         for (PhysicsEntity o : gameState.entities) {
             if (o.entityType == PhysicsEntity.Type.PLANT) {
                 Plant plant = (Plant) o;
-                plant.makeMistReferences(gameState.mists);
+                gameState.mists.addAll(plant.myMists);
             }
         }
         return gameState;

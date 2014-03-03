@@ -8,11 +8,6 @@ import com.badlogic.symbiont.Assets;
 public class Mist {
 
     /**
-     * plants have a lists of ids of mist they own
-     */
-    public int id;
-
-    /**
      * vertices of the polygon the mist covers
      */
     public float[] vertices;
