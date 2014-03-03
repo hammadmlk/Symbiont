@@ -18,12 +18,10 @@ public class PhysicsEntityModel {
     public float scale = 1;
     public float breakingPoint = -1;
     public Type entityType = Type.WALL;
-    public boolean toBeDestroyed;
-
     public boolean flipHorizontal = false;
-
     public boolean flipVertical = false;
 
+    public transient boolean toBeDestroyed;
     private transient Vector2 origin;
 
     /*

@@ -57,7 +57,7 @@ public class GameState {
 
     public transient deflectorEndpointInfo[] deflectorEndpoints = new deflectorEndpointInfo[2];
 
-    public boolean started = false;
+    public transient boolean started = false;
 
     public GameState() {
         for (int i = 0; i < 2; i++) {
