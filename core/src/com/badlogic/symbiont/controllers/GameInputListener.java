@@ -1,5 +1,7 @@
 package com.badlogic.symbiont.controllers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.symbiont.SymbiontMain;
@@ -12,6 +14,11 @@ public class GameInputListener extends InputListener {
     @Override
     public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
         SymbiontMain.gameState.started = true;
+        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+            System.out.println(String.format("{\"x\": %f, \"y\": %f}", screenX, screenY));
+        } else if (Gdx.input.isButtonPressed(Input.Buttons.MIDDLE)) {
+            System.out.println(String.format("%f, %f,", screenX, screenY));
+        }
         touchDragged(event, screenX, screenY, pointer);
         return true;
     }

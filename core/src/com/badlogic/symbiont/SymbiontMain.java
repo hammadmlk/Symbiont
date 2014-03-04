@@ -24,10 +24,12 @@ public class SymbiontMain extends ApplicationAdapter {
     private GameView gameView;
 
     public static GameState gameState;
-    private String currentLevelFileName = "first";
+    private String currentLevelFileName = "second";
     public static World world;
 
     public static final float PIXELS_PER_METER = 50;
+
+    public static boolean EMIT_POINTS = false;
 
     Skin skin;
 
