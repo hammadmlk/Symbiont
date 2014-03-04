@@ -1,0 +1,88 @@
+{
+    "backgroundPath": "non-git/background.png",
+    "entities": [
+        {
+            "flipHorizontal": true,
+            "name": "branch",
+            "position": {
+                "x": 245.936935,
+                "y": 454
+            }
+        },
+        {
+            "density": 0.5,
+            "entityType": "ALIEN",
+            "friction": 0.4,
+            "linearVelocity": {
+                "x": 0,
+                "y": -250
+            },
+            "name": "ball",
+            "position": {
+                "x": 200,
+                "y": 600
+            },
+            "restitution": 1,
+            "scale": 0.5,
+            "type": "DynamicBody"
+        },
+        {
+            "class": "com.badlogic.symbiont.models.Plant",
+            "entityType": "PLANT",
+            "isSensor": true,
+            "myMists": [
+                {
+                    "position": {
+                        "x": 360,
+                        "y": 525
+                    },
+                    "vertices": [
+                        240,
+                        800,
+                        480,
+                        800,
+                        480,
+                        200,
+                        240,
+                        200
+                    ]
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 360.0,
+                "y": 525
+            },
+            "scale": 0.4
+        },
+        {
+            "class": "com.badlogic.symbiont.models.Plant",
+            "entityType": "PLANT",
+            "isSensor": true,
+            "myMists": [
+                {
+                    "position": {
+                        "x": 100,
+                        "y": 600
+                    },
+                    "vertices": [
+                        0,
+                        800,
+                        240,
+                        800,
+                        240,
+                        200,
+                        0,
+                        200
+                    ]
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 100,
+                "y": 600
+            },
+            "scale": 0.4
+        }
+    ]
+}
