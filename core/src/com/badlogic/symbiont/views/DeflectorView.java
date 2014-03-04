@@ -12,7 +12,7 @@ public class DeflectorView {
 
     public void render(SpriteBatch batch) {
         //push to the batch
-        if (SymbiontMain.gameState.touches[0].touched && SymbiontMain.gameState.touches[1].touched) {
+        if (SymbiontMain.gameState.deflector()) {
             float x1 = SymbiontMain.gameState.touches[0].x;
             float y1 = SymbiontMain.gameState.touches[0].y;
             float x2 = SymbiontMain.gameState.touches[1].x;

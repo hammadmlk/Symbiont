@@ -20,6 +20,21 @@ public class GameState {
 
     public transient List<Mist> mists = new ArrayList<Mist>();
 
+    public boolean deflector(){
+    	if(!touches[0].touched || !touches[1].touched){
+            return false;
+        }
+        for(Mist mist: mists){
+            if(mist.contains(touches[0].x, touches[0].y)){
+                return false;
+            }
+            if(mist.contains(touches[1].x, touches[1].y)){
+                return false;
+            }
+        }
+    	return true;
+    }
+
     public class TouchInfo {
         public float x;
         public float y;

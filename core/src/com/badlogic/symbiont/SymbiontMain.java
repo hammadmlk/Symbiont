@@ -157,14 +157,14 @@ public class SymbiontMain extends ApplicationAdapter {
         // clear the window
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        // set up trampoline
-        Body trampolineBody = null;
+        // set up deflector
+        Body deflectorBody = null;
         if (gameState.touches[0].touched && gameState.touches[1].touched &&
                 new Vector2(
                         gameState.touches[1].x - gameState.touches[0].x,
                         gameState.touches[1].y - gameState.touches[0].y
                         ).len() > 1) {
-            trampolineBody = setUpTrampoline();
+            deflectorBody = setUpDeflector();
         }
 
         // step physics engine
@@ -189,40 +189,26 @@ public class SymbiontMain extends ApplicationAdapter {
 
         stage.draw();
 
-        if (trampolineBody != null) {
-            tearDownTrampoline(trampolineBody);
+        if (deflectorBody != null) {
+            tearDownDeflector(deflectorBody);
         }
     }
 
-    private boolean mistDetection(float x, float y){
-    	if(gameState.touches[0].touched && gameState.touches[1].touched){
-    		for(Mist mist: gameState.mists){
-    			if(mist.contains(x, y)){
-    				return true;
-    			}	
-    		}
-    	}
-    	return false;
-    }
-    
-    
-    private Body setUpTrampoline() {
-        boolean flag1= mistDetection(gameState.touches[0].x,gameState.touches[0].y);
-        boolean flag2= mistDetection(gameState.touches[1].x,gameState.touches[1].y);
 
-        if (flag1 || flag2) {
+    private Body setUpDeflector() {
+        if (!gameState.deflector()) {
             return null;
         }
 
-        BodyDef trampolineDef = new BodyDef();
-        trampolineDef.type = BodyDef.BodyType.StaticBody;
-        trampolineDef.position.set(new Vector2(
+        BodyDef deflectorDef = new BodyDef();
+        deflectorDef.type = BodyDef.BodyType.StaticBody;
+        deflectorDef.position.set(new Vector2(
                 gameState.touches[0].x,
                 gameState.touches[0].y
             ).scl(1 / PIXELS_PER_METER)
         );
         Vector2[] points = new Vector2[4];
-        float trampoline_width = 10 / PIXELS_PER_METER;
+        float deflector_width = 10 / PIXELS_PER_METER;
         points[0] = new Vector2(0,0);
         points[1] = new Vector2(
                 gameState.touches[1].x - gameState.touches[0].x,
@@ -230,7 +216,7 @@ public class SymbiontMain extends ApplicationAdapter {
         ).scl(1 / PIXELS_PER_METER);
         Vector2 normal = new Vector2(-points[1].y, points[1].x);
         normal.nor();
-        normal.scl(trampoline_width);
+        normal.scl(deflector_width);
         points[2] = new Vector2(
                 points[1].x + normal.x,
                 points[1].y + normal.y
@@ -240,16 +226,16 @@ public class SymbiontMain extends ApplicationAdapter {
         for (Vector2 point : points) {
             point.sub(new Vector2(normal.x, normal.y).scl(.5f));
         }
-        Body trampolineBody = SymbiontMain.world.createBody(trampolineDef);
-        PolygonShape trampolineBox = new PolygonShape();
-        trampolineBox.set(points);
-        trampolineBody.createFixture(trampolineBox, 0f);
-        trampolineBox.dispose();
-        return trampolineBody;
+        Body deflectorBody = SymbiontMain.world.createBody(deflectorDef);
+        PolygonShape deflectorBox = new PolygonShape();
+        deflectorBox.set(points);
+        deflectorBody.createFixture(deflectorBox, 0f);
+        deflectorBox.dispose();
+        return deflectorBody;
     }
 
-    private void tearDownTrampoline(Body trampolineBody) {
-        SymbiontMain.world.destroyBody(trampolineBody);
+    private void tearDownDeflector(Body deflectorBody) {
+        SymbiontMain.world.destroyBody(deflectorBody);
     }
 
     @Override
