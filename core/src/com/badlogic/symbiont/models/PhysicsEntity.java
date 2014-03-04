@@ -20,7 +20,11 @@ public class PhysicsEntity {
     public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
 
-    private Vector2 origin;
+    public boolean flipHorizontal = false;
+
+    public boolean flipVertical = false;
+
+    private transient Vector2 origin;
 
     /*
      * BodyDef fields. Can't use a BodyDef because fields are marked final
@@ -96,8 +100,14 @@ public class PhysicsEntity {
      * @param body
      */
     public void update(Body body) {
-        position = body.getPosition();
-        linearVelocity = body.getLinearVelocity();
+        position.set(
+                body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
+                body.getPosition().y * SymbiontMain.PIXELS_PER_METER
+            );
+        linearVelocity.set(
+                body.getLinearVelocity().x * SymbiontMain.PIXELS_PER_METER,
+                body.getLinearVelocity().y * SymbiontMain.PIXELS_PER_METER
+        );
         angle = body.getAngle();
         angularVelocity = body.getAngularVelocity();
     }
@@ -105,9 +115,9 @@ public class PhysicsEntity {
     public void addToWorld(World world) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
-        bodyDef.position.set(position.x, position.y);
+        bodyDef.position.set(position.x / SymbiontMain.PIXELS_PER_METER, position.y / SymbiontMain.PIXELS_PER_METER);
         bodyDef.type = type;
-        bodyDef.linearVelocity.set(linearVelocity.x, linearVelocity.y);
+        bodyDef.linearVelocity.set(linearVelocity.x / SymbiontMain.PIXELS_PER_METER, linearVelocity.y / SymbiontMain.PIXELS_PER_METER);
         bodyDef.linearDamping = linearDamping;
         bodyDef.active = active;
         bodyDef.allowSleep = allowSleep;
@@ -128,7 +138,16 @@ public class PhysicsEntity {
 
         this.body = body;
 
-        Assets.physicsLoader.attach(body, name, fixtureDef, scale, getImg().getWidth());
+        Assets.physicsLoader.attach(
+                body,
+                name,
+                fixtureDef,
+                scale,
+                getImg().getWidth(),
+                getImg().getHeight(),
+                flipHorizontal,
+                flipVertical
+        );
     }
 
     public Texture getImg() {
@@ -144,7 +163,7 @@ public class PhysicsEntity {
     public Vector2 getOrigin() {
         if (origin != null)
             return origin;
-        float combinedScale = scale * getImg().getWidth() / SymbiontMain.PIXELS_PER_METER;
+        float combinedScale = getImg().getWidth();
         Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
         origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
         return origin;

@@ -1,8 +1,5 @@
 package com.badlogic.symbiont.models;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.SymbiontMain.TouchInfo;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Vector2;
@@ -10,11 +7,6 @@ import com.badlogic.symbiont.Assets;
 
 
 public class Mist {
-
-    /**
-     * plants have a lists of ids of mist they own
-     */
-    public int id;
 
     /**
      * vertices of the polygon the mist covers

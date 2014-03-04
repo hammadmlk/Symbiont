@@ -30,14 +30,26 @@ public class Loader {
         }
     }
 
-    public void attach(Body body, String name, FixtureDef fixtureDef, float scale, float imgWidth) {
+    public void attach(
+            Body body,
+            String name,
+            FixtureDef fixtureDef,
+            float scale,
+            float imgWidth,
+            float imgHeight,
+            boolean flipHorizontal,
+            boolean flipVertical
+    ) {
         float combinedScale = scale * imgWidth / SymbiontMain.PIXELS_PER_METER;
         RigidBody rigidBody = rigidBodyMap.get(name);
         Vector2 origin = new Vector2(rigidBody.origin.x, rigidBody.origin.y).scl(combinedScale);
         for (Circle circle : rigidBody.circles) {
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(circle.r * combinedScale);
-            circleShape.setPosition(new Vector2(circle.cx, circle.cy).scl(combinedScale));
+            circleShape.setPosition(new Vector2(
+                    flipHorizontal ? 1 - circle.cx : circle.cx,
+                    flipVertical ? imgHeight / imgWidth - circle.cy : circle.cy
+            ).scl(combinedScale).sub(origin.x, origin.y));
             fixtureDef.shape = circleShape;
             body.createFixture(fixtureDef);
             fixtureDef.shape.dispose();
@@ -45,7 +57,10 @@ public class Loader {
         for (Vector2[] vertices : rigidBody.polygons) {
             Vector2[] scaledVertices = new Vector2[vertices.length];
             for (int i = 0; i < vertices.length; i++) {
-                scaledVertices[i] = new Vector2(vertices[i].x, vertices[i].y).scl(combinedScale);
+                scaledVertices[i] = new Vector2(
+                        flipHorizontal ? 1 - vertices[i].x : vertices[i].x,
+                        flipVertical ?  imgHeight / imgWidth - vertices[i].y : vertices[i].y
+                ).scl(combinedScale).sub(origin.x, origin.y);
             }
             PolygonShape polygonShape = new PolygonShape();
             polygonShape.set(scaledVertices);

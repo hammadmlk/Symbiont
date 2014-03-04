@@ -2,92 +2,113 @@ package com.badlogic.symbiont;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.controllers.AlienContactListener;
+import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.models.*;
-import com.badlogic.symbiont.views.MistView;
-import com.badlogic.symbiont.views.PhysicsEntityView;
+import com.badlogic.symbiont.views.GameView;
 
-public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
-    // Big ups to http://www.acamara.es/blog/2012/02/keep-screen-aspect-ratio-with-different-resolutions-using-libgdx
+public class SymbiontMain extends ApplicationAdapter {
     private static final int VIRTUAL_WIDTH = 480;
     private static final int VIRTUAL_HEIGHT = 800;
-    private static final float ASPECT_RATIO = (float) VIRTUAL_WIDTH
-            / (float) VIRTUAL_HEIGHT;
 
-    private Rectangle viewport;
+    private Stage stage;
+    private GameView gameView;
 
-    // Shouts out to http://www.gamefromscratch.com/post/2013/10/24/LibGDX-Tutorial-5-Handling-Input-Touch-and-gestures.aspx
-    private SpriteBatch batch;
-    private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera camera;
+    public static GameState gameState;
+    private String currentLevelFileName = "first";
+    public static World world;
 
-    private int screenWidth;
-    private int screenHeight;
+    public static final float PIXELS_PER_METER = 50;
 
-    private World world;
+    Skin skin;
 
-    public class TouchInfo {
-        public Vector3 vector = new Vector3();
-        public boolean touched = false;
+    public static boolean debug = false;
+
+    public static String toggleDebug() {
+        if (debug) {
+            debug = false;
+            return "Enable Debug";
+        } else {
+            debug = true;
+            return "Disable Debug";
+        }
     }
-
-    public TouchInfo[] touches = new TouchInfo[2];
-
-    private GameState gameState;
-
-    private MistView mistView;
-    
-    public static final float PIXELS_PER_METER = 50f;
 
     @Override
     public void create() {
-        // shouts out to http://stackoverflow.com/questions/16514152/libgdx-coordinate-system-differences-between-rendering-and-touch-input
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
 
-        // Create a full-screen camera:
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, VIRTUAL_WIDTH / PIXELS_PER_METER, VIRTUAL_HEIGHT / PIXELS_PER_METER);
-        camera.update();
-        // Create a full screen sprite renderer and use the above camera
-        batch = new SpriteBatch();
-        debugRenderer = new Box2DDebugRenderer();
-        batch.setProjectionMatrix(camera.combined);
+        gameView = new GameView();
+        gameView.setBounds(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        GameInputListener gameInputListener = new GameInputListener();
+        gameView.addListener(gameInputListener);
+        stage.addActor(gameView);
 
+		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+
+		// Create a table that fills the screen. Everything else will go inside this table.
+		Table table = new Table().top().left();
+		table.setFillParent(true);
+		stage.addActor(table);
+
+        toggleDebug();
+		final TextButton debugToggleButton = new TextButton(toggleDebug(), skin);
+        table.add(debugToggleButton);
+        final TextButton loadGameButton = new TextButton("Load Game:", skin);
+        table.add(loadGameButton);
+        final TextField levelPath = new TextField(currentLevelFileName, skin);
+        table.add(levelPath);
+        levelPath.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char key) {
+                currentLevelFileName = textField.getText();
+            }
+        });
+
+		debugToggleButton.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                debugToggleButton.setText(toggleDebug());
+            }
+        });
+
+        loadGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                loadGame();
+            }
+        });
+
+        loadGame();
+    }
+
+    private void loadGame() {
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new AlienContactListener());
 
-        Gdx.input.setInputProcessor(this);
-        for(int i = 0; i < 2; i++){
-            touches[i] = new TouchInfo(); 
-        }
-
-        screenWidth = Gdx.graphics.getWidth();
-        screenHeight = Gdx.graphics.getHeight();
-
-        mistView = new MistView(camera);
-
-        FileHandle gamestateFile = Gdx.files.internal("levels/gamestate.json");
+        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
-        
+
         setUpWalls();
     }
 
     private void setUpWalls() {
+        float halfwidth = 50 / PIXELS_PER_METER;
+
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
-        groundBodyDef.position.set(new Vector2(camera.viewportWidth / 2, -1));
+        groundBodyDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER / 2, -halfwidth));
 
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
@@ -96,117 +117,85 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         PolygonShape groundBox = new PolygonShape();
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(camera.viewportWidth / 2 + 1, 1);
+        groundBox.setAsBox(VIRTUAL_WIDTH / PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         // Create a fixture from our polygon shape and add it to our ground body
         groundBody.createFixture(groundBox, 0f);
 
         BodyDef topWallDef = new BodyDef();
-        topWallDef.position.set(new Vector2(camera.viewportWidth / 2, camera.viewportHeight + 1));
+        topWallDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER / 2, VIRTUAL_HEIGHT / PIXELS_PER_METER + halfwidth));
         Body topWallBody = world.createBody(topWallDef);
         PolygonShape topWallBox = new PolygonShape();
-        topWallBox.setAsBox(camera.viewportWidth / 2 + 1, 1f);
+        topWallBox.setAsBox(VIRTUAL_WIDTH / PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         topWallBody.createFixture(topWallBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(-1, camera.viewportHeight / 2));
+        leftWallDef.position.set(new Vector2(-halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2));
         Body leftWallBody = world.createBody(leftWallDef);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(1f, camera.viewportHeight / 2 + 1);
+        leftWallBox.setAsBox(halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2 + halfwidth);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(camera.viewportWidth + 1, camera.viewportHeight / 2));
+        rightWallDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER + halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2));
         Body rightWallBody = world.createBody(rightWallDef);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(1f, camera.viewportHeight / 2 + 1);
-        rightWallBody.createFixture(rightWallBox, 1f);
-    }
-
-    private void renderBackground() {
-        batch.draw(gameState.getBackgroundTexture(), 0, 0, camera.viewportWidth, camera.viewportHeight);
+        rightWallBox.setAsBox(halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2 + halfwidth);
+        rightWallBody.createFixture(rightWallBox, halfwidth);
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
-        debugRenderer.dispose();
+        stage.dispose();
+        skin.dispose();
+        gameView.dispose();
         world.dispose();
-        mistView.dispose();
         Assets.dispose();
     }
 
     @Override
     public void render() {
+        // clear the window
+        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+
         // set up trampoline
         Body trampolineBody = null;
-        if (touches[0].touched && touches[1].touched &&
+        if (gameState.touches[0].touched && gameState.touches[1].touched &&
                 new Vector2(
-                        touches[1].vector.x - touches[0].vector.x,
-                        touches[1].vector.y - touches[0].vector.y
-                        ).len() > 1 / PIXELS_PER_METER) {
+                        gameState.touches[1].x - gameState.touches[0].x,
+                        gameState.touches[1].y - gameState.touches[0].y
+                        ).len() > 1) {
             trampolineBody = setUpTrampoline();
         }
 
         // step physics engine
-        world.step(1/60f, 6, 2);
+        if (gameState.started) {
+            world.step(1/60f, 6, 2);
 
-        // update game state
-        Array<Body> bodies = new Array<Body>();
-        world.getBodies(bodies);
-        for (Body b : bodies) {
-            if (b.getUserData() instanceof PhysicsEntity) {
-                PhysicsEntity o = (PhysicsEntity) b.getUserData();
-                if (o.toBeDestroyed) {
-                    world.destroyBody(b);
-                } else {
-                    o.update(b);
+            // update game state
+            Array<Body> bodies = new Array<Body>();
+            world.getBodies(bodies);
+            for (Body b : bodies) {
+                if (b.getUserData() instanceof PhysicsEntity) {
+                    PhysicsEntity o = (PhysicsEntity) b.getUserData();
+                    if (o.toBeDestroyed) {
+                        world.destroyBody(b);
+                    } else {
+                        o.update(b);
+                    }
                 }
             }
+            gameState.cleanDeadEntities(1 / 60f);
         }
-        gameState.cleanDeadEntities(1 / 60f);
 
-        // update camera
-        camera.update();
-        camera.apply(Gdx.gl10);
+        stage.draw();
 
-        // set viewport
-        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y,
-                (int) viewport.width, (int) viewport.height);
-
-        // clear the window
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-        // render background
-        // disable blending optimization as recommended here
-        // https://github.com/libgdx/libgdx/wiki/Spritebatch%2C-textureregions%2C-and-sprite#wiki-blending
-        batch.begin();
-        batch.disableBlending();
-        renderBackground();
-        batch.enableBlending();
-        batch.end();
-
-        // render game state
-        batch.begin();
-        for (PhysicsEntity entity : gameState.entities) {
-            PhysicsEntityView.render(batch, entity);
-        }
-        batch.end();
-
-        mistView.render(batch, gameState);
-
-        // debug render
-        debugRenderer.render(world, camera.combined);
-
-        // tear down trampoline
-        if (trampolineBody != null)
+        if (trampolineBody != null) {
             tearDownTrampoline(trampolineBody);
+        }
     }
 
-    
-    
     private boolean mistDetection(float x, float y){
-    	if(touches[0].touched && touches[1].touched){
+    	if(gameState.touches[0].touched && gameState.touches[1].touched){
     		for(Mist mist: gameState.mists){
     			if(mist.contains(x, y)){
     				return true;
@@ -218,64 +207,55 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     
     
     private Body setUpTrampoline() {
+        boolean flag1= mistDetection(gameState.touches[0].x,gameState.touches[0].y);
+        boolean flag2= mistDetection(gameState.touches[1].x,gameState.touches[1].y);
+
+        if (flag1 || flag2) {
+            return null;
+        }
+
         BodyDef trampolineDef = new BodyDef();
         trampolineDef.type = BodyDef.BodyType.StaticBody;
-        trampolineDef.position.set(new Vector2(touches[0].vector.x, touches[0].vector.y));
+        trampolineDef.position.set(new Vector2(
+                gameState.touches[0].x,
+                gameState.touches[0].y
+            ).scl(1 / PIXELS_PER_METER)
+        );
         Vector2[] points = new Vector2[4];
         float trampoline_width = 10 / PIXELS_PER_METER;
         points[0] = new Vector2(0,0);
-        points[1] = new Vector2(touches[1].vector.x - touches[0].vector.x, touches[1].vector.y - touches[0].vector.y);
+        points[1] = new Vector2(
+                gameState.touches[1].x - gameState.touches[0].x,
+                gameState.touches[1].y - gameState.touches[0].y
+        ).scl(1 / PIXELS_PER_METER);
         Vector2 normal = new Vector2(-points[1].y, points[1].x);
         normal.nor();
-        normal.x *= trampoline_width;
-        normal.y *= trampoline_width;
-        points[2] = new Vector2(points[1].x + normal.x, points[1].y + normal.y);
+        normal.scl(trampoline_width);
+        points[2] = new Vector2(
+                points[1].x + normal.x,
+                points[1].y + normal.y
+        );
         points[3] = normal;
-        
-        boolean flag1= mistDetection(touches[0].vector.x,touches[0].vector.y);
-        boolean flag2= mistDetection(touches[1].vector.x,touches[1].vector.y);
-        
-        if(!flag1 && !flag2) {
-            Body trampolineBody = world.createBody(trampolineDef);
 
-            PolygonShape trampolineBox = new PolygonShape();
-            trampolineBox.set(points);
-            trampolineBody.createFixture(trampolineBox, 0f);
-            trampolineBox.dispose();
-            return trampolineBody;
+        for (Vector2 point : points) {
+            point.sub(new Vector2(normal.x, normal.y).scl(.5f));
         }
-        return null;
+        Body trampolineBody = SymbiontMain.world.createBody(trampolineDef);
+        PolygonShape trampolineBox = new PolygonShape();
+        trampolineBox.set(points);
+        trampolineBody.createFixture(trampolineBox, 0f);
+        trampolineBox.dispose();
+        return trampolineBody;
     }
 
-    private void tearDownTrampoline(Body trampoline) {
-        world.destroyBody(trampoline);
+    private void tearDownTrampoline(Body trampolineBody) {
+        SymbiontMain.world.destroyBody(trampolineBody);
     }
 
     @Override
     public void resize(int width, int height) {
-        // calculate new viewport
-        float aspectRatio = (float)width/(float)height;
-        float scale = 1f;
-        Vector2 crop = new Vector2(0f, 0f);
-
-        if(aspectRatio > ASPECT_RATIO)
-        {
-            scale = (float)height/(float)VIRTUAL_HEIGHT;
-            crop.x = (width - VIRTUAL_WIDTH*scale)/2f;
-        }
-        else if(aspectRatio < ASPECT_RATIO)
-        {
-            scale = (float)width/(float)VIRTUAL_WIDTH;
-            crop.y = (height - VIRTUAL_HEIGHT*scale)/2f;
-        }
-        else
-        {
-            scale = (float)width/(float)VIRTUAL_WIDTH;
-        }
-
-        float w = (float)VIRTUAL_WIDTH*scale;
-        float h = (float)VIRTUAL_HEIGHT*scale;
-        viewport = new Rectangle(crop.x, crop.y, w, h);
+        stage.setViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
+        stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
     }
 
     @Override
@@ -288,68 +268,4 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return touchDragged(screenX, screenY, pointer);
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if(pointer < 2){
-            touches[pointer].vector.x = 0;
-            touches[pointer].vector.y = 0;
-            touches[pointer].touched = false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if(pointer < 2){
-            touches[pointer].vector.x = screenX;
-            touches[pointer].vector.y = screenY;
-            camera.unproject(touches[pointer].vector);
-            touches[pointer].touched = true;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return touchDragged(screenX, screenY, 1);
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-	public TouchInfo[] getTouches() {
-		return touches;
-	}
-
-	public void setTouches(TouchInfo[] touches) {
-		this.touches = touches;
-	}
-    
-    
 }
