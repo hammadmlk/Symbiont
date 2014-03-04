@@ -1,5 +1,5 @@
 {
-    "backgroundPath": "non-git/background.png",
+    "backgroundPath": "non-git/level1bg.png",
     "entities": [
         {
             "density": 0.5,
