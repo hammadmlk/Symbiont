@@ -27,10 +27,10 @@
             "type": "DynamicBody"
         },
         {
-            "class": "com.badlogic.symbiont.models.Plant",
+            "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
             "isSensor": true,
-            "myMists": [
+            "mistModels": [
                 {
                     "position": {
                         "x": 360,
@@ -56,10 +56,10 @@
             "scale": 0.4
         },
         {
-            "class": "com.badlogic.symbiont.models.Plant",
+            "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
             "isSensor": true,
-            "myMists": [
+            "mistModels": [
                 {
                     "position": {
                         "x": 100,

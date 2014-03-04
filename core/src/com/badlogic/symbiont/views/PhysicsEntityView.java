@@ -2,11 +2,10 @@ package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.models.PhysicsEntity;
+import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class PhysicsEntityView {
-    public static void render(SpriteBatch batch, PhysicsEntity entity) {
+    public static void render(SpriteBatch batch, PhysicsEntityModel entity) {
         Vector2 origin = entity.getOrigin();
         float adjustedX = entity.position.x - origin.x;
         float adjustedY = entity.position.y - origin.y;

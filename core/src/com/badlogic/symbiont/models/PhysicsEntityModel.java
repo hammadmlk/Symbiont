@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 
-public class PhysicsEntity {
+public class PhysicsEntityModel {
 
     public enum Type {ALIEN, WALL, PLANT}
 

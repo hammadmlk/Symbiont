@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.symbiont.Assets;
 
 
-public class Mist {
+public class MistModel {
 
     /**
      * vertices of the polygon the mist covers

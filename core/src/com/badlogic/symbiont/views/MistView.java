@@ -1,19 +1,12 @@
 package com.badlogic.symbiont.views;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
-import com.badlogic.symbiont.models.Mist;
-import com.badlogic.symbiont.models.PhysicsEntity;
-import com.badlogic.symbiont.models.Plant;
+import com.badlogic.symbiont.models.MistModel;
 
 /*
     mad props to
@@ -28,12 +21,12 @@ public class MistView {
     }
 
     public void render(SpriteBatch batch, GameState gamestate) {
-        for (Mist mist : gamestate.mists) {
-            renderMist(batch, mist);
+        for (MistModel mistModel : gamestate.mistModels) {
+            renderMist(batch, mistModel);
         }
     }
 
-	private void renderMist(SpriteBatch batch, Mist mist) {
+	private void renderMist(SpriteBatch batch, MistModel mistModel) {
         batch.end();
 
         shapes.setProjectionMatrix(batch.getProjectionMatrix());
@@ -56,10 +49,10 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-        float x1 = mist.vertices[0];
-        float y1 = mist.vertices[1];
-        for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
-            shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
+        float x1 = mistModel.vertices[0];
+        float y1 = mistModel.vertices[1];
+        for (int i = 2; i + 3 < mistModel.vertices.length; i+=2) {
+            shapes.triangle(x1, y1, mistModel.vertices[i], mistModel.vertices[i+1], mistModel.vertices[i+2], mistModel.vertices[i+3]);
         }
 
 		shapes.end();
@@ -78,7 +71,7 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 		
 		//push to the batch
-        mist.getMistEffect().draw(batch, 1 / 60f);
+        mistModel.getMistEffect().draw(batch, 1 / 60f);
 
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);

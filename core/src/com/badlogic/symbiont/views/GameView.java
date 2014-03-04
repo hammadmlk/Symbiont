@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.models.PhysicsEntity;
+import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class GameView extends Actor {
 
@@ -22,7 +22,7 @@ public class GameView extends Actor {
         batch.enableBlending();
 
         // render game state
-        for (PhysicsEntity entity : SymbiontMain.gameState.entities) {
+        for (PhysicsEntityModel entity : SymbiontMain.gameState.entities) {
             PhysicsEntityView.render(batch, entity);
         }
 

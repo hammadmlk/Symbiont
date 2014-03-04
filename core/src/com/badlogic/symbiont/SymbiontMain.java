@@ -177,8 +177,8 @@ public class SymbiontMain extends ApplicationAdapter {
             Array<Body> bodies = new Array<Body>();
             world.getBodies(bodies);
             for (Body b : bodies) {
-                if (b.getUserData() instanceof PhysicsEntity) {
-                    PhysicsEntity o = (PhysicsEntity) b.getUserData();
+                if (b.getUserData() instanceof PhysicsEntityModel) {
+                    PhysicsEntityModel o = (PhysicsEntityModel) b.getUserData();
                     if (o.toBeDestroyed) {
                         world.destroyBody(b);
                     } else {

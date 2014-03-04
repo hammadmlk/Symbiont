@@ -16,19 +16,19 @@ public class GameState {
 
     private transient Texture backgroundTexture;
 
-    public List<PhysicsEntity> entities = new ArrayList<PhysicsEntity>();
+    public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
 
-    public transient List<Mist> mists = new ArrayList<Mist>();
+    public transient List<MistModel> mistModels = new ArrayList<MistModel>();
 
     public boolean deflector(){
     	if(!touches[0].touched || !touches[1].touched){
             return false;
         }
-        for(Mist mist: mists){
-            if(mist.contains(touches[0].x, touches[0].y)){
+        for(MistModel mistModel : mistModels){
+            if(mistModel.contains(touches[0].x, touches[0].y)){
                 return false;
             }
-            if(mist.contains(touches[1].x, touches[1].y)){
+            if(mistModel.contains(touches[1].x, touches[1].y)){
                 return false;
             }
         }
@@ -68,10 +68,10 @@ public class GameState {
     public static GameState fromJSON(String serialized) {
         Json json = new Json();
         GameState gameState = json.fromJson(GameState.class, serialized);
-        for (PhysicsEntity o : gameState.entities) {
-            if (o.entityType == PhysicsEntity.Type.PLANT) {
-                Plant plant = (Plant) o;
-                gameState.mists.addAll(plant.myMists);
+        for (PhysicsEntityModel o : gameState.entities) {
+            if (o.entityType == PhysicsEntityModel.Type.PLANT) {
+                PlantModel plantModel = (PlantModel) o;
+                gameState.mistModels.addAll(plantModel.mistModels);
             }
         }
         return gameState;
@@ -85,8 +85,8 @@ public class GameState {
 
     public void cleanDeadEntities(float delta) {
         // TODO this might make the gc sad
-        List<PhysicsEntity> stillAlive = new ArrayList<PhysicsEntity>();
-        for (PhysicsEntity e : entities) {
+        List<PhysicsEntityModel> stillAlive = new ArrayList<PhysicsEntityModel>();
+        for (PhysicsEntityModel e : entities) {
             if (!e.toBeDestroyed) {
                 stillAlive.add(e);
             } else {
@@ -95,24 +95,24 @@ public class GameState {
         }
         entities = stillAlive;
         // Also update mist I guess TODO refactor into controller
-        List<Mist> stillMisty = new ArrayList<Mist>();
-        for (Mist mist : mists) {
-            if (mist.fading) {
-                mist.secondsLeft -= delta;
-                if (mist.secondsLeft > 0) {
-                    stillMisty.add(mist);
+        List<MistModel> stillMisty = new ArrayList<MistModel>();
+        for (MistModel mistModel : mistModels) {
+            if (mistModel.fading) {
+                mistModel.secondsLeft -= delta;
+                if (mistModel.secondsLeft > 0) {
+                    stillMisty.add(mistModel);
                 } else {
-                    mist.getMistEffect().dispose();
+                    mistModel.getMistEffect().dispose();
                 }
             } else {
-                stillMisty.add(mist);
+                stillMisty.add(mistModel);
             }
         }
-        mists = stillMisty;
+        mistModels = stillMisty;
     }
 
     public void addToWorld(World world) {
-        for (PhysicsEntity o : entities) {
+        for (PhysicsEntityModel o : entities) {
             o.addToWorld(world);
         }
     }
