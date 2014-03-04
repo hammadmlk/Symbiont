@@ -28,13 +28,13 @@ public class Mist {
     /**
      * how long does it take for the mist to fade?
      */
-    public float fadeTime = 5;
+    public float fadeTime = 2;
 
     /**
      * how many seconds until the mist is gone?
      * (if it's fading)
      */
-    public float secondsLeft = 5;
+    public float secondsLeft = 2;
 
     private transient ParticleEffect mistEffect;
 
