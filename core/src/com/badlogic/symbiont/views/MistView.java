@@ -1,5 +1,6 @@
 package com.badlogic.symbiont.views;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
@@ -26,7 +27,13 @@ public class MistView {
         shapes = new ShapeRenderer();
     }
 
-	public void render(SpriteBatch batch, GameState gameState) {
+    public void render(SpriteBatch batch, GameState gamestate) {
+        for (Mist mist : gamestate.mists) {
+            renderMist(batch, mist);
+        }
+    }
+
+	private void renderMist(SpriteBatch batch, Mist mist) {
         batch.end();
 
         shapes.setProjectionMatrix(batch.getProjectionMatrix());
@@ -49,12 +56,10 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-        for (Mist mist : gameState.mists) {
-            float x1 = mist.vertices[0];
-            float y1 = mist.vertices[1];
-            for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
-                shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
-            }
+        float x1 = mist.vertices[0];
+        float y1 = mist.vertices[1];
+        for (int i = 2; i + 3 < mist.vertices.length; i+=2) {
+            shapes.triangle(x1, y1, mist.vertices[i], mist.vertices[i+1], mist.vertices[i+2], mist.vertices[i+3]);
         }
 
 		shapes.end();
@@ -73,9 +78,7 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 		
 		//push to the batch
-        for (Mist mist : gameState.mists) {
-            mist.getMistEffect().draw(batch, 1 / 60f);
-        }
+        mist.getMistEffect().draw(batch, 1 / 60f);
 
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
