@@ -21,6 +21,7 @@ public class Mist {
      */
     public float[] vertices;
 
+    private transient Polygon polygon;
 
     /**
      * position the mist emanates from.
@@ -61,5 +62,12 @@ public class Mist {
         for (ParticleEmitter particleEmitter : getMistEffect().getEmitters()) {
             particleEmitter.setContinuous(false);
         }
+    }
+
+    public boolean contains(float x, float y) {
+        if (polygon == null) {
+            polygon = new Polygon(vertices);
+        }
+        return polygon.contains(x, y);
     }
 }

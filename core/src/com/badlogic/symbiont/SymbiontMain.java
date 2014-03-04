@@ -48,8 +48,6 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
 
     private MistView mistView;
     
-    private Mist mist;
-
     public static final float PIXELS_PER_METER = 50f;
 
     @Override
@@ -165,6 +163,7 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
                 }
             }
         }
+        gameState.cleanDeadEntities(1 / 60f);
 
         // update camera
         camera.update();
@@ -209,15 +208,12 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
     private boolean mistDetection(float x, float y){
     	if(touches[0].touched && touches[1].touched){
     		for(Mist mist: gameState.mists){
-    			Polygon mistShape = new Polygon(mist.vertices);
-    			if(mistShape.contains(x, y)){
+    			if(mist.contains(x, y)){
     				return true;
     			}	
     		}
     	}
-    	
     	return false;
-    	
     }
     
     
@@ -239,18 +235,14 @@ public class SymbiontMain extends ApplicationAdapter implements InputProcessor {
         boolean flag1= mistDetection(touches[0].vector.x,touches[0].vector.y);
         boolean flag2= mistDetection(touches[1].vector.x,touches[1].vector.y);
         
-        System.out.println("mist detect1"+flag1);
-        System.out.println("mist detect2"+flag1);
-        
-        if(flag1==false || flag2==false) {
-        
-        Body trampolineBody = world.createBody(trampolineDef);
-        
-        PolygonShape trampolineBox = new PolygonShape();
-        trampolineBox.set(points);
-        trampolineBody.createFixture(trampolineBox, 0f);
-        trampolineBox.dispose();
-        return trampolineBody;
+        if(!flag1 && !flag2) {
+            Body trampolineBody = world.createBody(trampolineDef);
+
+            PolygonShape trampolineBox = new PolygonShape();
+            trampolineBox.set(points);
+            trampolineBody.createFixture(trampolineBox, 0f);
+            trampolineBox.dispose();
+            return trampolineBody;
         }
         return null;
     }
