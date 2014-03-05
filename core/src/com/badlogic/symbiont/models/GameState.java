@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -13,12 +12,15 @@ import com.badlogic.symbiont.Assets;
 public class GameState {
 
     public String backgroundPath;
-
-    private transient Texture backgroundTexture;
-
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
 
+    /*
+     * private/transient (don't get serialized)
+     */
+    private Texture backgroundTexture;
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
+    public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
+    public transient boolean started = false;
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
         for(MistModel mistModel : mistModels){
@@ -35,33 +37,9 @@ public class GameState {
         return deflectorEndpoints[0].active && deflectorEndpoints[1].active;
     }
 
-    public class deflectorEndpointInfo {
-        public float x;
-        public float y;
-        public boolean active = false;
-
-        private ParticleEffect particleEffect;
-
-        public ParticleEffect getParticleEffect() {
-            if (particleEffect != null) {
-                return particleEffect;
-            }
-            particleEffect = Assets.getParticleEffect("deflector");
-            return particleEffect;
-        }
-
-        public void resetParticleEffect() {
-            getParticleEffect().reset();
-        }
-    }
-
-    public transient deflectorEndpointInfo[] deflectorEndpoints = new deflectorEndpointInfo[2];
-
-    public transient boolean started = false;
-
     public GameState() {
         for (int i = 0; i < 2; i++) {
-            deflectorEndpoints[i] = new deflectorEndpointInfo();
+            deflectorEndpoints[i] = new DeflectorEndpoint();
         }
     }
 

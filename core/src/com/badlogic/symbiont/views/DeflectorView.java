@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameState;
 
 public class DeflectorView {
@@ -39,7 +40,7 @@ public class DeflectorView {
                     false                                                         // boolean flipY
             );
 
-            for (GameState.deflectorEndpointInfo deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
+            for (DeflectorEndpoint deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
                 deflectorEndpointInfo.getParticleEffect().setPosition(deflectorEndpointInfo.x, deflectorEndpointInfo.y);
                 deflectorEndpointInfo.getParticleEffect().draw(batch, 1 / 60f);
             }
