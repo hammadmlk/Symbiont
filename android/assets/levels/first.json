@@ -2,9 +2,7 @@
     "backgroundPath": "non-git/level1bg.png",
     "entities": [
         {
-            "density": 0.5,
             "entityType": "ALIEN",
-            "friction": 0.4,
             "linearVelocity": {
                 "x": 0,
                 "y": -250
@@ -14,9 +12,7 @@
                 "x": 350,
                 "y": 600
             },
-            "restitution": 1,
-            "scale": 0.5,
-            "type": "DynamicBody"
+            "scale": 0.5
         },
         {
             "breakingPoint": 8,
@@ -39,7 +35,6 @@
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
-            "isSensor": true,
             "mistModels": [
                 {
                     "position": {
@@ -68,7 +63,6 @@
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
-            "isSensor": true,
             "mistModels": [
                 {
                     "position": {

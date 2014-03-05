@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.symbiont.models.PhysicsConfigLoader;
 import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
 
 import java.util.HashMap;
@@ -14,6 +15,8 @@ public class Assets {
     private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
     public static final Loader physicsLoader = new Loader("physics.json");
+
+    public static final PhysicsConfigLoader physicsConfigLoader = PhysicsConfigLoader.fromFileFactory("physics_constants.json");
 
     public static ParticleEffect getParticleEffect(String name) {
         ParticleEffect particleEffect = new ParticleEffect();

@@ -10,9 +10,7 @@
             }
         },
         {
-            "density": 0.5,
             "entityType": "ALIEN",
-            "friction": 0.4,
             "linearVelocity": {
                 "x": 0,
                 "y": -250
@@ -22,14 +20,11 @@
                 "x": 200,
                 "y": 600
             },
-            "restitution": 1,
-            "scale": 0.5,
-            "type": "DynamicBody"
+            "scale": 0.5
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
-            "isSensor": true,
             "mistModels": [
                 {
                     "position": {
@@ -58,7 +53,6 @@
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
             "entityType": "PLANT",
-            "isSensor": true,
             "mistModels": [
                 {
                     "position": {
