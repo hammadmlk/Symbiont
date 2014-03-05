@@ -161,10 +161,10 @@ public class SymbiontMain extends ApplicationAdapter {
 
         // set up deflector
         Body deflectorBody = null;
-        if (gameState.touches[0].touched && gameState.touches[1].touched &&
+        if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active &&
                 new Vector2(
-                        gameState.touches[1].x - gameState.touches[0].x,
-                        gameState.touches[1].y - gameState.touches[0].y
+                        gameState.deflectorEndpoints[1].x - gameState.deflectorEndpoints[0].x,
+                        gameState.deflectorEndpoints[1].y - gameState.deflectorEndpoints[0].y
                         ).len() > 1) {
             deflectorBody = setUpDeflector();
         }
@@ -205,16 +205,16 @@ public class SymbiontMain extends ApplicationAdapter {
         BodyDef deflectorDef = new BodyDef();
         deflectorDef.type = BodyDef.BodyType.StaticBody;
         deflectorDef.position.set(new Vector2(
-                gameState.touches[0].x,
-                gameState.touches[0].y
+                gameState.deflectorEndpoints[0].x,
+                gameState.deflectorEndpoints[0].y
             ).scl(1 / PIXELS_PER_METER)
         );
         Vector2[] points = new Vector2[4];
         float deflector_width = 10 / PIXELS_PER_METER;
         points[0] = new Vector2(0,0);
         points[1] = new Vector2(
-                gameState.touches[1].x - gameState.touches[0].x,
-                gameState.touches[1].y - gameState.touches[0].y
+                gameState.deflectorEndpoints[1].x - gameState.deflectorEndpoints[0].x,
+                gameState.deflectorEndpoints[1].y - gameState.deflectorEndpoints[0].y
         ).scl(1 / PIXELS_PER_METER);
         Vector2 normal = new Vector2(-points[1].y, points[1].x);
         normal.nor();

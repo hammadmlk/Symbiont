@@ -20,25 +20,25 @@ public class GameState {
 
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
 
-    public boolean deflector(){
-    	if(!touches[0].touched || !touches[1].touched){
-            return false;
-        }
+    public void setDeflectorEndpoint(float x, float y, int pointer) {
         for(MistModel mistModel : mistModels){
-            if(mistModel.contains(touches[0].x, touches[0].y)){
-                return false;
-            }
-            if(mistModel.contains(touches[1].x, touches[1].y)){
-                return false;
+            if(mistModel.contains(x, y)){
+                return;
             }
         }
-    	return true;
+        deflectorEndpoints[pointer].x = x;
+        deflectorEndpoints[pointer].y = y;
+        deflectorEndpoints[pointer].active = true;
     }
 
-    public class TouchInfo {
+    public boolean deflector() {
+        return deflectorEndpoints[0].active && deflectorEndpoints[1].active;
+    }
+
+    public class deflectorEndpointInfo {
         public float x;
         public float y;
-        public boolean touched = false;
+        public boolean active = false;
 
         private ParticleEffect particleEffect;
 
@@ -55,13 +55,13 @@ public class GameState {
         }
     }
 
-    public transient TouchInfo[] touches = new TouchInfo[2];
+    public transient deflectorEndpointInfo[] deflectorEndpoints = new deflectorEndpointInfo[2];
 
     public boolean started = false;
 
     public GameState() {
         for (int i = 0; i < 2; i++) {
-            touches[i] = new TouchInfo();
+            deflectorEndpoints[i] = new deflectorEndpointInfo();
         }
     }
 

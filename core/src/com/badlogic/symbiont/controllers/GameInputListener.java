@@ -26,20 +26,16 @@ public class GameInputListener extends InputListener {
     @Override
     public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
         if(pointer < 2){
-            SymbiontMain.gameState.touches[pointer].x = 0;
-            SymbiontMain.gameState.touches[pointer].y = 0;
-            SymbiontMain.gameState.touches[pointer].touched = false;
+            SymbiontMain.gameState.deflectorEndpoints[pointer].active = false;
         }
-        SymbiontMain.gameState.touches[0].resetParticleEffect();
-        SymbiontMain.gameState.touches[1].resetParticleEffect();
+        SymbiontMain.gameState.deflectorEndpoints[0].resetParticleEffect();
+        SymbiontMain.gameState.deflectorEndpoints[1].resetParticleEffect();
     }
 
     @Override
     public void touchDragged(InputEvent event, float screenX, float screenY, int pointer) {
         if(pointer < 2){
-            SymbiontMain.gameState.touches[pointer].x = screenX;
-            SymbiontMain.gameState.touches[pointer].y = screenY;
-            SymbiontMain.gameState.touches[pointer].touched = true;
+            SymbiontMain.gameState.setDeflectorEndpoint(screenX, screenY, pointer);
         }
     }
 

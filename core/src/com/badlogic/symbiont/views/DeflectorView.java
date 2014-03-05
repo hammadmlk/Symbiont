@@ -13,10 +13,10 @@ public class DeflectorView {
     public void render(SpriteBatch batch) {
         //push to the batch
         if (SymbiontMain.gameState.deflector()) {
-            float x1 = SymbiontMain.gameState.touches[0].x;
-            float y1 = SymbiontMain.gameState.touches[0].y;
-            float x2 = SymbiontMain.gameState.touches[1].x;
-            float y2 = SymbiontMain.gameState.touches[1].y;
+            float x1 = SymbiontMain.gameState.deflectorEndpoints[0].x;
+            float y1 = SymbiontMain.gameState.deflectorEndpoints[0].y;
+            float x2 = SymbiontMain.gameState.deflectorEndpoints[1].x;
+            float y2 = SymbiontMain.gameState.deflectorEndpoints[1].y;
 
             float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
 
@@ -39,9 +39,9 @@ public class DeflectorView {
                     false                                                         // boolean flipY
             );
 
-            for (GameState.TouchInfo touchInfo : SymbiontMain.gameState.touches) {
-                touchInfo.getParticleEffect().setPosition(touchInfo.x, touchInfo.y);
-                touchInfo.getParticleEffect().draw(batch, 1 / 60f);
+            for (GameState.deflectorEndpointInfo deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
+                deflectorEndpointInfo.getParticleEffect().setPosition(deflectorEndpointInfo.x, deflectorEndpointInfo.y);
+                deflectorEndpointInfo.getParticleEffect().draw(batch, 1 / 60f);
             }
         }
     }
