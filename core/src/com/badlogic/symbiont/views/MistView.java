@@ -33,21 +33,26 @@ public class MistView {
 		//2. clear our depth buffer with 1.0
 		Gdx.gl.glClearDepthf(1f);
 		Gdx.gl.glClear(GL10.GL_DEPTH_BUFFER_BIT);
-		
+
 		//3. set the function to LESS
 		Gdx.gl.glDepthFunc(GL10.GL_LESS);
-		
+
 		//4. enable depth writing
 		Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
-		
-		//5. Enable depth writing, disable RGBA color writing 
+
+		//5. Enable depth writing
 		Gdx.gl.glDepthMask(true);
-		Gdx.gl.glColorMask(false, false, false, false);
-		
+
+        // enable blending: thanks http://stackoverflow.com/questions/14700577/drawing-transparent-shaperenderer-in-libgdx
+        Gdx.gl.glEnable(GL10.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
 		///////////// Draw mask shape(s)
 		
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
+
+        // color roughly taken from `particles/mist.p` TODO keep up to date
+        shapes.setColor(0.44f, 0.28f, 0.79f, 0.15f);
 
         float x1 = mistModel.vertices[0];
         float y1 = mistModel.vertices[1];
@@ -56,20 +61,23 @@ public class MistView {
         }
 
 		shapes.end();
-		
+
+        // disable blending
+        Gdx.gl.glDisable(GL10.GL_BLEND);
+
 		///////////// Draw sprite(s) to be masked
 		batch.begin();
-		
+
 		//8. Enable RGBA color writing
 		//   (SpriteBatch.begin() will disable depth mask)
 		Gdx.gl.glColorMask(true, true, true, true);
-		
+
 		//9. Make sure testing is enabled.
 		Gdx.gl.glEnable(GL10.GL_DEPTH_TEST);
-		
+
 		//10. Now depth discards pixels outside our masked shapes
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
-		
+
 		//push to the batch
         mistModel.getMistEffect().draw(batch, 1 / 60f);
 
