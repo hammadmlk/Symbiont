@@ -17,8 +17,8 @@ import com.badlogic.symbiont.models.*;
 import com.badlogic.symbiont.views.GameView;
 
 public class SymbiontMain extends ApplicationAdapter {
-    private static final int VIRTUAL_WIDTH = 480;
-    private static final int VIRTUAL_HEIGHT = 800;
+    public static final int VIRTUAL_WIDTH = 480;
+    public static final int VIRTUAL_HEIGHT = 800;
 
     private Stage stage;
     private GameView gameView;

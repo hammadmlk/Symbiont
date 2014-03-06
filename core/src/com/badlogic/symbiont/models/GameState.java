@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
+import com.badlogic.symbiont.SymbiontMain;
 
 public class GameState {
 
@@ -23,6 +24,8 @@ public class GameState {
     public transient boolean started = false;
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
+        if (x < 0 || x > SymbiontMain.VIRTUAL_WIDTH || y < 0 || y > SymbiontMain.VIRTUAL_HEIGHT)
+            return;
         for(MistModel mistModel : mistModels){
             if(mistModel.contains(x, y)){
                 return;
