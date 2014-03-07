@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
@@ -77,6 +81,71 @@ public class GameState {
         for (PhysicsEntityModel o : entities) {
             o.addToWorld(world);
         }
+        setUpWalls(world);
+    }
+
+    private void setUpWalls(World world) {
+        float halfwidth = 50 / SymbiontMain.PIXELS_PER_METER;
+
+        BodyDef groundBodyDef = new BodyDef();
+        // Set its world position
+        groundBodyDef.position.set(new Vector2(
+                SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2,
+                -halfwidth
+                )
+            );
+
+        // Create a body from the definition and add it to the world
+        Body groundBody = world.createBody(groundBodyDef);
+        PhysicsEntityModel groundPhysicsEntityModel = new PhysicsEntityModel();
+        groundPhysicsEntityModel.entityType = PhysicsEntityModel.Type.GROUND;
+        groundBody.setUserData(groundPhysicsEntityModel);
+
+        // Create a polygon shape
+        PolygonShape groundBox = new PolygonShape();
+        // Set the polygon shape as a box which is twice the size of our view port and 20 high
+        // (setAsBox takes half-width and half-height as arguments)
+        groundBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
+        // Create a fixture from our polygon shape and add it to our ground body
+        groundBody.createFixture(groundBox, 0f);
+
+        BodyDef topWallDef = new BodyDef();
+        topWallDef.position.set(new Vector2(
+                    SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2,
+                    SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER + halfwidth
+                )
+            );
+        Body topWallBody = world.createBody(topWallDef);
+        PhysicsEntityModel topPhysicsEntityModel = new PhysicsEntityModel();
+        topPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
+        topWallBody.setUserData(topPhysicsEntityModel);
+        PolygonShape topWallBox = new PolygonShape();
+        topWallBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
+        topWallBody.createFixture(topWallBox, 0f);
+
+        BodyDef leftWallDef = new BodyDef();
+        leftWallDef.position.set(new Vector2(-halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2));
+        Body leftWallBody = world.createBody(leftWallDef);
+        PhysicsEntityModel leftPhysicsEntityModel = new PhysicsEntityModel();
+        leftPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
+        leftWallBody.setUserData(leftPhysicsEntityModel);
+        PolygonShape leftWallBox = new PolygonShape();
+        leftWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth);
+        leftWallBody.createFixture(leftWallBox, 0f);
+
+        BodyDef rightWallDef = new BodyDef();
+        rightWallDef.position.set(new Vector2(
+                    SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER + halfwidth,
+                    SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2
+                )
+            );
+        Body rightWallBody = world.createBody(rightWallDef);
+        PhysicsEntityModel rightPhysicsEntityModel = new PhysicsEntityModel();
+        rightPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
+        rightWallBody.setUserData(rightPhysicsEntityModel);
+        PolygonShape rightWallBox = new PolygonShape();
+        rightWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth);
+        rightWallBody.createFixture(rightWallBox, halfwidth);
     }
 
     public Texture getBackgroundTexture() {

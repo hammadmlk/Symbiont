@@ -16,6 +16,7 @@
         },
         {
             "breakingPoint": 8,
+            "entityType": "BRANCH",
             "flipHorizontal": true,
             "name": "branch",
             "position": {
@@ -25,6 +26,7 @@
         },
         {
             "breakingPoint": 8,
+            "entityType": "BRANCH",
             "flipVertical": true,
             "name": "branch",
             "position": {
