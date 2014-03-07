@@ -11,12 +11,12 @@ public class PhysicsEntityModel {
     /**
      * used to determine what happends in collisions
      */
-    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH}
+    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, DEFLECTOR}
 
     /**
      * All physics entities must have textures
-     * unless they're walls or grounds, which aren't in
-     * the gameState, so won't get drawn or loaded from JSON
+     * unless they're walls or grounds or the deflector, which aren't in
+     * the gameState's list of physics entities, so won't get drawn or loaded from JSON
      */
     public transient Texture texture;
     public String name;
