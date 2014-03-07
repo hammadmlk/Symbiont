@@ -20,6 +20,7 @@ import com.badlogic.symbiont.controllers.AlienContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.models.GameState;
+import com.badlogic.symbiont.models.PhysicsEntityModel;
 import com.badlogic.symbiont.views.GameView;
 
 public class SymbiontMain extends ApplicationAdapter {
