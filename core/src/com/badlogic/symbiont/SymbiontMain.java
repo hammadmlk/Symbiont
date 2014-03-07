@@ -102,49 +102,8 @@ public class SymbiontMain extends ApplicationAdapter {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
-
-        setUpWalls();
     }
 
-    private void setUpWalls() {
-        float halfwidth = 50 / PIXELS_PER_METER;
-
-        BodyDef groundBodyDef = new BodyDef();
-        // Set its world position
-        groundBodyDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER / 2, -halfwidth));
-
-        // Create a body from the definition and add it to the world
-        Body groundBody = world.createBody(groundBodyDef);
-
-        // Create a polygon shape
-        PolygonShape groundBox = new PolygonShape();
-        // Set the polygon shape as a box which is twice the size of our view port and 20 high
-        // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(VIRTUAL_WIDTH / PIXELS_PER_METER / 2 + halfwidth, halfwidth);
-        // Create a fixture from our polygon shape and add it to our ground body
-        groundBody.createFixture(groundBox, 0f);
-
-        BodyDef topWallDef = new BodyDef();
-        topWallDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER / 2, VIRTUAL_HEIGHT / PIXELS_PER_METER + halfwidth));
-        Body topWallBody = world.createBody(topWallDef);
-        PolygonShape topWallBox = new PolygonShape();
-        topWallBox.setAsBox(VIRTUAL_WIDTH / PIXELS_PER_METER / 2 + halfwidth, halfwidth);
-        topWallBody.createFixture(topWallBox, 0f);
-
-        BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(-halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2));
-        Body leftWallBody = world.createBody(leftWallDef);
-        PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2 + halfwidth);
-        leftWallBody.createFixture(leftWallBox, 0f);
-
-        BodyDef rightWallDef = new BodyDef();
-        rightWallDef.position.set(new Vector2(VIRTUAL_WIDTH / PIXELS_PER_METER + halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2));
-        Body rightWallBody = world.createBody(rightWallDef);
-        PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(halfwidth, VIRTUAL_HEIGHT / PIXELS_PER_METER / 2 + halfwidth);
-        rightWallBody.createFixture(rightWallBox, halfwidth);
-    }
 
     @Override
     public void dispose() {

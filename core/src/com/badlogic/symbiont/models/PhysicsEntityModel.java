@@ -8,16 +8,18 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntityModel {
 
-    public enum Type {ALIEN, WALL, PLANT}
+    public enum Type {ALIEN, WALL, GROUND, PLANT}
 
     /**
      * All physics entities must have textures
+     * unless they're walls or grounds, which aren't in
+     * the gameState, so won't get drawn or loaded from JSON
      */
     public transient Texture texture;
     public String name;
     public float scale = 1;
     public float breakingPoint = -1;
-    public Type entityType = Type.WALL;
+    public Type entityType;
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
 
