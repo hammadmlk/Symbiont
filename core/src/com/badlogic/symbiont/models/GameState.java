@@ -12,6 +12,8 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class GameState {
 
+    public enum State {WAITING_TO_START, PLAYING, WON, LOST};
+
     public String backgroundPath;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
 
@@ -21,7 +23,14 @@ public class GameState {
     private Texture backgroundTexture;
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
-    public transient boolean started = false;
+
+    public transient State state = State.WAITING_TO_START;
+
+    public void startIfWaiting() {
+        if (SymbiontMain.gameState.state == GameState.State.WAITING_TO_START) {
+            SymbiontMain.gameState.state = GameState.State.PLAYING;
+        }
+    }
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
         if (x < 0 || x > SymbiontMain.VIRTUAL_WIDTH || y < 0 || y > SymbiontMain.VIRTUAL_HEIGHT)

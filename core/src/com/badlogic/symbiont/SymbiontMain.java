@@ -170,7 +170,7 @@ public class SymbiontMain extends ApplicationAdapter {
         }
 
         // step physics engine
-        if (gameState.started) {
+        if (gameState.state == GameState.State.PLAYING) {
             world.step(1/60f, 6, 2);
 
             // update game state
