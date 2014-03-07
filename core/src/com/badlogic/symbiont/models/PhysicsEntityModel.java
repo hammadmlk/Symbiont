@@ -8,7 +8,10 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class PhysicsEntityModel {
 
-    public enum Type {ALIEN, WALL, GROUND, PLANT}
+    /**
+     * used to determine what happends in collisions
+     */
+    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH}
 
     /**
      * All physics entities must have textures

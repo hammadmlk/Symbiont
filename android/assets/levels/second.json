@@ -2,6 +2,7 @@
     "backgroundPath": "non-git/background.png",
     "entities": [
         {
+            "entityType": "BRANCH",
             "flipHorizontal": true,
             "name": "branch",
             "position": {
