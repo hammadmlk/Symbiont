@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.controllers.AlienContactListener;
+import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.models.*;
 import com.badlogic.symbiont.views.GameView;
@@ -170,24 +171,7 @@ public class SymbiontMain extends ApplicationAdapter {
         }
 
         // step physics engine
-        if (gameState.state == GameState.State.PLAYING) {
-            world.step(1/60f, 6, 2);
-
-            // update game state
-            Array<Body> bodies = new Array<Body>();
-            world.getBodies(bodies);
-            for (Body b : bodies) {
-                if (b.getUserData() instanceof PhysicsEntityModel) {
-                    PhysicsEntityModel o = (PhysicsEntityModel) b.getUserData();
-                    if (o.toBeDestroyed) {
-                        world.destroyBody(b);
-                    } else {
-                        o.update(b);
-                    }
-                }
-            }
-            gameState.cleanDeadEntities(1 / 60f);
-        }
+        GameEngine.step(gameState, world, 1/60f);
 
         stage.draw();
 

@@ -73,34 +73,6 @@ public class GameState {
         return json.prettyPrint(this);
     }
 
-    public void cleanDeadEntities(float delta) {
-        // TODO this might make the gc sad
-        List<PhysicsEntityModel> stillAlive = new ArrayList<PhysicsEntityModel>();
-        for (PhysicsEntityModel e : entities) {
-            if (!e.toBeDestroyed) {
-                stillAlive.add(e);
-            } else {
-                e.cleanUP();
-            }
-        }
-        entities = stillAlive;
-        // Also update mist I guess TODO refactor into controller
-        List<MistModel> stillMisty = new ArrayList<MistModel>();
-        for (MistModel mistModel : mistModels) {
-            if (mistModel.fading) {
-                mistModel.secondsLeft -= delta;
-                if (mistModel.secondsLeft > 0) {
-                    stillMisty.add(mistModel);
-                } else {
-                    mistModel.getMistEffect().dispose();
-                }
-            } else {
-                stillMisty.add(mistModel);
-            }
-        }
-        mistModels = stillMisty;
-    }
-
     public void addToWorld(World world) {
         for (PhysicsEntityModel o : entities) {
             o.addToWorld(world);
