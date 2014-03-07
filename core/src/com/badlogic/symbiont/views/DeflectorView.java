@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
-import com.badlogic.symbiont.models.GameState;
 
 public class DeflectorView {
 

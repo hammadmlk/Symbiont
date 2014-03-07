@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.models.GameState;
 
 public class GameInputListener extends InputListener {
 
