@@ -32,7 +32,7 @@ public class AlienContactListener implements ContactListener
             return;
         }
 
-        if (other.entityType == PhysicsEntityModel.Type.WALL && other.breakingPoint != -1 &&
+        if (other.breakingPoint != -1 &&
                 alien.linearVelocity.len() > other.breakingPoint) {
             other.toBeDestroyed = true;
         }
