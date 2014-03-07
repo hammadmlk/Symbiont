@@ -32,7 +32,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static boolean EMIT_POINTS = false;
 
-    Skin skin;
+    public static Skin skin;
 
     public static boolean debug = false;
 
