@@ -117,6 +117,7 @@ public class SymbiontMain extends ApplicationAdapter {
         skin.dispose();
         gameView.dispose();
         world.dispose();
+        GameEngine.dispose();
         Assets.dispose();
     }
 
@@ -128,11 +129,13 @@ public class SymbiontMain extends ApplicationAdapter {
         // set up deflector
         Body deflectorBody = null;
         if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active &&
-                new Vector2(
-                        gameState.deflectorEndpoints[1].x - gameState.deflectorEndpoints[0].x,
-                        gameState.deflectorEndpoints[1].y - gameState.deflectorEndpoints[0].y
-                        ).len() > 1) {
-            deflectorBody = setUpDeflector();
+                Util.distance(
+                        gameState.deflectorEndpoints[1].x,
+                        gameState.deflectorEndpoints[1].y,
+                        gameState.deflectorEndpoints[0].x,
+                        gameState.deflectorEndpoints[0].y
+                ) > 1) {
+            deflectorBody = GameEngine.setUpDeflector();
         }
 
         // step physics engine
@@ -141,54 +144,10 @@ public class SymbiontMain extends ApplicationAdapter {
         stage.draw();
 
         if (deflectorBody != null) {
-            tearDownDeflector(deflectorBody);
+            GameEngine.tearDownDeflector(deflectorBody);
         }
     }
 
-
-    private Body setUpDeflector() {
-        if (!gameState.deflector()) {
-            return null;
-        }
-
-        BodyDef deflectorDef = new BodyDef();
-        deflectorDef.type = BodyDef.BodyType.StaticBody;
-        deflectorDef.position.set(new Vector2(
-                gameState.deflectorEndpoints[0].x,
-                gameState.deflectorEndpoints[0].y
-            ).scl(1 / PIXELS_PER_METER)
-        );
-        Vector2[] points = new Vector2[4];
-        float deflector_width = 10 / PIXELS_PER_METER;
-        points[0] = new Vector2(0,0);
-        points[1] = new Vector2(
-                gameState.deflectorEndpoints[1].x - gameState.deflectorEndpoints[0].x,
-                gameState.deflectorEndpoints[1].y - gameState.deflectorEndpoints[0].y
-        ).scl(1 / PIXELS_PER_METER);
-        Vector2 normal = new Vector2(-points[1].y, points[1].x);
-        normal.nor();
-        normal.scl(deflector_width);
-        points[2] = new Vector2(
-                points[1].x + normal.x,
-                points[1].y + normal.y
-        );
-        points[3] = normal;
-
-        for (Vector2 point : points) {
-            point.sub(new Vector2(normal.x, normal.y).scl(.5f));
-        }
-        Body deflectorBody = SymbiontMain.world.createBody(deflectorDef);
-        deflectorBody.setUserData(PhysicsEntityModel.getDeflectorInstance());
-        PolygonShape deflectorBox = new PolygonShape();
-        deflectorBox.set(points);
-        deflectorBody.createFixture(deflectorBox, 0f);
-        deflectorBox.dispose();
-        return deflectorBody;
-    }
-
-    private void tearDownDeflector(Body deflectorBody) {
-        SymbiontMain.world.destroyBody(deflectorBody);
-    }
 
     @Override
     public void resize(int width, int height) {

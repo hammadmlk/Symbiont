@@ -1,6 +1,11 @@
 package com.badlogic.symbiont.controllers;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
@@ -43,5 +48,58 @@ public class GameEngine {
                 gameState.state = GameState.State.WON;
             }
         }
+    }
+
+    private static BodyDef deflectorDef = new BodyDef();
+    private static Vector2[] deflectorPoints = new Vector2[4];
+    private static Vector2 deflectorNormal = new Vector2();
+    private static PolygonShape deflectorBox = new PolygonShape();
+    static {
+        for (int i = 0; i < 4; i++) {
+            deflectorPoints[i] = new Vector2();
+        }
+    }
+
+    public static Body setUpDeflector() {
+        if (!SymbiontMain.gameState.deflector()) {
+            return null;
+        }
+        deflectorDef.type = BodyDef.BodyType.StaticBody;
+        deflectorDef.position.set(
+                SymbiontMain.gameState.deflectorEndpoints[0].x / SymbiontMain.PIXELS_PER_METER,
+                SymbiontMain.gameState.deflectorEndpoints[0].y / SymbiontMain.PIXELS_PER_METER
+        );
+
+        float deflector_width = 10 / SymbiontMain.PIXELS_PER_METER;
+        deflectorPoints[0].set(0,0);
+        deflectorPoints[1].set(
+                (SymbiontMain.gameState.deflectorEndpoints[1].x - SymbiontMain.gameState.deflectorEndpoints[0].x) / SymbiontMain.PIXELS_PER_METER,
+                (SymbiontMain.gameState.deflectorEndpoints[1].y - SymbiontMain.gameState.deflectorEndpoints[0].y) / SymbiontMain.PIXELS_PER_METER
+        );
+        deflectorNormal.set(-deflectorPoints[1].y, deflectorPoints[1].x);
+        deflectorNormal.nor();
+        deflectorNormal.scl(deflector_width);
+        deflectorPoints[2].set(
+                deflectorPoints[1].x + deflectorNormal.x,
+                deflectorPoints[1].y + deflectorNormal.y
+        );
+        deflectorPoints[3] = deflectorNormal;
+
+        for (Vector2 point : deflectorPoints) {
+            point.set(point.x - deflectorNormal.x / 2, point.y - deflectorNormal.y / 2);
+        }
+        Body deflectorBody = SymbiontMain.world.createBody(deflectorDef);
+        deflectorBody.setUserData(PhysicsEntityModel.getDeflectorInstance());
+        deflectorBox.set(deflectorPoints);
+        deflectorBody.createFixture(deflectorBox, 0f);
+        return deflectorBody;
+    }
+
+    public static void dispose() {
+        deflectorBox.dispose();
+    }
+
+    public static void tearDownDeflector(Body deflectorBody) {
+        SymbiontMain.world.destroyBody(deflectorBody);
     }
 }
