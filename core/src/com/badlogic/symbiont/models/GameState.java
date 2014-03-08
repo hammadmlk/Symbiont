@@ -85,11 +85,13 @@ public class GameState {
     private void setUpWalls(World world) {
         float halfwidth = 50 / SymbiontMain.PIXELS_PER_METER;
 
+        float groundHeight = - halfwidth - SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2;
+
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
         groundBodyDef.position.set(new Vector2(
                 SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2,
-                -halfwidth
+                groundHeight
                 )
             );
 
@@ -129,7 +131,7 @@ public class GameState {
         leftPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
         leftWallBody.setUserData(leftPhysicsEntityModel);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth);
+        leftWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
@@ -143,7 +145,7 @@ public class GameState {
         rightPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
         rightWallBody.setUserData(rightPhysicsEntityModel);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth);
+        rightWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
         rightWallBody.createFixture(rightWallBox, halfwidth);
     }
 
