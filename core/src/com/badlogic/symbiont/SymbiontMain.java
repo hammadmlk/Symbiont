@@ -178,9 +178,7 @@ public class SymbiontMain extends ApplicationAdapter {
             point.sub(new Vector2(normal.x, normal.y).scl(.5f));
         }
         Body deflectorBody = SymbiontMain.world.createBody(deflectorDef);
-        PhysicsEntityModel deflectorPhysicsEntityModel = new PhysicsEntityModel();
-        deflectorPhysicsEntityModel.entityType = PhysicsEntityModel.Type.DEFLECTOR;
-        deflectorBody.setUserData(deflectorPhysicsEntityModel);
+        deflectorBody.setUserData(PhysicsEntityModel.getDeflectorInstance());
         PolygonShape deflectorBox = new PolygonShape();
         deflectorBox.set(points);
         deflectorBody.createFixture(deflectorBox, 0f);

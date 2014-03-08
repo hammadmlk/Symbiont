@@ -131,4 +131,18 @@ public class PhysicsEntityModel {
     public void cleanUP() {
 
     }
+
+    /**
+     * cache an instance with entityType = DEFLECTOR. We'll only ever need one
+     */
+    private static PhysicsEntityModel DEFLECTOR_INSTANCE;
+
+    static {
+        DEFLECTOR_INSTANCE = new PhysicsEntityModel();
+        DEFLECTOR_INSTANCE.entityType = Type.DEFLECTOR;
+    }
+
+    public static PhysicsEntityModel getDeflectorInstance() {
+        return DEFLECTOR_INSTANCE;
+    }
 }
