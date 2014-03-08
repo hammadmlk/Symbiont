@@ -35,6 +35,10 @@ public class PhysicsEntityModel {
      * BodyDef fields. Can't use a BodyDef because fields are marked final
      */
 
+    /** This is here to allow us to override physics config */
+    /** The body type: static, kinematic, or dynamic. Note: if a dynamic body would have zero mass, the mass is set to one. **/
+    public BodyDef.BodyType type;
+
     /** The world position of the body. Avoid creating bodies at the origin since this can lead to many overlapping shapes. **/
     public Vector2 position = new Vector2();
 
@@ -57,6 +61,7 @@ public class PhysicsEntityModel {
      */
     public void update() {
         if (entityType == Type.BROKEN) {
+            type = BodyDef.BodyType.DynamicBody;
             body.setType(BodyDef.BodyType.DynamicBody);
             for (Fixture fixture : body.getFixtureList()) {
                 fixture.setFilterData(CollisionFilters.BROKEN);
@@ -81,7 +86,11 @@ public class PhysicsEntityModel {
         FixtureDef fixtureDef = new FixtureDef();
         PhysicsConfig physicsConfig = Assets.physicsConfigLoader.getConfig(name);
         bodyDef.position.set(position.x / SymbiontMain.PIXELS_PER_METER, position.y / SymbiontMain.PIXELS_PER_METER);
-        bodyDef.type = physicsConfig.type;
+        if (type != null) {
+            bodyDef.type = type;
+        } else {
+            bodyDef.type = physicsConfig.type;
+        }
         bodyDef.linearVelocity.set(linearVelocity.x / SymbiontMain.PIXELS_PER_METER, linearVelocity.y / SymbiontMain.PIXELS_PER_METER);
         bodyDef.linearDamping = physicsConfig.linearDamping;
         bodyDef.active = physicsConfig.active;
