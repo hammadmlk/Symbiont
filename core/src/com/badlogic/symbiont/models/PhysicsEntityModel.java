@@ -52,9 +52,8 @@ public class PhysicsEntityModel {
 
     /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
-     * @param body
      */
-    public void update(Body body) {
+    public void update() {
         position.set(
                 body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER

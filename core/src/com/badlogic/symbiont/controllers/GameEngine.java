@@ -1,8 +1,6 @@
 package com.badlogic.symbiont.controllers;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
@@ -15,26 +13,15 @@ public class GameEngine {
             world.step(1/60f, 6, 2);
 
             // update physics entities
-            Array<Body> bodies = new Array<Body>();
-            world.getBodies(bodies);
-            for (Body b : bodies) {
-                if (b.getUserData() instanceof PhysicsEntityModel) {
-                    PhysicsEntityModel o = (PhysicsEntityModel) b.getUserData();
-                    if (o.toBeDestroyed) {
-                        world.destroyBody(b);
-                    } else {
-                        o.update(b);
-                    }
-                }
-            }
-
-            // clean up physics entities
             Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
             while (physicsEntityModelIterator.hasNext()) {
                 PhysicsEntityModel physicsEntityModel = physicsEntityModelIterator.next();
                 if (physicsEntityModel.toBeDestroyed) {
                     physicsEntityModel.cleanUP();
                     physicsEntityModelIterator.remove();
+                    world.destroyBody(physicsEntityModel.body);
+                } else {
+                    physicsEntityModel.update();
                 }
             }
 
