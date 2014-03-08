@@ -1,6 +1,11 @@
 package com.badlogic.symbiont.models;
 
+<<<<<<< HEAD
 import com.badlogic.gdx.Gdx;
+=======
+import java.util.List;
+
+>>>>>>> beginning moving walls before rebase
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -26,6 +31,11 @@ public class PhysicsEntityModel {
     public float scale = 1;
     public boolean breakable = false;
     public Type entityType;
+
+    public List<Vector2> movingPath;
+    public float movingSpeed;
+    public int pathPos;
+
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
 
