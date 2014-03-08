@@ -21,7 +21,7 @@ public class PhysicsEntityModel {
     public transient Texture texture;
     public String name;
     public float scale = 1;
-    public float breakingPoint = -1;
+    public boolean breakable = false;
     public Type entityType;
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
