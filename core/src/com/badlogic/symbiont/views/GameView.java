@@ -8,8 +8,6 @@ import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
-import java.awt.*;
-
 public class GameView extends Actor {
 
     private MistView mistView = new MistView();

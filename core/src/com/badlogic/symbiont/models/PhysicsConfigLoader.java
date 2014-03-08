@@ -13,8 +13,7 @@ public class PhysicsConfigLoader {
     public static PhysicsConfigLoader fromFileFactory(String file) {
         FileHandle fileHandle = Gdx.files.internal(file);
         Json json = new Json();
-        PhysicsConfigLoader physicsConfigLoader = json.fromJson(PhysicsConfigLoader.class, fileHandle.readString());
-        return physicsConfigLoader;
+        return json.fromJson(PhysicsConfigLoader.class, fileHandle.readString());
     }
 
     public PhysicsConfig getConfig(String name) {

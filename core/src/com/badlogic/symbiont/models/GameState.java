@@ -16,7 +16,7 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class GameState {
 
-    public enum State {WAITING_TO_START, PLAYING, WON, LOST};
+    public enum State {WAITING_TO_START, PLAYING, WON, LOST}
 
     public String backgroundPath;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();

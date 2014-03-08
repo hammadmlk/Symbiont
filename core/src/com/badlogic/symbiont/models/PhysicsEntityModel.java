@@ -9,7 +9,7 @@ import com.badlogic.symbiont.SymbiontMain;
 public class PhysicsEntityModel {
 
     /**
-     * used to determine what happends in collisions
+     * used to determine what happens in collisions
      */
     public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, DEFLECTOR}
 
