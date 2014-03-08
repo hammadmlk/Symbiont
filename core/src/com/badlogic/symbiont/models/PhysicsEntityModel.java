@@ -1,5 +1,7 @@
 package com.badlogic.symbiont.models;
 
+import java.util.List;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -19,6 +21,10 @@ public class PhysicsEntityModel {
     public float breakingPoint = -1;
     public Type entityType = Type.WALL;
     public boolean toBeDestroyed;
+    
+    public List<Vector2> movingPath;
+    public float movingSpeed;
+    public int pathPos;
 
     public boolean flipHorizontal = false;
 
