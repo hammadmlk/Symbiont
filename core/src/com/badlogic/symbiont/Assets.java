@@ -20,7 +20,7 @@ public class Assets {
 
     public static ParticleEffect getParticleEffect(String name) {
         ParticleEffect particleEffect = new ParticleEffect();
-        FileHandle particleDir = Gdx.files.internal("particles");
+        FileHandle particleDir = Gdx.files.internal("non-git");
         particleEffect.load(Gdx.files.internal("particles/" + name + ".p"), particleDir);
         return particleEffect;
     }
