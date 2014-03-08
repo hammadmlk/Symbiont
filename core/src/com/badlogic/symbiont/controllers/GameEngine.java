@@ -7,8 +7,7 @@ import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 public class GameEngine {
     public static void step(GameState gameState, World world, float delta) {
@@ -29,32 +28,28 @@ public class GameEngine {
                 }
             }
 
-            // clean up physics entities TODO this might make the gc sad
-            List<PhysicsEntityModel> stillAlive = new ArrayList<PhysicsEntityModel>();
-            for (PhysicsEntityModel e : gameState.entities) {
-                if (!e.toBeDestroyed) {
-                    stillAlive.add(e);
-                } else {
-                    e.cleanUP();
+            // clean up physics entities
+            Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
+            while (physicsEntityModelIterator.hasNext()) {
+                PhysicsEntityModel physicsEntityModel = physicsEntityModelIterator.next();
+                if (physicsEntityModel.toBeDestroyed) {
+                    physicsEntityModel.cleanUP();
+                    physicsEntityModelIterator.remove();
                 }
             }
-            gameState.entities = stillAlive;
 
             // update mist, and clean up mist
-            List<MistModel> stillMisty = new ArrayList<MistModel>();
-            for (MistModel mistModel : gameState.mistModels) {
+            Iterator<MistModel> mistModelIterator = gameState.mistModels.iterator();
+            while (mistModelIterator.hasNext()) {
+                MistModel mistModel = mistModelIterator.next();
                 if (mistModel.fading) {
                     mistModel.secondsLeft -= delta;
-                    if (mistModel.secondsLeft > 0) {
-                        stillMisty.add(mistModel);
-                    } else {
+                    if (mistModel.secondsLeft <= 0) {
                         mistModel.getMistEffect().dispose();
+                        mistModelIterator.remove();
                     }
-                } else {
-                    stillMisty.add(mistModel);
                 }
             }
-            gameState.mistModels = stillMisty;
 
             // Check win conditions
             if (gameState.mistModels.size() == 0) {
