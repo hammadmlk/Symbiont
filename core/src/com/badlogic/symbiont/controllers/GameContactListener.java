@@ -49,6 +49,7 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
+        	this.alien = alien;
         	deflected = true;
         }
         
