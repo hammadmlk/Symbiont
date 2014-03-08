@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.controllers.CollisionFilters;
 
 public class GameState {
 
@@ -107,7 +105,8 @@ public class GameState {
         // (setAsBox takes half-width and half-height as arguments)
         groundBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         // Create a fixture from our polygon shape and add it to our ground body
-        groundBody.createFixture(groundBox, 0f);
+        Fixture groundFixture = groundBody.createFixture(groundBox, 0f);
+        groundFixture.setFilterData(CollisionFilters.GROUND);
 
         BodyDef topWallDef = new BodyDef();
         topWallDef.position.set(new Vector2(

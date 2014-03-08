@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.symbiont.controllers.AlienContactListener;
+import com.badlogic.symbiont.controllers.ContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.models.GameState;
@@ -99,7 +99,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     private void loadGame() {
         world = new World(new Vector2(0, -10), true);
-        world.setContactListener(new AlienContactListener());
+        world.setContactListener(new ContactListener());
 
         FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();

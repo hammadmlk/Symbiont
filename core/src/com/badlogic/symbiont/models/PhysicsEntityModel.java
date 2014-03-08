@@ -5,13 +5,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.controllers.CollisionFilters;
+import sun.font.PhysicalFont;
 
 public class PhysicsEntityModel {
 
     /**
      * used to determine what happens in collisions
      */
-    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, DEFLECTOR}
+    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR}
 
     /**
      * All physics entities must have textures
@@ -54,6 +56,14 @@ public class PhysicsEntityModel {
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      */
     public void update() {
+        if (entityType == Type.BROKEN) {
+            body.setType(BodyDef.BodyType.DynamicBody);
+            for (Fixture fixture : body.getFixtureList()) {
+                fixture.setFilterData(CollisionFilters.BROKEN);
+            }
+
+            body.setFixedRotation(false);
+        }
         position.set(
                 body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER
