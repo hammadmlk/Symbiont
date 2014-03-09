@@ -95,6 +95,9 @@ public class GameState {
                 )
             );
 
+        PhysicsEntityModel wallPhysicsEntityModel = new PhysicsEntityModel();
+        wallPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
+
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
         PhysicsEntityModel groundPhysicsEntityModel = new PhysicsEntityModel();
@@ -117,6 +120,7 @@ public class GameState {
                 )
             );
         Body topWallBody = world.createBody(topWallDef);
+        topWallBody.setUserData(wallPhysicsEntityModel);
         PhysicsEntityModel topPhysicsEntityModel = new PhysicsEntityModel();
         topPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
         topWallBody.setUserData(topPhysicsEntityModel);
@@ -127,6 +131,7 @@ public class GameState {
         BodyDef leftWallDef = new BodyDef();
         leftWallDef.position.set(new Vector2(-halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2));
         Body leftWallBody = world.createBody(leftWallDef);
+        leftWallBody.setUserData(wallPhysicsEntityModel);
         PhysicsEntityModel leftPhysicsEntityModel = new PhysicsEntityModel();
         leftPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
         leftWallBody.setUserData(leftPhysicsEntityModel);
@@ -141,6 +146,7 @@ public class GameState {
                 )
             );
         Body rightWallBody = world.createBody(rightWallDef);
+        rightWallBody.setUserData(wallPhysicsEntityModel);
         PhysicsEntityModel rightPhysicsEntityModel = new PhysicsEntityModel();
         rightPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
         rightWallBody.setUserData(rightPhysicsEntityModel);
