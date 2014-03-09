@@ -17,6 +17,8 @@ public class LevelEditor extends InputListener{
     PhysicsEntityModel selectedPhysicsEntityModel;
 
     Vector2 selectedOffset = new Vector2();
+    Vector2 selectedInitialLocation = new Vector2();
+    float selectedInitalAngle;
 
     public GameState editorGameState;
     public World editorWorld;
@@ -44,6 +46,8 @@ public class LevelEditor extends InputListener{
                         x - selectedPhysicsEntityModel.position.x,
                         y - selectedPhysicsEntityModel.position.y
                 );
+                selectedInitialLocation.set(x, y);
+                selectedInitalAngle = selectedPhysicsEntityModel.angle;
                 return false;
             }
         }, physicsX - aabb_delta, physicsY - aabb_delta, physicsX + aabb_delta, physicsY + aabb_delta);
@@ -55,13 +59,23 @@ public class LevelEditor extends InputListener{
         if (selectedPhysicsEntityModel == null) {
             return;
         }
-        x -= selectedOffset.x;
-        y -= selectedOffset.y;
-        float physicsX = x / SymbiontMain.PIXELS_PER_METER;
-        float physicsY = y / SymbiontMain.PIXELS_PER_METER;
-        selectedPhysicsEntityModel.setPositionFromLevelEditor(x, y);
-        if (selectedPhysicsEntityModel.body != null) {
-            selectedPhysicsEntityModel.body.setTransform(physicsX, physicsY, selectedPhysicsEntityModel.body.getAngle());
+        float angle_rate = (float) Math.PI / 180 * 2;
+        if (Gdx.input.isButtonPressed(Input.Buttons.RIGHT)) {
+            selectedPhysicsEntityModel.angle = selectedInitalAngle + (y - selectedInitialLocation.y) * angle_rate;
+            if (selectedPhysicsEntityModel.body != null) {
+                float bodyX = selectedPhysicsEntityModel.body.getPosition().x;
+                float bodyY = selectedPhysicsEntityModel.body.getPosition().y;
+                selectedPhysicsEntityModel.body.setTransform(bodyX, bodyY, selectedPhysicsEntityModel.angle);
+            }
+        } else {
+            x -= selectedOffset.x;
+            y -= selectedOffset.y;
+            float physicsX = x / SymbiontMain.PIXELS_PER_METER;
+            float physicsY = y / SymbiontMain.PIXELS_PER_METER;
+            selectedPhysicsEntityModel.setPositionFromLevelEditor(x, y);
+            if (selectedPhysicsEntityModel.body != null) {
+                selectedPhysicsEntityModel.body.setTransform(physicsX, physicsY, selectedPhysicsEntityModel.body.getAngle());
+            }
         }
     }
 
