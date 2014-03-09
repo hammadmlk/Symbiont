@@ -13,6 +13,9 @@ import com.badlogic.symbiont.models.PhysicsEntityModel;
 public class LevelEditor extends InputListener{
 
     PhysicsEntityModel selectedPhysicsEntityModel;
+
+    Vector2 selectedOffset = new Vector2();
+
     public GameState editorGameState;
     public World editorWorld;
 
@@ -25,13 +28,17 @@ public class LevelEditor extends InputListener{
     }
 
     @Override
-    public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+    public boolean touchDown(InputEvent event, final float x, final float y, int pointer, int button) {
         float physicsX = x / SymbiontMain.PIXELS_PER_METER;
         float physicsY = y / SymbiontMain.PIXELS_PER_METER;
         editorWorld.QueryAABB(new QueryCallback() {
             @Override
             public boolean reportFixture(Fixture fixture) {
                 selectedPhysicsEntityModel = (PhysicsEntityModel) fixture.getBody().getUserData();
+                selectedOffset.set(
+                        x - selectedPhysicsEntityModel.position.x,
+                        y - selectedPhysicsEntityModel.position.y
+                );
                 return false;
             }
         }, physicsX - aabb_delta, physicsY - aabb_delta, physicsX + aabb_delta, physicsY + aabb_delta);
@@ -43,6 +50,8 @@ public class LevelEditor extends InputListener{
         if (selectedPhysicsEntityModel == null) {
             return;
         }
+        x -= selectedOffset.x;
+        y -= selectedOffset.y;
         float physicsX = x / SymbiontMain.PIXELS_PER_METER;
         float physicsY = y / SymbiontMain.PIXELS_PER_METER;
         selectedPhysicsEntityModel.setPositionFromLevelEditor(x, y);
