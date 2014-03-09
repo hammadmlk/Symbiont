@@ -9,10 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.symbiont.controllers.ContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
@@ -39,16 +36,6 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static boolean debug = false;
 
-    public static String toggleDebug() {
-        if (debug) {
-            debug = false;
-            return "Enable Debug";
-        } else {
-            debug = true;
-            return "Disable Debug";
-        }
-    }
-
     @Override
     public void create() {
         stage = new Stage();
@@ -67,9 +54,8 @@ public class SymbiontMain extends ApplicationAdapter {
 		table.setFillParent(true);
 		stage.addActor(table);
 
-        toggleDebug();
-		final TextButton debugToggleButton = new TextButton(toggleDebug(), skin);
-        table.add(debugToggleButton);
+		final CheckBox debugCheckBox = new CheckBox("Debug", skin);
+        table.add(debugCheckBox);
         final TextButton loadGameButton = new TextButton("Load Game:", skin);
         table.add(loadGameButton);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
@@ -81,9 +67,9 @@ public class SymbiontMain extends ApplicationAdapter {
             }
         });
 
-		debugToggleButton.addListener(new ChangeListener() {
+		debugCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                debugToggleButton.setText(toggleDebug());
+                debug = !debug;
             }
         });
 
