@@ -8,9 +8,6 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class GameInputListener extends InputListener {
 
-    public GameInputListener() {
-    }
-
     @Override
     public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
         SymbiontMain.gameState.startIfWaiting();
