@@ -40,6 +40,9 @@ public class LevelEditor extends InputListener{
 
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
+        if (selectedPhysicsEntityModel == null) {
+            return;
+        }
         float physicsX = x / SymbiontMain.PIXELS_PER_METER;
         float physicsY = y / SymbiontMain.PIXELS_PER_METER;
         selectedPhysicsEntityModel.position.set(x, y);
