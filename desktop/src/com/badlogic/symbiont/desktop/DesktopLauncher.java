@@ -6,9 +6,6 @@ import com.badlogic.symbiont.SymbiontMain;
 
 public class DesktopLauncher {
 	public static void main (String[] args) {
-        if (args.length > 0 && args[0].equals("--emit-points")) {
-            SymbiontMain.EMIT_POINTS = true;
-        }
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "Symbiont";
 		config.width = 480;

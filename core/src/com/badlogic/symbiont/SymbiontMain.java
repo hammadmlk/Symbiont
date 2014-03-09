@@ -31,8 +31,6 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static final float PIXELS_PER_METER = 50;
 
-    public static boolean EMIT_POINTS = false;
-
     public static Skin skin;
 
     public static boolean debug = false;

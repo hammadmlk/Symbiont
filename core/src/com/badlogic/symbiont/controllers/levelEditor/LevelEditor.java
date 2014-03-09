@@ -1,5 +1,7 @@
 package com.badlogic.symbiont.controllers.levelEditor;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
@@ -29,6 +31,9 @@ public class LevelEditor extends InputListener{
 
     @Override
     public boolean touchDown(InputEvent event, final float x, final float y, int pointer, int button) {
+        if (Gdx.input.isButtonPressed(Input.Buttons.MIDDLE)) {
+            System.out.println(String.format("%f, %f,", x, y));
+        }
         float physicsX = x / SymbiontMain.PIXELS_PER_METER;
         float physicsY = y / SymbiontMain.PIXELS_PER_METER;
         editorWorld.QueryAABB(new QueryCallback() {
