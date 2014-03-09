@@ -5,7 +5,7 @@ import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
-public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
+public class GameContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
 
     @Override
     public void beginContact(Contact contact) {

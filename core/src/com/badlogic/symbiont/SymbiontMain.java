@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.symbiont.controllers.ContactListener;
+import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.controllers.levelEditor.LevelEditor;
@@ -92,7 +92,7 @@ public class SymbiontMain extends ApplicationAdapter {
                         world.dispose();
                     }
                     world = new World(new Vector2(0, -10), true);
-                    world.setContactListener(new ContactListener());
+                    world.setContactListener(new GameContactListener());
                     gameState = GameState.fromJSON(levelEditor.editorGameState.toJSON());
                     gameState.addToWorld(world);
                     gameView.clearListeners();
@@ -127,7 +127,7 @@ public class SymbiontMain extends ApplicationAdapter {
             world.dispose();
         }
         world = new World(new Vector2(0, -10), true);
-        world.setContactListener(new ContactListener());
+        world.setContactListener(new GameContactListener());
 
         FileHandle gamestateFile = Gdx.files.local("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();
