@@ -67,6 +67,8 @@ public class SymbiontMain extends ApplicationAdapter {
         table.add(editCheckBox);
         final TextButton loadFileButton = new TextButton("Load File:", skin);
         table.add(loadFileButton);
+        final TextButton saveFileButton = new TextButton("Save", skin);
+        table.add(saveFileButton);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
         table.add(levelPath);
         levelPath.setTextFieldListener(new TextField.TextFieldListener() {
@@ -109,6 +111,14 @@ public class SymbiontMain extends ApplicationAdapter {
             }
         });
 
+        saveFileButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                FileHandle fileHandle = Gdx.files.local("levels/" + currentLevelFileName + ".json");
+                fileHandle.writeString(levelEditor.editorGameState.toJSON(), false);
+            }
+        });
+
         loadFile();
     }
 
@@ -119,7 +129,7 @@ public class SymbiontMain extends ApplicationAdapter {
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new ContactListener());
 
-        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
+        FileHandle gamestateFile = Gdx.files.local("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
