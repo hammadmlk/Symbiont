@@ -65,10 +65,10 @@ public class SymbiontMain extends ApplicationAdapter {
         table.add(debugCheckBox);
         final CheckBox editCheckBox = new CheckBox("Edit", skin);
         table.add(editCheckBox);
-        final TextButton loadFileButton = new TextButton("Load File:", skin);
-        table.add(loadFileButton);
         final TextButton saveFileButton = new TextButton("Save", skin);
         table.add(saveFileButton);
+        final TextButton loadFileButton = new TextButton("Load File:", skin);
+        table.add(loadFileButton);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
         table.add(levelPath);
         levelPath.setTextFieldListener(new TextField.TextFieldListener() {
