@@ -138,6 +138,13 @@ public class SymbiontMain extends ApplicationAdapter {
             levelEditor.dispose();
         }
         levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
+        if (edit) {
+            gameView.clearListeners();
+            gameView.addListener(levelEditor);
+        } else {
+            gameView.clearListeners();
+            gameView.addListener(gameInputListener);
+        }
     }
 
 
