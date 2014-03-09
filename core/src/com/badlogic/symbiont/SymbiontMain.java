@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.symbiont.controllers.ContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
+import com.badlogic.symbiont.controllers.levelEditor.LevelEditor;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.views.GameView;
 
@@ -36,14 +37,20 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static boolean debug = false;
 
+    public static boolean edit = false;
+
+    public static LevelEditor levelEditor;
+
+    private GameInputListener gameInputListener = new GameInputListener();
+
     @Override
     public void create() {
+
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         gameView = new GameView();
         gameView.setBounds(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-        GameInputListener gameInputListener = new GameInputListener();
         gameView.addListener(gameInputListener);
         stage.addActor(gameView);
 
@@ -56,8 +63,10 @@ public class SymbiontMain extends ApplicationAdapter {
 
 		final CheckBox debugCheckBox = new CheckBox("Debug", skin);
         table.add(debugCheckBox);
-        final TextButton loadGameButton = new TextButton("Load Game:", skin);
-        table.add(loadGameButton);
+        final CheckBox editCheckBox = new CheckBox("Edit", skin);
+        table.add(editCheckBox);
+        final TextButton loadFileButton = new TextButton("Load File:", skin);
+        table.add(loadFileButton);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
         table.add(levelPath);
         levelPath.setTextFieldListener(new TextField.TextFieldListener() {
@@ -73,17 +82,37 @@ public class SymbiontMain extends ApplicationAdapter {
             }
         });
 
-        loadGameButton.addListener(new ChangeListener() {
-            @Override
+        editCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                loadGame();
+                edit = !edit;
+                if (!edit) {
+                    if (world != null) {
+                        world.dispose();
+                    }
+                    world = new World(new Vector2(0, -10), true);
+                    world.setContactListener(new ContactListener());
+                    gameState = GameState.fromJSON(levelEditor.editorGameState.toJSON());
+                    gameState.addToWorld(world);
+                    gameView.clearListeners();
+                    gameView.addListener(gameInputListener);
+                } else {
+                    gameView.clearListeners();
+                    gameView.addListener(levelEditor);
+                }
             }
         });
 
-        loadGame();
+        loadFileButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                loadFile();
+            }
+        });
+
+        loadFile();
     }
 
-    private void loadGame() {
+    private void loadFile() {
         if (world != null) {
             world.dispose();
         }
@@ -94,6 +123,11 @@ public class SymbiontMain extends ApplicationAdapter {
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
+
+        if (levelEditor != null) {
+            levelEditor.dispose();
+        }
+        levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
     }
 
 

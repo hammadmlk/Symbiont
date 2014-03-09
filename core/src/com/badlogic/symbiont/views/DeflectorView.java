@@ -11,6 +11,10 @@ public class DeflectorView {
     private Texture texture = Assets.load("non-git/deflector.png");
 
     public void render(SpriteBatch batch) {
+        if (SymbiontMain.edit) {
+            return;
+        }
+
         //push to the batch
         if (SymbiontMain.gameState.deflector()) {
             float x1 = SymbiontMain.gameState.deflectorEndpoints[0].x;

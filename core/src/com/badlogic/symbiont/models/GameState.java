@@ -22,7 +22,7 @@ public class GameState {
     /*
      * private/transient (don't get serialized)
      */
-    private Texture backgroundTexture;
+    private transient Texture backgroundTexture;
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
 

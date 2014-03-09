@@ -3,6 +3,7 @@ package com.badlogic.symbiont.views;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameState;
@@ -16,32 +17,36 @@ public class GameView extends Actor {
 
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
+        GameState gameState = SymbiontMain.edit ? SymbiontMain.levelEditor.editorGameState : SymbiontMain.gameState;
+        World world = SymbiontMain.edit ? SymbiontMain.levelEditor.editorWorld : SymbiontMain.world;
+
+
         // render background
         // disable blending optimization as recommended here
         // https://github.com/libgdx/libgdx/wiki/Spritebatch%2C-textureregions%2C-and-sprite#wiki-blending
         batch.disableBlending();
-        batch.draw(SymbiontMain.gameState.getBackgroundTexture(), 0, 0, getWidth(), getHeight());
+        batch.draw(gameState.getBackgroundTexture(), 0, 0, getWidth(), getHeight());
         batch.enableBlending();
 
         // render game state
-        for (PhysicsEntityModel entity : SymbiontMain.gameState.entities) {
+        for (PhysicsEntityModel entity : gameState.entities) {
             PhysicsEntityView.render(batch, entity);
         }
 
-        mistView.render(batch, SymbiontMain.gameState);
+        mistView.render(batch, gameState);
 
         deflectorView.render(batch);
 
-        if (SymbiontMain.gameState.state == GameState.State.WON) {
+        if (gameState.state == GameState.State.WON) {
             drawTextCentered(batch, "YOU WON!");
-        } else if (SymbiontMain.gameState.state == GameState.State.LOST) {
+        } else if (gameState.state == GameState.State.LOST) {
             drawTextCentered(batch, "YOU LOST!");
         }
 
         // debug render
         if (SymbiontMain.debug) {
             batch.end();
-            debugRenderer.render(SymbiontMain.world, batch.getProjectionMatrix().cpy().scale(
+            debugRenderer.render(world, batch.getProjectionMatrix().cpy().scale(
                     SymbiontMain.PIXELS_PER_METER,
                     SymbiontMain.PIXELS_PER_METER,
                     SymbiontMain.PIXELS_PER_METER
