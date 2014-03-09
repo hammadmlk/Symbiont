@@ -151,6 +151,15 @@ public class PhysicsEntityModel {
     }
 
     /**
+     * use this as a callback for when you're moved in the level editor
+     * @param x
+     * @param y
+     */
+    public void setPositionFromLevelEditor(float x, float y) {
+        position.set(x, y);
+    }
+
+    /**
      * cache an instance with entityType = DEFLECTOR. We'll only ever need one
      */
     private static PhysicsEntityModel DEFLECTOR_INSTANCE;

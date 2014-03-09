@@ -45,7 +45,7 @@ public class LevelEditor extends InputListener{
         }
         float physicsX = x / SymbiontMain.PIXELS_PER_METER;
         float physicsY = y / SymbiontMain.PIXELS_PER_METER;
-        selectedPhysicsEntityModel.position.set(x, y);
+        selectedPhysicsEntityModel.setPositionFromLevelEditor(x, y);
         selectedPhysicsEntityModel.body.setTransform(physicsX, physicsY, selectedPhysicsEntityModel.body.getAngle());
     }
 

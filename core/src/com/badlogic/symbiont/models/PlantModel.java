@@ -18,4 +18,11 @@ public class PlantModel extends PhysicsEntityModel {
         }
     }
 
+    @Override
+    public void setPositionFromLevelEditor(float x, float y) {
+        for (MistModel mistModel : mistModels) {
+            mistModel.position.set(x, y);
+        }
+        super.setPositionFromLevelEditor(x, y);
+    }
 }
