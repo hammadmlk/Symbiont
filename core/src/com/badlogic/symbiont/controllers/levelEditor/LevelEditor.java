@@ -23,7 +23,7 @@ public class LevelEditor extends InputListener{
 
     public LevelEditor(GameState editorGameState) {
         this.editorGameState = editorGameState;
-        editorWorld = new World(new Vector2(-10, 0), true);
+        editorWorld = new World(new Vector2(), true);
         this.editorGameState.addToWorld(editorWorld);
     }
 
