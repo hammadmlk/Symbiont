@@ -84,6 +84,9 @@ public class SymbiontMain extends ApplicationAdapter {
     }
 
     private void loadGame() {
+        if (world != null) {
+            world.dispose();
+        }
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new ContactListener());
 
