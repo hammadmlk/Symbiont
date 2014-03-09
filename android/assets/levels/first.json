@@ -4,7 +4,6 @@
         {
             "entityType": "ALIEN",
             "linearVelocity": {
-                "x": 0,
                 "y": -250
             },
             "name": "ball",
@@ -20,8 +19,8 @@
             "flipHorizontal": true,
             "name": "branch",
             "position": {
-                "x": 224,
-                "y": 650
+                "x": 354,
+                "y": 684
             }
         },
         {
@@ -30,25 +29,24 @@
             "flipVertical": true,
             "name": "branch",
             "position": {
-                "x": -50,
-                "y": 450
+                "x": 124,
+                "y": 471.99997
             }
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
-            "entityType": "PLANT",
             "mistModels": [
                 {
                     "position": {
-                        "x": 125.0,
-                        "y": 325.0
+                        "x": 181.88498,
+                        "y": 360.55286
                     },
                     "vertices": [
                         0,
                         200,
-                        480.0,
+                        480,
                         200,
-                        480.0,
+                        480,
                         800,
                         0,
                         800
@@ -57,26 +55,25 @@
             ],
             "name": "plant",
             "position": {
-                "x": 100,
-                "y": 300
+                "x": 181.88498,
+                "y": 360.55286
             },
             "scale": 0.4
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
-            "entityType": "PLANT",
             "mistModels": [
                 {
                     "position": {
-                        "x": 125.0,
-                        "y": 625.0
+                        "x": 107.18923,
+                        "y": 620.5473
                     },
                     "vertices": [
                         0,
                         200,
-                        480.0,
+                        480,
                         200,
-                        480.0,
+                        480,
                         800,
                         0,
                         800
@@ -85,8 +82,8 @@
             ],
             "name": "plant",
             "position": {
-                "x": 100,
-                "y": 600
+                "x": 107.18923,
+                "y": 620.5473
             },
             "scale": 0.4
         }

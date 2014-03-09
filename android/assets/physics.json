@@ -6,8 +6,8 @@
             "imagePath": "non-git/plant.png",
             "name": "plant",
             "origin": {
-                "x": 0,
-                "y": 0
+                "x": 0.5075000524520874,
+                "y": 1.2075001001358032
             },
             "polygons": [
                 [
@@ -345,8 +345,8 @@
             "imagePath": "non-git/branch2.png",
             "name": "branch",
             "origin": {
-                "x": 0,
-                "y": 0
+                "x": 0.5012500286102295,
+                "y": 0.17125003039836884
             },
             "polygons": [
                 [
