@@ -127,7 +127,7 @@ public class SymbiontMain extends ApplicationAdapter {
         world = new World(new Vector2(0, -10), true);
         world.setContactListener(new GameContactListener());
 
-        FileHandle gamestateFile = Gdx.files.local("levels/" + currentLevelFileName + ".json");
+        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gamestateFile.readString();
         gameState = GameState.fromJSON(rawGameStateJSON);
         gameState.addToWorld(world);
