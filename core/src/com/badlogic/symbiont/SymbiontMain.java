@@ -55,7 +55,7 @@ public class SymbiontMain extends ApplicationAdapter {
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
 		// Create a table that fills the screen. Everything else will go inside this table.
-		Table table = new Table().top().left();
+		Table table = new Table().top().left().padTop(20);
 		table.setFillParent(true);
 		stage.addActor(table);
 
