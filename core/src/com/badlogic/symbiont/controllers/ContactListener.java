@@ -13,9 +13,9 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         Fixture fixtureB = contact.getFixtureB();
         PhysicsEntityModel a = (PhysicsEntityModel) fixtureA.getBody().getUserData();
         PhysicsEntityModel b = (PhysicsEntityModel) fixtureB.getBody().getUserData();
-        if (a == null || b == null) {
-            return;
-        }
+
+        assert (a != null && b != null);
+
         if (a.entityType == PhysicsEntityModel.Type.ALIEN) {
             handleAlienContact(a, b);
         } else if (b.entityType == PhysicsEntityModel.Type.ALIEN) {
