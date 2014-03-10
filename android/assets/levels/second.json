@@ -3,6 +3,21 @@
     "entities": [
         {
             "flipHorizontal": true,
+            "movingPath": [
+                {
+                    "x": 245.936935,
+                    "y": 454
+                },
+                {
+                    "x": 245.936935,
+                    "y": 254
+                },
+                {
+                    "x": 200,
+                    "y": 320
+                }
+            ],
+            "movingSpeed": 5,
             "name": "branch",
             "position": {
                 "x": 245.936935,
