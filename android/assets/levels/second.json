@@ -6,19 +6,19 @@
             "flipHorizontal": true,
             "movingPath": [
                 {
-                    "x": 245.936935,
-                    "y": 454
+                    "x": 354,
+                    "y": 596
                 },
                 {
-                    "x": 245.936935,
-                    "y": 254
+                    "x": 354,
+                    "y": 296
                 },
                 {
-                    "x": 200,
-                    "y": 320
+                    "x": 354,
+                    "y": 596
                 }
             ],
-            "movingSpeed": 5,
+            "movingSpeed": 3,
             "name": "branch",
             "position": {
                 "x": 354,

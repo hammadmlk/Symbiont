@@ -26,7 +26,6 @@ public class PhysicsEntityModel {
     public transient TextureAtlas.AtlasRegion atlasRegion;
     public String name;
     public float scale = 1;
-
     public boolean breakable = false;
     public Type entityType;
 
@@ -92,7 +91,6 @@ public class PhysicsEntityModel {
                 }
                 Vector2 vel = new Vector2(movingPath.get(pathPos));
                 vel.sub(curPos).nor().scl(movingSpeed);
-                System.out.println(vel);
                 body.setLinearVelocity(vel);
             }
         }
