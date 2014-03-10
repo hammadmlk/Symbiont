@@ -26,6 +26,7 @@ public class PhysicsEntityModel {
     public transient TextureAtlas.AtlasRegion atlasRegion;
     public String name;
     public float scale = 1;
+
     public boolean breakable = false;
     public Type entityType;
 
@@ -94,7 +95,6 @@ public class PhysicsEntityModel {
                 System.out.println(vel);
                 body.setLinearVelocity(vel);
             }
-            System.out.println(body.getLinearVelocity().y);
         }
         
         position.set(

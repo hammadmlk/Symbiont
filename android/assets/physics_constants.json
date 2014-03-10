@@ -6,7 +6,9 @@
             "restitution": 1,
             "type": "DynamicBody"
         },
-        "branch": {},
+        "branch": {
+            "type": "KinematicBody"
+        },
         "plant": {
             "isSensor": true
         }
