@@ -1,6 +1,7 @@
 package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
@@ -9,23 +10,29 @@ public class PhysicsEntityView {
         Vector2 origin = entity.getOrigin();
         float adjustedX = entity.position.x - origin.x;
         float adjustedY = entity.position.y - origin.y;
+
+        TextureAtlas.AtlasRegion atlasRegion = entity.getImg();
+
+        boolean oldX = atlasRegion.isFlipX();
+        boolean oldY = atlasRegion.isFlipY();
+
+        // flip if necessary
+        atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
+
         batch.draw(
-                entity.getImg(),                                   // Texture texture
+                atlasRegion,                                       // Texture atlasRegion
                 adjustedX,                                         // float x
                 adjustedY,                                         // float y
                 origin.x,                                          // float originX
                 origin.y,                                          // float originY
-                entity.getImg().getWidth(),                        // float width
-                entity.getImg().getHeight(),                       // float height
+                atlasRegion.originalWidth,                         // float width
+                atlasRegion.originalHeight,                        // float height
                 entity.scale,                                      // float scaleX
                 entity.scale,                                      // float scaleY
-                (float) Math.toDegrees(entity.angle),              // float rotation
-                0,                                                 // int srcX
-                0,                                                 // int srcY
-                entity.getImg().getWidth(),                        // int srcWidth
-                entity.getImg().getHeight(),                       // srcHeight
-                entity.flipHorizontal,                             // boolean flipX
-                entity.flipVertical                                // boolean flipY
+                (float) Math.toDegrees(entity.angle)               // float rotation
         );
+
+        // flip back if necessary
+        atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
     }
 }

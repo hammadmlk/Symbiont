@@ -74,7 +74,6 @@ public class GameView extends Actor {
 
     public void dispose() {
         mistView.dispose();
-        deflectorView.dispose();
         debugRenderer.dispose();
     }
 }

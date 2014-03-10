@@ -1,12 +1,13 @@
 package com.badlogic.symbiont.models;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.CollisionFilters;
-import sun.font.PhysicalFont;
 
 public class PhysicsEntityModel {
 
@@ -20,7 +21,7 @@ public class PhysicsEntityModel {
      * unless they're walls or grounds or the deflector, which aren't in
      * the gameState's list of physics entities, so won't get drawn or loaded from JSON
      */
-    public transient Texture texture;
+    public transient TextureAtlas.AtlasRegion atlasRegion;
     public String name;
     public float scale = 1;
     public boolean breakable = false;
@@ -117,27 +118,27 @@ public class PhysicsEntityModel {
                 name,
                 fixtureDef,
                 scale,
-                getImg().getWidth(),
-                getImg().getHeight(),
+                getImg().originalWidth,
+                getImg().originalHeight,
                 flipHorizontal,
                 flipVertical
         );
     }
 
-    public Texture getImg() {
-        if (texture != null) {
-            return texture;
+    public TextureAtlas.AtlasRegion getImg() {
+        if (atlasRegion != null) {
+            return atlasRegion;
         }
         String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
-        texture = Assets.load(imgPath);
-        assert texture != null;
-        return texture;
+        atlasRegion = Assets.loadAtlas(imgPath);
+        assert atlasRegion != null;
+        return atlasRegion;
     }
 
     public Vector2 getOrigin() {
         if (origin != null)
             return origin;
-        float combinedScale = getImg().getWidth();
+        float combinedScale = getImg().originalWidth;
         Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
         origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
         return origin;

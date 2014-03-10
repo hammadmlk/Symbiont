@@ -159,7 +159,7 @@ public class GameState {
         if (backgroundTexture != null) {
             return backgroundTexture;
         }
-        backgroundTexture = Assets.load(backgroundPath);
+        backgroundTexture = Assets.loadTexture(backgroundPath);
         return backgroundTexture;
     }
 }
