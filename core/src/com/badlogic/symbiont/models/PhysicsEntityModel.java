@@ -32,6 +32,11 @@ public class PhysicsEntityModel {
     public boolean breakable = false;
     public Type entityType;
 
+<<<<<<< HEAD
+=======
+    public Type entityType;
+    
+>>>>>>> setVelocity has no code; might need to try something else
     public List<Vector2> movingPath;
     public float movingSpeed;
     public int pathPos;
@@ -80,10 +85,30 @@ public class PhysicsEntityModel {
 
             body.setFixedRotation(false);
         }
-        position.set(
+        Vector2 curPos = new Vector2(
                 body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER
-            );
+        );
+        
+        if (movingPath != null) {
+            // Some small distance that signals that the body has reached the next point
+            if (curPos.dst(movingPath.get(pathPos)) < 0.1) {
+                pathPos++;
+                if (pathPos >= movingPath.size()) {
+                    pathPos = 0;
+                }
+                Vector2 vel = new Vector2(movingPath.get(pathPos));
+                vel.sub(curPos).nor().scl(movingSpeed);
+                System.out.println(vel);
+                body.setLinearVelocity(vel);
+            }
+            System.out.println(body.getLinearVelocity().y);
+        }
+        
+        position.set(
+                curPos.x,
+                curPos.y
+        );
         linearVelocity.set(
                 body.getLinearVelocity().x * SymbiontMain.PIXELS_PER_METER,
                 body.getLinearVelocity().y * SymbiontMain.PIXELS_PER_METER
