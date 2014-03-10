@@ -74,8 +74,8 @@ public class PhysicsEntityModel {
                 vel.sub(curPos).nor().scl(movingSpeed);
                 System.out.println(vel);
                 body.setLinearVelocity(vel);
+                System.out.println(body.getLinearVelocity().y);
             }
-            System.out.println(body.getLinearVelocity().y);
         }
         
         position.set(
