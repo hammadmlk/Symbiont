@@ -1,11 +1,8 @@
 package com.badlogic.symbiont.models;
 
-<<<<<<< HEAD
 import com.badlogic.gdx.Gdx;
-=======
 import java.util.List;
 
->>>>>>> beginning moving walls before rebase
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -32,11 +29,6 @@ public class PhysicsEntityModel {
     public boolean breakable = false;
     public Type entityType;
 
-<<<<<<< HEAD
-=======
-    public Type entityType;
-    
->>>>>>> setVelocity has no code; might need to try something else
     public List<Vector2> movingPath;
     public float movingSpeed;
     public int pathPos;
