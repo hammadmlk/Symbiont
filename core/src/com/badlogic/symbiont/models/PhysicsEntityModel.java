@@ -1,7 +1,5 @@
 package com.badlogic.symbiont.models;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -23,8 +21,8 @@ public class PhysicsEntityModel {
      */
     public transient TextureAtlas.AtlasRegion atlasRegion;
     public String name;
-    public float scale = 1;
-    public boolean breakable = false;
+    public Float scale;
+    public Boolean breakable;
     public Type entityType;
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
@@ -85,28 +83,41 @@ public class PhysicsEntityModel {
     public void addToWorld(World world) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
-        PhysicsConfig physicsConfig = Assets.physicsConfigLoader.getConfig(name);
+        ConstantsConfig constantsConfig = Assets.constantsConfigLoader.getConfig(name);
+        if (name.equals("breakable_branch")) {
+            System.out.println(name);
+        }
         bodyDef.position.set(position.x / SymbiontMain.PIXELS_PER_METER, position.y / SymbiontMain.PIXELS_PER_METER);
         if (type != null) {
             bodyDef.type = type;
         } else {
-            bodyDef.type = physicsConfig.type;
+            bodyDef.type = constantsConfig.type;
         }
         bodyDef.linearVelocity.set(linearVelocity.x / SymbiontMain.PIXELS_PER_METER, linearVelocity.y / SymbiontMain.PIXELS_PER_METER);
-        bodyDef.linearDamping = physicsConfig.linearDamping;
-        bodyDef.active = physicsConfig.active;
-        bodyDef.allowSleep = physicsConfig.allowSleep;
+        bodyDef.linearDamping = constantsConfig.linearDamping;
+        bodyDef.active = constantsConfig.active;
+        bodyDef.allowSleep = constantsConfig.allowSleep;
         bodyDef.angle = angle;
-        bodyDef.angularDamping = physicsConfig.angularDamping;
+        bodyDef.angularDamping = constantsConfig.angularDamping;
         bodyDef.angularVelocity = angularVelocity;
-        bodyDef.awake = physicsConfig.awake;
-        bodyDef.bullet = physicsConfig.bullet;
-        bodyDef.fixedRotation = physicsConfig.fixedRotation;
-        bodyDef.gravityScale = physicsConfig.gravityScale;
-        fixtureDef.friction = physicsConfig.friction;
-        fixtureDef.restitution = physicsConfig.restitution;
-        fixtureDef.density = physicsConfig.density;
-        fixtureDef.isSensor = physicsConfig.isSensor;
+        bodyDef.awake = constantsConfig.awake;
+        bodyDef.bullet = constantsConfig.bullet;
+        bodyDef.fixedRotation = constantsConfig.fixedRotation;
+        bodyDef.gravityScale = constantsConfig.gravityScale;
+        fixtureDef.friction = constantsConfig.friction;
+        fixtureDef.restitution = constantsConfig.restitution;
+        fixtureDef.density = constantsConfig.density;
+        fixtureDef.isSensor = constantsConfig.isSensor;
+
+        if (scale == null) {
+            scale = constantsConfig.scale;
+        }
+        if (entityType == null) {
+            entityType = constantsConfig.entityType;
+        }
+        if (breakable == null) {
+            breakable = constantsConfig.breakable;
+        }
 
         Body body = world.createBody(bodyDef);
         body.setUserData(this);
@@ -168,6 +179,7 @@ public class PhysicsEntityModel {
     static {
         DEFLECTOR_INSTANCE = new PhysicsEntityModel();
         DEFLECTOR_INSTANCE.entityType = Type.DEFLECTOR;
+        DEFLECTOR_INSTANCE.breakable = false;
     }
 
     public static PhysicsEntityModel getDeflectorInstance() {

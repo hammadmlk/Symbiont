@@ -2,7 +2,6 @@
     "backgroundPath": "non-git/level1bg.png",
     "entities": [
         {
-            "entityType": "ALIEN",
             "linearVelocity": {
                 "y": -250
             },
@@ -10,24 +9,19 @@
             "position": {
                 "x": 350,
                 "y": 600
-            },
-            "scale": 0.5
+            }
         },
         {
-            "breakable": true,
-            "entityType": "BRANCH",
             "flipHorizontal": true,
-            "name": "branch",
+            "name": "branchbreakable",
             "position": {
                 "x": 354,
                 "y": 684
             }
         },
         {
-            "breakable": true,
-            "entityType": "BRANCH",
             "flipVertical": true,
-            "name": "branch",
+            "name": "branchbreakable",
             "position": {
                 "x": 124,
                 "y": 471.99997
@@ -57,8 +51,7 @@
             "position": {
                 "x": 181.88498,
                 "y": 360.55286
-            },
-            "scale": 0.4
+            }
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
@@ -84,8 +77,7 @@
             "position": {
                 "x": 107.18923,
                 "y": 620.5473
-            },
-            "scale": 0.4
+            }
         }
     ]
 }

@@ -6,17 +6,17 @@ import com.badlogic.gdx.utils.Json;
 
 import java.util.HashMap;
 
-public class PhysicsConfigLoader {
+public class ConstantsConfigLoader {
 
-    HashMap<String, PhysicsConfig> namesToConfigs;
+    HashMap<String, ConstantsConfig> namesToConfigs;
 
-    public static PhysicsConfigLoader fromFileFactory(String file) {
+    public static ConstantsConfigLoader fromFileFactory(String file) {
         FileHandle fileHandle = Gdx.files.internal(file);
         Json json = new Json();
-        return json.fromJson(PhysicsConfigLoader.class, fileHandle.readString());
+        return json.fromJson(ConstantsConfigLoader.class, fileHandle.readString());
     }
 
-    public PhysicsConfig getConfig(String name) {
+    public ConstantsConfig getConfig(String name) {
         return namesToConfigs.get(name);
     }
 

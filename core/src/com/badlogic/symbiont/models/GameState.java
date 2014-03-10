@@ -96,12 +96,14 @@ public class GameState {
             );
 
         PhysicsEntityModel wallPhysicsEntityModel = new PhysicsEntityModel();
+        wallPhysicsEntityModel.breakable = false;
         wallPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
 
         // Create a body from the definition and add it to the world
         Body groundBody = world.createBody(groundBodyDef);
         PhysicsEntityModel groundPhysicsEntityModel = new PhysicsEntityModel();
         groundPhysicsEntityModel.entityType = PhysicsEntityModel.Type.GROUND;
+        groundPhysicsEntityModel.breakable = false;
         groundBody.setUserData(groundPhysicsEntityModel);
 
         // Create a polygon shape
@@ -121,9 +123,6 @@ public class GameState {
             );
         Body topWallBody = world.createBody(topWallDef);
         topWallBody.setUserData(wallPhysicsEntityModel);
-        PhysicsEntityModel topPhysicsEntityModel = new PhysicsEntityModel();
-        topPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
-        topWallBody.setUserData(topPhysicsEntityModel);
         PolygonShape topWallBox = new PolygonShape();
         topWallBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         topWallBody.createFixture(topWallBox, 0f);
@@ -132,9 +131,6 @@ public class GameState {
         leftWallDef.position.set(new Vector2(-halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2));
         Body leftWallBody = world.createBody(leftWallDef);
         leftWallBody.setUserData(wallPhysicsEntityModel);
-        PhysicsEntityModel leftPhysicsEntityModel = new PhysicsEntityModel();
-        leftPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
-        leftWallBody.setUserData(leftPhysicsEntityModel);
         PolygonShape leftWallBox = new PolygonShape();
         leftWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
         leftWallBody.createFixture(leftWallBox, 0f);
@@ -147,9 +143,6 @@ public class GameState {
             );
         Body rightWallBody = world.createBody(rightWallDef);
         rightWallBody.setUserData(wallPhysicsEntityModel);
-        PhysicsEntityModel rightPhysicsEntityModel = new PhysicsEntityModel();
-        rightPhysicsEntityModel.entityType = PhysicsEntityModel.Type.WALL;
-        rightWallBody.setUserData(rightPhysicsEntityModel);
         PolygonShape rightWallBox = new PolygonShape();
         rightWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
         rightWallBody.createFixture(rightWallBox, halfwidth);

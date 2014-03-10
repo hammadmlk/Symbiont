@@ -2,7 +2,6 @@
     "backgroundPath": "non-git/background.png",
     "entities": [
         {
-            "entityType": "BRANCH",
             "flipHorizontal": true,
             "name": "branch",
             "position": {
@@ -11,7 +10,6 @@
             }
         },
         {
-            "entityType": "ALIEN",
             "linearVelocity": {
                 "y": -250
             },
@@ -19,8 +17,7 @@
             "position": {
                 "x": 188,
                 "y": 608
-            },
-            "scale": 0.5
+            }
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
@@ -46,8 +43,7 @@
             "position": {
                 "x": 392,
                 "y": 647
-            },
-            "scale": 0.4
+            }
         },
         {
             "class": "com.badlogic.symbiont.models.PlantModel",
@@ -73,8 +69,7 @@
             "position": {
                 "x": 94.09465,
                 "y": 623.8366
-            },
-            "scale": 0.4
+            }
         }
     ]
 }

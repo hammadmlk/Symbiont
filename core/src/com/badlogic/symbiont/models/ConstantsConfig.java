@@ -5,7 +5,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 /**
  * This model holds all the physics constants for each type of physics entity
  */
-public class PhysicsConfig {
+public class ConstantsConfig {
+
+    public float scale = 1;
+
+    public PhysicsEntityModel.Type entityType;
+
+    public boolean breakable = false;
 
     /** The body type: static, kinematic, or dynamic. Note: if a dynamic body would have zero mass, the mass is set to one. **/
     public BodyDef.BodyType type = BodyDef.BodyType.StaticBody;
