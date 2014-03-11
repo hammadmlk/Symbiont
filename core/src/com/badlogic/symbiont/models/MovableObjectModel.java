@@ -20,6 +20,7 @@ public class MovableObjectModel extends PhysicsEntityModel {
         
         // Some small distance that signals that the body has reached the next point
         if (curPos.dst(movingPath.get(pathPos)) < 0.1) {
+            curPos = movingPath.get(pathPos);
             pathPos++;
             if (pathPos >= movingPath.size()) {
                 pathPos = 0;
