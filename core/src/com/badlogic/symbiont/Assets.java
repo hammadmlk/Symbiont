@@ -25,8 +25,7 @@ public class Assets {
 
     public static ParticleEffect getParticleEffect(String name) {
         ParticleEffect particleEffect = new ParticleEffect();
-        FileHandle particleDir = Gdx.files.internal("non-git");
-        particleEffect.load(Gdx.files.internal("particles/" + name + ".p"), particleDir);
+        particleEffect.load(Gdx.files.internal("particles/" + name + ".p"), textureAtlas);
         return particleEffect;
     }
 
