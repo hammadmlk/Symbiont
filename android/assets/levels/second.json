@@ -2,6 +2,7 @@
     "backgroundPath": "non-git/background.png",
     "entities": [
         {
+            "class": "com.badlogic.symbiont.models.MovableObjectModel",
             "entityType": "BRANCH",
             "flipHorizontal": true,
             "movingPath": [
@@ -18,7 +19,7 @@
                     "y": 596
                 }
             ],
-            "movingSpeed": 3,
+            "movingSpeed": 2,
             "name": "branch",
             "position": {
                 "x": 354,

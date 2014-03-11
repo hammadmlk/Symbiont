@@ -29,10 +29,6 @@ public class PhysicsEntityModel {
     public boolean breakable = false;
     public Type entityType;
 
-    public List<Vector2> movingPath;
-    public float movingSpeed;
-    public int pathPos;
-
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
 
@@ -77,27 +73,10 @@ public class PhysicsEntityModel {
 
             body.setFixedRotation(false);
         }
-        Vector2 curPos = new Vector2(
-                body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
-                body.getPosition().y * SymbiontMain.PIXELS_PER_METER
-        );
-        
-        if (movingPath != null) {
-            // Some small distance that signals that the body has reached the next point
-            if (curPos.dst(movingPath.get(pathPos)) < 0.1) {
-                pathPos++;
-                if (pathPos >= movingPath.size()) {
-                    pathPos = 0;
-                }
-                Vector2 vel = new Vector2(movingPath.get(pathPos));
-                vel.sub(curPos).nor().scl(movingSpeed);
-                body.setLinearVelocity(vel);
-            }
-        }
         
         position.set(
-                curPos.x,
-                curPos.y
+                body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
+                body.getPosition().y * SymbiontMain.PIXELS_PER_METER
         );
         linearVelocity.set(
                 body.getLinearVelocity().x * SymbiontMain.PIXELS_PER_METER,
