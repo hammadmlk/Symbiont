@@ -54,11 +54,7 @@ public class MistView {
         // color roughly taken from `particles/mist.p` TODO keep up to date
         shapes.setColor(0.44f, 0.28f, 0.79f, 0.15f);
 
-        float x1 = mistModel.vertices[0];
-        float y1 = mistModel.vertices[1];
-        for (int i = 2; i + 3 < mistModel.vertices.length; i+=2) {
-            shapes.triangle(x1, y1, mistModel.vertices[i], mistModel.vertices[i+1], mistModel.vertices[i+2], mistModel.vertices[i+3]);
-        }
+        shapes.rect(mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
 
 		shapes.end();
 
