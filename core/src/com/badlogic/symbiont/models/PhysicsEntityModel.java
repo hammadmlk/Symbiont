@@ -1,5 +1,9 @@
 package com.badlogic.symbiont.models;
 
+import com.badlogic.gdx.Gdx;
+import java.util.List;
+
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -24,6 +28,7 @@ public class PhysicsEntityModel {
     public Float scale;
     public Boolean breakable;
     public Type entityType;
+
     public boolean flipHorizontal = false;
     public boolean flipVertical = false;
 
@@ -68,10 +73,11 @@ public class PhysicsEntityModel {
 
             body.setFixedRotation(false);
         }
+        
         position.set(
                 body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER
-            );
+        );
         linearVelocity.set(
                 body.getLinearVelocity().x * SymbiontMain.PIXELS_PER_METER,
                 body.getLinearVelocity().y * SymbiontMain.PIXELS_PER_METER

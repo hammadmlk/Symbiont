@@ -1,0 +1,16 @@
+{
+    "namesToConfigs": {
+        "ball": {
+            "density": 0.5,
+            "friction": 0.4,
+            "restitution": 1,
+            "type": "DynamicBody"
+        },
+        "branch": {
+            "type": "KinematicBody"
+        },
+        "plant": {
+            "isSensor": true
+        }
+    }
+}
