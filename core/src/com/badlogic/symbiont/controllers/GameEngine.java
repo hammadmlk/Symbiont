@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
@@ -15,7 +16,7 @@ import java.util.Iterator;
 public class GameEngine {
     public static void step(GameState gameState, World world, float delta) {
         if (gameState.state == GameState.State.PLAYING) {
-            world.step(1/60f, 6, 2);
+            world.step(delta, 6, 2);
 
             // update physics entities
             Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
@@ -34,6 +35,7 @@ public class GameEngine {
             Iterator<MistModel> mistModelIterator = gameState.mistModels.iterator();
             while (mistModelIterator.hasNext()) {
                 MistModel mistModel = mistModelIterator.next();
+                mistModel.update(delta);
                 if (mistModel.fading) {
                     mistModel.secondsLeft -= delta;
                     if (mistModel.secondsLeft <= 0) {
@@ -41,6 +43,10 @@ public class GameEngine {
                         mistModelIterator.remove();
                     }
                 }
+            }
+
+            for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
+                deflectorEndpoint.update(delta);
             }
 
             // Check win conditions

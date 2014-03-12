@@ -75,7 +75,7 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 
 		//push to the batch
-        mistModel.getMistEffect().draw(batch, 1 / 60f);
+        mistModel.getMistEffect().draw(batch);
 
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
