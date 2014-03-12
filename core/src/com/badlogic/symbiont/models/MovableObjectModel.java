@@ -13,6 +13,7 @@ public class MovableObjectModel extends PhysicsEntityModel {
 
     private Vector2 curPos = new Vector2();
     private Vector2 vel = new Vector2();
+    private float lastDist = 0;
 
     @Override
     public void update() {
@@ -21,8 +22,9 @@ public class MovableObjectModel extends PhysicsEntityModel {
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER
         );
         
-        // Some small distance that signals that the body has reached the next point
-        if (curPos.dst(movingPath.get(pathPos)) < 0.1) {
+        float dist = curPos.dst(movingPath.get(pathPos));
+
+        if (dist >= lastDist) {
             curPos = movingPath.get(pathPos);
             pathPos++;
             if (pathPos >= movingPath.size()) {
@@ -31,6 +33,9 @@ public class MovableObjectModel extends PhysicsEntityModel {
             vel.set(movingPath.get(pathPos));
             vel.sub(curPos).nor().scl(movingSpeed);
             body.setLinearVelocity(vel);
+            lastDist = Float.MAX_VALUE;
+        } else {
+            lastDist = dist;
         }
         
         super.update();
