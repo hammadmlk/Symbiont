@@ -10,10 +10,13 @@ public class MovableObjectModel extends PhysicsEntityModel {
     public List<Vector2> movingPath;
     public float movingSpeed;
     public int pathPos;
-    
+
+    private Vector2 curPos = new Vector2();
+    private Vector2 vel = new Vector2();
+
     @Override
     public void update() {
-        Vector2 curPos = new Vector2(
+        curPos.set(
                 body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
                 body.getPosition().y * SymbiontMain.PIXELS_PER_METER
         );
@@ -25,7 +28,7 @@ public class MovableObjectModel extends PhysicsEntityModel {
             if (pathPos >= movingPath.size()) {
                 pathPos = 0;
             }
-            Vector2 vel = new Vector2(movingPath.get(pathPos));
+            vel.set(movingPath.get(pathPos));
             vel.sub(curPos).nor().scl(movingSpeed);
             body.setLinearVelocity(vel);
         }
