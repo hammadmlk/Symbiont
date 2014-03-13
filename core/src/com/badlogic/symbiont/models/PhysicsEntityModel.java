@@ -90,9 +90,6 @@ public class PhysicsEntityModel {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         ConstantsConfig constantsConfig = Assets.constantsConfigLoader.getConfig(name);
-        if (name.equals("breakable_branch")) {
-            System.out.println(name);
-        }
         bodyDef.position.set(position.x / SymbiontMain.PIXELS_PER_METER, position.y / SymbiontMain.PIXELS_PER_METER);
         if (type != null) {
             bodyDef.type = type;
