@@ -1,5 +1,7 @@
 package com.badlogic.symbiont.views;
 
+import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -54,7 +56,16 @@ public class GameView extends Actor {
             );
 
             batch.begin();
+
+            drawTextCenteredBottom(batch, String.format("fps: %d", Gdx.graphics.getFramesPerSecond()));
         }
+    }
+
+    private void drawTextCenteredBottom(SpriteBatch batch, String text) {
+        BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
+        float fontX = SymbiontMain.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
+        float fontY = 50;
+        bitmapFont.draw(batch, text, fontX, fontY);
     }
 
     private void drawTextCentered(SpriteBatch batch, String text) {

@@ -21,4 +21,8 @@ public class DeflectorEndpoint {
     public void resetParticleEffect() {
         getParticleEffect().reset();
     }
+
+    public void update(float delta) {
+        getParticleEffect().update(delta);
+    }
 }

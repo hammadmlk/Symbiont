@@ -173,8 +173,10 @@ public class SymbiontMain extends ApplicationAdapter {
             deflectorBody = GameEngine.setUpDeflector();
         }
 
+        float delta = Gdx.graphics.getDeltaTime();
+
         // step physics engine
-        GameEngine.step(gameState, world, 1/60f);
+        GameEngine.step(gameState, world, delta);
 
         stage.draw();
 

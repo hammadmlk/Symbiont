@@ -39,7 +39,7 @@ public class DeflectorView {
 
             for (DeflectorEndpoint deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
                 deflectorEndpointInfo.getParticleEffect().setPosition(deflectorEndpointInfo.x, deflectorEndpointInfo.y);
-                deflectorEndpointInfo.getParticleEffect().draw(batch, 1 / 60f);
+                deflectorEndpointInfo.getParticleEffect().draw(batch);
             }
         }
     }

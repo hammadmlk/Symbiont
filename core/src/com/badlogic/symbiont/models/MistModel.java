@@ -57,4 +57,8 @@ public class MistModel {
     public boolean contains(float x, float y) {
         return rectangle.contains(x, y);
     }
+
+    public void update(float delta) {
+        getMistEffect().update(delta);
+    }
 }

@@ -52,7 +52,7 @@ public class MistView {
 		shapes.begin(ShapeType.Filled);
 
         // color roughly taken from `particles/mist.p` TODO keep up to date
-        shapes.setColor(0.44f, 0.28f, 0.79f, 0.15f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
+        shapes.setColor(0.44f, 0.28f, 0.79f, 0.20f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
 
         shapes.rect(mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
 
@@ -75,7 +75,7 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 
 		//push to the batch
-        mistModel.getMistEffect().draw(batch, 1 / 60f);
+        mistModel.getMistEffect().draw(batch);
 
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
