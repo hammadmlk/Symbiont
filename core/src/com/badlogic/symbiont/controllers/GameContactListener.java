@@ -12,13 +12,10 @@ import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class GameContactListener implements ContactListener {
-    PhysicsEntityModel alien;
-    PhysicsEntityModel other;
-    boolean deflected;
 
     @Override
     public void beginContact(Contact contact) {
-    	deflected = false;
+    	SymbiontMain.gameState.deflected = false; // for sanity
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
         PhysicsEntityModel a = (PhysicsEntityModel) fixtureA.getBody().getUserData();
@@ -49,16 +46,17 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
-        	this.alien = alien;
-        	deflected = true;
+        	SymbiontMain.gameState.alien = alien;
+        	SymbiontMain.gameState.deflected = true;
         }
         
     }
 
     @Override
     public void endContact(Contact contact) {
-    	if (deflected) {
-    		deflected = false;
+    	if (SymbiontMain.gameState.deflected) {
+    		SymbiontMain.gameState.deflected = false;
+    		PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     		
     		// TODO this is a constant and should be stored somewhere else
     		float desiredVel = 15;
