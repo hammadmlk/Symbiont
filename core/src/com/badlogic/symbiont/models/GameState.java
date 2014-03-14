@@ -18,6 +18,10 @@ public class GameState {
 
     public String backgroundPath;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
+    
+    // References for collision handling (alien and other are also in entities)
+    public transient PhysicsEntityModel alien;
+    public transient boolean deflected;
 
     /*
      * private/transient (don't get serialized)
