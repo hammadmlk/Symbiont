@@ -58,28 +58,31 @@ public class GameContactListener implements ContactListener {
     		SymbiontMain.gameState.deflected = false;
     		PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     		
-    		// TODO this is a constant and should be stored somewhere else
-    		float desiredVel = 15;
-    		Vector2 vel = alien.body.getLinearVelocity();
-    		
-    		// Only add impulse if the alien isn't moving fast enough
-    		if (vel.len() > desiredVel) {
-    			return;
-    		}
-    		float velChange = desiredVel - vel.len();
-    		float impulse = alien.body.getMass() * velChange;
-    		
     		float xdiff = SymbiontMain.gameState.deflectorEndpoints[1].x
 					- SymbiontMain.gameState.deflectorEndpoints[0].x;
 			float ydiff = SymbiontMain.gameState.deflectorEndpoints[1].y
 					- SymbiontMain.gameState.deflectorEndpoints[0].y;
 			
 			Vector2 impulseDir = new Vector2(ydiff, -xdiff);
+    		
+    		// TODO this is a constant and should be stored somewhere else
+    		float desiredVel = impulseDir.len()/20;
+    		Vector2 vel = alien.body.getLinearVelocity();
+    		
+
+    		float velChange = desiredVel - vel.len();
+    		float impulse = alien.body.getMass() * velChange;
+    		System.out.println("421IMPULSE: "+impulse);
+    		if (impulse > 15) {
+    			impulse = 15;
+    		} else if (impulse < -15) {
+    			impulse = -15;
+    		}
+
+    		System.out.println("241IMPULSE: "+impulse);
+    		
 			impulseDir.nor();
     		impulseDir.scl(impulse);
-    		if (impulseDir.y < 0) {
-    			impulseDir.scl(-1);
-    		}
     		
     		alien.body.applyLinearImpulse(impulseDir, alien.body.getWorldCenter(), true);
         }
