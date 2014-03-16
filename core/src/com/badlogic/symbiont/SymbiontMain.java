@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
@@ -62,8 +63,10 @@ public class SymbiontMain extends ApplicationAdapter {
         table.add(editCheckBox);
         final TextButton saveFileButton = new TextButton("Save", skin);
         table.add(saveFileButton);
-        final TextButton loadFileButton = new TextButton("Load File:", skin);
-        table.add(loadFileButton);
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
+		style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
+		ImageButton loadFileButton = new ImageButton(style);
+        table.add(loadFileButton).width(32).height(32);
         final TextField levelPath = new TextField(currentLevelFileName, skin);
         table.add(levelPath);
         levelPath.setTextFieldListener(new TextField.TextFieldListener() {
