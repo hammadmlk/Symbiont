@@ -63,27 +63,22 @@ public class GameContactListener implements ContactListener {
 			float ydiff = SymbiontMain.gameState.deflectorEndpoints[1].y
 					- SymbiontMain.gameState.deflectorEndpoints[0].y;
 			
+			// Always assume we're trying to bounce it upwards
+			// Weird corner case is if alien hits deflector from underneath,
+			// it will still bounce upwards
 			Vector2 impulseDir = new Vector2(ydiff, -xdiff);
+			if (impulseDir.y < 0) {
+				impulseDir.scl(-1);
+			}
     		
     		// TODO this is a constant and should be stored somewhere else
     		float desiredVel = impulseDir.len()/20;
     		Vector2 vel = alien.body.getLinearVelocity();
-    		
 
     		float velChange = desiredVel - vel.len();
-    		float impulse = alien.body.getMass() * velChange;
-    		System.out.println("421IMPULSE: "+impulse);
-    		if (impulse > 15) {
-    			impulse = 15;
-    		} else if (impulse < -15) {
-    			impulse = -15;
-    		}
+    		float imp = alien.body.getMass() * velChange;
 
-    		System.out.println("241IMPULSE: "+impulse);
-    		
-			impulseDir.nor();
-    		impulseDir.scl(impulse);
-    		
+			impulseDir.nor().scl(imp);
     		alien.body.applyLinearImpulse(impulseDir, alien.body.getWorldCenter(), true);
         }
     }
@@ -95,6 +90,5 @@ public class GameContactListener implements ContactListener {
 
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
-
     }
 }
