@@ -16,7 +16,7 @@ public class PhysicsEntityModel {
     /**
      * used to determine what happens in collisions
      */
-    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR, POWERUP_SPEED}
+    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR, POWERUP_SPEED, POWERUP_SHRINK}
 
     /**
      * All physics entities must have textures
