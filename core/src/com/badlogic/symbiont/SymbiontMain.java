@@ -7,11 +7,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
@@ -23,10 +20,10 @@ import com.badlogic.symbiont.views.GameView;
 public class SymbiontMain extends ApplicationAdapter {
 
     private Stage stage;
-    private GameView gameView;
+    public static GameView gameView;
 
     public static GameState gameState;
-    private String currentLevelFileName = "second";
+    public static String currentLevelFileName = "second";
     public static World world;
 
     public static Skin skin;
@@ -37,7 +34,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static LevelEditor levelEditor;
 
-    private GameInputListener gameInputListener = new GameInputListener();
+    public static GameInputListener gameInputListener = new GameInputListener();
 
     @Override
     public void create() {
@@ -52,75 +49,12 @@ public class SymbiontMain extends ApplicationAdapter {
 
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-		// Create a table that fills the screen. Everything else will go inside this table.
-		Table table = new Table().top().left().padTop(20);
-		table.setFillParent(true);
-		stage.addActor(table);
-
-		final CheckBox debugCheckBox = new CheckBox("Debug", skin);
-        table.add(debugCheckBox);
-        final CheckBox editCheckBox = new CheckBox("Edit", skin);
-        table.add(editCheckBox);
-        final TextButton saveFileButton = new TextButton("Save", skin);
-        table.add(saveFileButton);
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
-		style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
-		ImageButton loadFileButton = new ImageButton(style);
-        table.add(loadFileButton).width(32).height(32);
-        final TextField levelPath = new TextField(currentLevelFileName, skin);
-        table.add(levelPath);
-        levelPath.setTextFieldListener(new TextField.TextFieldListener() {
-            @Override
-            public void keyTyped(TextField textField, char key) {
-                currentLevelFileName = textField.getText();
-            }
-        });
-
-		debugCheckBox.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                debug = !debug;
-            }
-        });
-
-        editCheckBox.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                edit = !edit;
-                if (!edit) {
-                    if (world != null) {
-                        world.dispose();
-                    }
-                    world = new World(new Vector2(0, -10), true);
-                    world.setContactListener(new GameContactListener());
-                    gameState = GameState.fromJSON(levelEditor.editorGameState.toJSON());
-                    gameState.addToWorld(world);
-                    gameView.clearListeners();
-                    gameView.addListener(gameInputListener);
-                } else {
-                    gameView.clearListeners();
-                    gameView.addListener(levelEditor);
-                }
-            }
-        });
-
-        loadFileButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                loadFile();
-            }
-        });
-
-        saveFileButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                FileHandle fileHandle = Gdx.files.local("levels/" + currentLevelFileName + ".json");
-                fileHandle.writeString(levelEditor.editorGameState.toJSON(), false);
-            }
-        });
+        stage.addActor(Menu.createMenu(skin));
 
         loadFile();
     }
 
-    private void loadFile() {
+    public static void loadFile() {
         if (world != null) {
             world.dispose();
         }
