@@ -1,5 +1,5 @@
 {
-    "backgroundPath": "non-git/background.png",
+    "backgroundPath": "non-git/level2bg.png",
     "entities": [
         {
             "class": "com.badlogic.symbiont.models.MovableObjectModel",
