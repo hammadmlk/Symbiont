@@ -38,6 +38,15 @@
             }
         },
         {
+            "entityType": "POWERUP_SPEED",
+            "flipVertical": true,
+            "name": "plant",
+            "position": {
+                "x": 94.1,
+                "y": 500
+            }
+        },
+        {
             "class": "com.badlogic.symbiont.models.PlantModel",
             "mistModels": [
                 {
