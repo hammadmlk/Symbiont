@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.ConstantsConfig;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
@@ -53,6 +54,11 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.alien = alien;
             SymbiontMain.gameState.spedUp = true;
         }
+        if (other.entityType == PhysicsEntityModel.Type.POWERUP_SHRINK) {
+            other.toBeDestroyed = true;
+            SymbiontMain.gameState.alien = alien;
+            SymbiontMain.gameState.shrink = true;
+        }
     }
 
     @Override
@@ -88,8 +94,7 @@ public class GameContactListener implements ContactListener {
     	    SymbiontMain.gameState.spedUp = false;
     	    PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     	    
-    	    // TODO this is also a constant and should be stored
-            float desiredVel = 25;
+            float desiredVel = ConstantsConfig.powerupSpeed;
             Vector2 vel = alien.body.getLinearVelocity();
             
             float velChange = desiredVel - vel.len();
@@ -100,6 +105,12 @@ public class GameContactListener implements ContactListener {
             
             alien.body.applyLinearImpulse(vel, alien.body.getWorldCenter(), true);	    
     	}
+    	if (SymbiontMain.gameState.shrink) {
+            SymbiontMain.gameState.shrink = false;
+            PhysicsEntityModel alien = SymbiontMain.gameState.alien;
+            
+            // TODO if we really want this, we will have to set a variable and destroy/create new fixtures in GameEngine
+        }
     }
 
     @Override
