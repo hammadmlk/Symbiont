@@ -32,7 +32,6 @@ public class GameContactListener implements ContactListener {
         } else if (b.entityType == PhysicsEntityModel.Type.BROKEN) {
             b.toBeDestroyed = true;
         }
-
     }
 
     private void handleAlienContact(PhysicsEntityModel alien, PhysicsEntityModel other) {
@@ -49,7 +48,11 @@ public class GameContactListener implements ContactListener {
         	SymbiontMain.gameState.alien = alien;
         	SymbiontMain.gameState.deflected = true;
         }
-        
+        if (other.entityType == PhysicsEntityModel.Type.POWERUP_SPEED) {
+            other.toBeDestroyed = true;
+            SymbiontMain.gameState.alien = alien;
+            SymbiontMain.gameState.spedUp = true;
+        }
     }
 
     @Override
@@ -81,6 +84,22 @@ public class GameContactListener implements ContactListener {
 			impulseDir.nor().scl(imp);
     		alien.body.applyLinearImpulse(impulseDir, alien.body.getWorldCenter(), true);
         }
+    	if (SymbiontMain.gameState.spedUp) {
+    	    SymbiontMain.gameState.spedUp = false;
+    	    PhysicsEntityModel alien = SymbiontMain.gameState.alien;
+    	    
+    	    // TODO this is also a constant and should be stored
+            float desiredVel = 25;
+            Vector2 vel = alien.body.getLinearVelocity();
+            
+            float velChange = desiredVel - vel.len();
+            float impulse = alien.body.getMass() * velChange;
+            
+            vel.nor();
+            vel.scl(impulse);
+            
+            alien.body.applyLinearImpulse(vel, alien.body.getWorldCenter(), true);	    
+    	}
     }
 
     @Override
