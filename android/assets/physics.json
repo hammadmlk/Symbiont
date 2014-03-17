@@ -317,8 +317,8 @@
                     "r": 0.5
                 }
             ],
-            "imagePath": "non-git/textures/ball.png",
-            "name": "ball",
+            "imagePath": "non-git/textures/creatureanim.png",
+            "name": "creatureanim",
             "origin": {
                 "x": 0.5,
                 "y": 0.5

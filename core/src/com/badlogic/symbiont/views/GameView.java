@@ -32,7 +32,7 @@ public class GameView extends Actor {
 
         // render game state
         for (PhysicsEntityModel entity : gameState.entities) {
-            PhysicsEntityView.render(batch, entity);
+            	PhysicsEntityView.render(batch, entity);     
         }
 
         mistView.render(batch, gameState);

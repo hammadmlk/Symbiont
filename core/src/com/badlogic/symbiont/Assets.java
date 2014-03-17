@@ -16,6 +16,8 @@ public class Assets {
     private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
     private static Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
+    private static Map<String, TextureAtlas.AtlasRegion[]> atlasAnimRegionMap = new HashMap<String, TextureAtlas.AtlasRegion[]>();
+
 
     private static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
 
@@ -62,6 +64,19 @@ public class Assets {
         TextureAtlas.AtlasRegion atlasRegion = textureAtlas.findRegion(name);
         atlasRegionMap.put(name, atlasRegion);
         return atlasRegion;
+    }
+    // create images for Animation
+    public static TextureAtlas.AtlasRegion[] loadAnimationAtlas(String path, int index){
+    	String name=Gdx.files.internal(path).nameWithoutExtension();
+    	TextureAtlas.AtlasRegion[] atlasAnimRegion = new TextureAtlas.AtlasRegion[index+1];
+    	if (atlasAnimRegionMap.containsKey(name)) {
+             return atlasAnimRegionMap.get(name);
+         }
+    	for(int i=0;i<=index;i++){
+    		  atlasAnimRegion[i] = textureAtlas.findRegion(name,i);
+    	 }
+    	 atlasAnimRegionMap.put(name,atlasAnimRegion); 
+    	 return atlasAnimRegion;
     }
 
     public static void dispose() {

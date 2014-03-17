@@ -1,9 +1,11 @@
 package com.badlogic.symbiont.models;
 
 import com.badlogic.gdx.Gdx;
+
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -24,6 +26,7 @@ public class PhysicsEntityModel {
      * the gameState's list of physics entities, so won't get drawn or loaded from JSON
      */
     public transient TextureAtlas.AtlasRegion atlasRegion;
+    public transient TextureAtlas.AtlasRegion[] atlasAnimRegion;
     public String name;
     public Float scale;
     public Boolean breakable;
@@ -34,7 +37,12 @@ public class PhysicsEntityModel {
 
     public transient boolean toBeDestroyed;
     private transient Vector2 origin;
-
+    
+    //Alien Animation
+  
+	public Animation alienAnimation;
+	public float stateTime;
+	//public TextureAtlas.AtlasRegion currentFrame;
     /*
      * BodyDef fields. Can't use a BodyDef because fields are marked final
      */
@@ -144,9 +152,33 @@ public class PhysicsEntityModel {
             return atlasRegion;
         }
         String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
-        atlasRegion = Assets.loadAtlas(imgPath);
+        if(entityType != Type.ALIEN){
+        	atlasRegion = Assets.loadAtlas(imgPath);
+        }else{
+        	
+        	atlasRegion=Assets.loadAnimationAtlas(imgPath,7)[0];	
+        }
         assert atlasRegion != null;
         return atlasRegion;
+    }
+    
+    //get Alien animation images
+    public TextureAtlas.AtlasRegion[] getAnimImg(){
+         if(atlasAnimRegion !=null){
+        	 return atlasAnimRegion;
+         }  
+         String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
+         atlasAnimRegion=Assets.loadAnimationAtlas(imgPath,7);// now it just gets Alien's animation
+         assert atlasAnimRegion!=null;
+         return  atlasAnimRegion;
+    }
+   //create Alien Animation, it will be called in SymbiontMain
+    public void createAlienAnimation(){
+    	alienAnimation= new Animation(0.15f,atlasAnimRegion);
+    	alienAnimation.setPlayMode(alienAnimation.LOOP);
+    	
+    	stateTime=0f;
+    	
     }
 
     public Vector2 getOrigin() {

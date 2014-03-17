@@ -31,7 +31,7 @@
             "linearVelocity": {
                 "y": -250
             },
-            "name": "ball",
+            "name": "creatureanim",
             "position": {
                 "x": 188,
                 "y": 608

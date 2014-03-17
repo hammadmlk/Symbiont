@@ -16,7 +16,10 @@ import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.controllers.levelEditor.LevelEditor;
 import com.badlogic.symbiont.models.GameState;
+import com.badlogic.symbiont.models.PhysicsEntityModel;
 import com.badlogic.symbiont.views.GameView;
+import com.badlogic.symbiont.views.PhysicsEntityView;
+import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class SymbiontMain extends ApplicationAdapter {
     public static final int VIRTUAL_WIDTH = 480;
@@ -118,8 +121,20 @@ public class SymbiontMain extends ApplicationAdapter {
         });
 
         loadFile();
+        
+        createAlienAnimation();
     }
-
+    
+    //Create Alien animation
+    private void createAlienAnimation(){
+    	 for (PhysicsEntityModel o : gameState.entities){
+         	if(o.entityType==PhysicsEntityModel.Type.ALIEN){
+         		PhysicsEntityView.create(o);
+         	}
+         }
+    }
+    
+    
     private void loadFile() {
         if (world != null) {
             world.dispose();
@@ -177,7 +192,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
         // step physics engine
         GameEngine.step(gameState, world, delta);
-
+        
         stage.draw();
 
         if (deflectorBody != null) {

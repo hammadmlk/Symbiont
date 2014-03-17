@@ -1,6 +1,6 @@
 {
     "namesToConfigs": {
-        "ball": {
+        "creatureanim": {
             "density": 0.5,
             "entityType": "ALIEN",
             "friction": 0.4,
