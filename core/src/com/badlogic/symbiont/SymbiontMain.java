@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
@@ -113,6 +114,7 @@ public class SymbiontMain extends ApplicationAdapter {
         GameEngine.step(gameState, world, delta);
 
         stage.draw();
+        Table.drawDebug(stage);
 
         if (deflectorBody != null) {
             GameEngine.tearDownDeflector(deflectorBody);

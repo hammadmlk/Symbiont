@@ -6,29 +6,66 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 
 public class Menu {
+    public static boolean menuIsVisible = false;
+
     public static Actor createMenu(Skin skin) {
         // Create a table that fills the screen. Everything else will go inside this table.
-        Table table = new Table().top().left().padTop(20);
-        table.setFillParent(true);
+        Table mainTable = new Table().top().left();
+        mainTable.setFillParent(true);
+        mainTable.debug();
+        Table upperTable = new Table();
+
+        final Window menuWindow = new Window("Menu", skin);
+        menuWindow.setMovable(false);
+        menuWindow.setVisible(menuIsVisible);
+        menuWindow.setModal(menuIsVisible);
+
+        final TextButton menuTextButton = new TextButton("Menu", skin);
+        menuTextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuIsVisible = true;
+                menuWindow.setVisible(menuIsVisible);
+                menuWindow.setModal(menuIsVisible);
+            }
+        });
+
+        final TextButton returnTextButton = new TextButton("Return", skin);
+        returnTextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuIsVisible = false;
+                menuWindow.setVisible(menuIsVisible);
+                menuWindow.setModal(menuIsVisible);
+            }
+        });
+
+        upperTable.add(menuTextButton);
 
         final CheckBox debugCheckBox = new CheckBox("Debug", skin);
-        table.add(debugCheckBox);
+        menuWindow.add(debugCheckBox);
+        menuWindow.row();
         final CheckBox editCheckBox = new CheckBox("Edit", skin);
-        table.add(editCheckBox);
+        menuWindow.add(editCheckBox);
+        menuWindow.row();
         final TextButton saveFileButton = new TextButton("Save", skin);
-        table.add(saveFileButton);
+        menuWindow.add(saveFileButton);
+        menuWindow.row();
         ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
         style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
         ImageButton loadFileButton = new ImageButton(style);
-        table.add(loadFileButton).width(32).height(32);
+        upperTable.add(loadFileButton).width(32).height(32);
         final TextField levelPath = new TextField(SymbiontMain.currentLevelFileName, skin);
-        table.add(levelPath);
+        menuWindow.add(levelPath);
+        menuWindow.row();
         levelPath.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField textField, char key) {
@@ -77,6 +114,13 @@ public class Menu {
             }
         });
 
-        return table;
+        menuWindow.row();
+        menuWindow.add(returnTextButton);
+
+        mainTable.add(upperTable);
+        mainTable.row();
+        mainTable.add(menuWindow).width(GameConstants.VIRTUAL_WIDTH);
+
+        return mainTable;
     }
 }
