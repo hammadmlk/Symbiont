@@ -173,14 +173,20 @@ public class PhysicsEntityModel {
          assert atlasAnimRegion!=null;
          return  atlasAnimRegion;
     }
-   //create Alien Animation, it will be called in SymbiontMain
-    public void createAlienAnimation(){
+   //create Alien Animation
+    public void setUpAlienAnimation(){
     	alienAnimation= new Animation(0.15f,atlasAnimRegion);
     	alienAnimation.setPlayMode(alienAnimation.LOOP);
-    	
     	stateTime=0f;
-    	
     }
+    
+    public static void createAnimation(PhysicsEntityModel entity){
+		if(entity.entityType==PhysicsEntityModel.Type.ALIEN){
+			entity.atlasAnimRegion=entity.getAnimImg();
+	    	entity.setUpAlienAnimation(); 
+		}
+	}
+	
 
     public Vector2 getOrigin() {
         if (origin != null)

@@ -72,7 +72,7 @@ public class GameState {
             }
             
             if(o.entityType==PhysicsEntityModel.Type.ALIEN){
-         		PhysicsEntityView.create(o);
+         		PhysicsEntityModel.createAnimation(o);
          	}
         }
         return gameState;
