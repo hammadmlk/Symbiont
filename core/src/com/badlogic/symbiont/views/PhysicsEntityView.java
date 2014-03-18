@@ -26,8 +26,7 @@ public class PhysicsEntityView {
         // flip if necessary
         atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
         
-        // flip back if necessary
-        atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
+       
        
         if(entity.entityType==PhysicsEntityModel.Type.ALIEN){
         	entity.stateTime+=Gdx.graphics.getDeltaTime();
@@ -58,5 +57,8 @@ public class PhysicsEntityView {
 	                (float) Math.toDegrees(entity.angle)               // float rotation
 	        );
         }
+        
+        // flip back if necessary
+        atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
     }
 }
