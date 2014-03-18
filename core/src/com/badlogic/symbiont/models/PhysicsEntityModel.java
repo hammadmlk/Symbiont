@@ -40,7 +40,7 @@ public class PhysicsEntityModel {
     
     //Alien Animation
   
-	public Animation alienAnimation;
+	public transient Animation alienAnimation;
 	public float stateTime;
 	//public TextureAtlas.AtlasRegion currentFrame;
     /*

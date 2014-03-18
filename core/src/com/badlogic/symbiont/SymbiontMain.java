@@ -122,18 +122,10 @@ public class SymbiontMain extends ApplicationAdapter {
 
         loadFile();
         
-        createAlienAnimation();
+        
     }
     
-    //Create Alien animation
-    private void createAlienAnimation(){
-    	 for (PhysicsEntityModel o : gameState.entities){
-         	if(o.entityType==PhysicsEntityModel.Type.ALIEN){
-         		PhysicsEntityView.create(o);
-         	}
-         }
-    }
-    
+   
     
     private void loadFile() {
         if (world != null) {

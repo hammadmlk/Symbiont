@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.CollisionFilters;
+import com.badlogic.symbiont.views.PhysicsEntityView;
 
 public class GameState {
 
@@ -69,10 +70,14 @@ public class GameState {
                 PlantModel plantModel = (PlantModel) o;
                 gameState.mistModels.addAll(plantModel.mistModels);
             }
+            
+            if(o.entityType==PhysicsEntityModel.Type.ALIEN){
+         		PhysicsEntityView.create(o);
+         	}
         }
         return gameState;
     }
-
+    
     public String toJSON() {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);

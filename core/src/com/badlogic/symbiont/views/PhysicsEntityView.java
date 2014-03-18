@@ -25,8 +25,6 @@ public class PhysicsEntityView {
 
         // flip if necessary
         atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
-        
-       
        
         if(entity.entityType==PhysicsEntityModel.Type.ALIEN){
         	TextureAtlas.AtlasRegion currentFrame=(AtlasRegion) entity.alienAnimation.getKeyFrame(entity.stateTime,true);
