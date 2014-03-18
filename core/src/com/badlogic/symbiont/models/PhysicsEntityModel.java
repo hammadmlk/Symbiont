@@ -71,7 +71,7 @@ public class PhysicsEntityModel {
     /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      */
-    public void update() {
+    public void update(float delta) {
         if (entityType == Type.BROKEN) {
             type = BodyDef.BodyType.DynamicBody;
             body.setType(BodyDef.BodyType.DynamicBody);
@@ -92,6 +92,7 @@ public class PhysicsEntityModel {
         );
         angle = body.getAngle();
         angularVelocity = body.getAngularVelocity();
+        stateTime+=delta;
     }
 
     public void addToWorld(World world) {

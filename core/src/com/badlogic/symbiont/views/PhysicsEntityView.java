@@ -29,7 +29,6 @@ public class PhysicsEntityView {
        
        
         if(entity.entityType==PhysicsEntityModel.Type.ALIEN){
-        	entity.stateTime+=Gdx.graphics.getDeltaTime();
         	TextureAtlas.AtlasRegion currentFrame=(AtlasRegion) entity.alienAnimation.getKeyFrame(entity.stateTime,true);
         	batch.draw(currentFrame,  
         			adjustedX,                                         // float x

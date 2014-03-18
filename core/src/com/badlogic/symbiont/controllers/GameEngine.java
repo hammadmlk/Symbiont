@@ -27,7 +27,7 @@ public class GameEngine {
                     physicsEntityModelIterator.remove();
                     world.destroyBody(physicsEntityModel.body);
                 } else {
-                    physicsEntityModel.update();
+                    physicsEntityModel.update(delta);
                 }
             }
 
