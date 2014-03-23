@@ -1,15 +1,14 @@
 package com.badlogic.symbiont;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.symbiont.models.ConstantsConfigLoader;
 import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Assets {
 

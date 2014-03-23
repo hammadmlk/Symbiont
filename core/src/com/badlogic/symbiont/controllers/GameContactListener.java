@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
@@ -71,8 +72,7 @@ public class GameContactListener implements ContactListener {
 				impulseDir.scl(-1);
 			}
     		
-    		// TODO this is a constant and should be stored somewhere else
-    		float desiredVel = impulseDir.len()/20;
+    		float desiredVel = impulseDir.len()*GameConstants.DEFLECTOR_CONSTANT;
     		Vector2 vel = alien.body.getLinearVelocity();
 
     		float velChange = desiredVel - vel.len();
