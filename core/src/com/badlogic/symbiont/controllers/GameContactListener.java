@@ -72,7 +72,7 @@ public class GameContactListener implements ContactListener {
 				impulseDir.scl(-1);
 			}
     		
-    		float desiredVel = impulseDir.len()*GameConstants.DEFLECTOR_CONSTANT;
+    		float desiredVel = impulseDir.len()*GameConstants.DEFLECTOR_IMPULSE;
     		Vector2 vel = alien.body.getLinearVelocity();
 
     		float velChange = desiredVel - vel.len();

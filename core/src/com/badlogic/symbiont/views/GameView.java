@@ -44,6 +44,9 @@ public class GameView extends Actor {
         } else if (gameState.state == GameState.State.LOST) {
             drawTextCentered(batch, "YOU LOST!");
         }
+        
+        // Currently covers up FPS display, won't be an issue when it is an actual meter
+        this.drawTextCenteredBottom(batch, ""+SymbiontMain.gameState.currentEnergy);
 
         // debug render
         if (SymbiontMain.debug) {

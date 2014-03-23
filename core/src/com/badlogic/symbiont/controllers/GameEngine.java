@@ -49,10 +49,22 @@ public class GameEngine {
             for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
                 deflectorEndpoint.update(delta);
             }
+            
+            // Get deflector width and update energy meter
+            if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active) {
+				float xdiff = gameState.deflectorEndpoints[1].x
+						- gameState.deflectorEndpoints[0].x;
+				float ydiff = gameState.deflectorEndpoints[1].y
+						- gameState.deflectorEndpoints[0].y;
+				float length = (float) Math.sqrt(xdiff * xdiff + ydiff * ydiff);
+				gameState.currentEnergy -= length*GameConstants.DEFLECTOR_ENERGY;
+            }
 
             // Check win conditions
             if (gameState.mistModels.size() == 0) {
                 gameState.state = GameState.State.WON;
+            } else if (gameState.currentEnergy <= 0) {
+            	gameState.state = GameState.State.LOST;
             }
         }
     }
