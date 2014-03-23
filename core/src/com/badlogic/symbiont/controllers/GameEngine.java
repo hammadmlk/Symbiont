@@ -17,7 +17,7 @@ import java.util.Iterator;
 public class GameEngine {
     public static void step(GameState gameState, World world, float delta) {
         if (gameState.state == GameState.State.PLAYING) {
-            world.step(delta, 6, 2);
+            world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
 
             // update physics entities
             Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
@@ -77,7 +77,6 @@ public class GameEngine {
                 SymbiontMain.gameState.deflectorEndpoints[0].y / GameConstants.PIXELS_PER_METER
         );
 
-        float deflector_width = 10 / GameConstants.PIXELS_PER_METER;
         deflectorPoints[0].set(0,0);
         deflectorPoints[1].set(
                 (SymbiontMain.gameState.deflectorEndpoints[1].x - SymbiontMain.gameState.deflectorEndpoints[0].x) / GameConstants.PIXELS_PER_METER,
@@ -85,7 +84,7 @@ public class GameEngine {
         );
         deflectorNormal.set(-deflectorPoints[1].y, deflectorPoints[1].x);
         deflectorNormal.nor();
-        deflectorNormal.scl(deflector_width);
+        deflectorNormal.scl(GameConstants.DEFLECTOR_THICKNESS);
         deflectorPoints[2].set(
                 deflectorPoints[1].x + deflectorNormal.x,
                 deflectorPoints[1].y + deflectorNormal.y
