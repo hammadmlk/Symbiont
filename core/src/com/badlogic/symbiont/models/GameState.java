@@ -17,6 +17,7 @@ public class GameState {
     public enum State {WAITING_TO_START, PLAYING, WON, LOST}
 
     public String backgroundPath;
+    public float currentEnergy;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
     
     // References for collision handling (alien and other are also in entities)
