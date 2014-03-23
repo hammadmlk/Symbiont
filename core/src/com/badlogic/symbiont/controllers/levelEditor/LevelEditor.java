@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
@@ -23,7 +23,7 @@ public class LevelEditor extends InputListener{
     public GameState editorGameState;
     public World editorWorld;
 
-    private final float aabb_delta = 5 / SymbiontMain.PIXELS_PER_METER;
+    private final float aabb_delta = 5 / GameConstants.PIXELS_PER_METER;
 
     public LevelEditor(GameState editorGameState) {
         this.editorGameState = editorGameState;
@@ -36,8 +36,8 @@ public class LevelEditor extends InputListener{
         if (Gdx.input.isButtonPressed(Input.Buttons.MIDDLE)) {
             System.out.println(String.format("%f, %f,", x, y));
         }
-        float physicsX = x / SymbiontMain.PIXELS_PER_METER;
-        float physicsY = y / SymbiontMain.PIXELS_PER_METER;
+        float physicsX = x / GameConstants.PIXELS_PER_METER;
+        float physicsY = y / GameConstants.PIXELS_PER_METER;
         editorWorld.QueryAABB(new QueryCallback() {
             @Override
             public boolean reportFixture(Fixture fixture) {
@@ -70,8 +70,8 @@ public class LevelEditor extends InputListener{
         } else {
             x -= selectedOffset.x;
             y -= selectedOffset.y;
-            float physicsX = x / SymbiontMain.PIXELS_PER_METER;
-            float physicsY = y / SymbiontMain.PIXELS_PER_METER;
+            float physicsX = x / GameConstants.PIXELS_PER_METER;
+            float physicsY = y / GameConstants.PIXELS_PER_METER;
             selectedPhysicsEntityModel.setPositionFromLevelEditor(x, y);
             if (selectedPhysicsEntityModel.body != null) {
                 selectedPhysicsEntityModel.body.setTransform(physicsX, physicsY, selectedPhysicsEntityModel.body.getAngle());
