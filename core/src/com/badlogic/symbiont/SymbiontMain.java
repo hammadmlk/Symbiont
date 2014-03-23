@@ -50,7 +50,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
-        stage.addActor(Menu.createMenu(skin));
+        stage.addActor(Menu.createMenu(skin, stage.getGutterHeight()));
 
         loadFile();
     }

@@ -15,9 +15,10 @@ import com.badlogic.symbiont.models.GameState;
 public class Menu {
     public static boolean menuIsVisible = false;
 
-    public static Actor createMenu(Skin skin) {
+    public static Actor createMenu(Skin skin, float padTop) {
         // Create a table that fills the screen. Everything else will go inside this table.
-        Table mainTable = new Table().top().left();
+        // TODO padding needs to get updated on resize
+        Table mainTable = new Table().top().left().padTop(padTop);
         mainTable.setFillParent(true);
         mainTable.debug();
         final Table upperTable = new Table();
