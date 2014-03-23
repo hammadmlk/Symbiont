@@ -15,12 +15,11 @@ import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
 import com.badlogic.symbiont.controllers.levelEditor.LevelEditor;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.views.GameView;
 
 public class SymbiontMain extends ApplicationAdapter {
-    public static final int VIRTUAL_WIDTH = 480;
-    public static final int VIRTUAL_HEIGHT = 800;
 
     private Stage stage;
     private GameView gameView;
@@ -28,8 +27,6 @@ public class SymbiontMain extends ApplicationAdapter {
     public static GameState gameState;
     private String currentLevelFileName = "second";
     public static World world;
-
-    public static final float PIXELS_PER_METER = 50;
 
     public static Skin skin;
 
@@ -48,7 +45,7 @@ public class SymbiontMain extends ApplicationAdapter {
         Gdx.input.setInputProcessor(stage);
 
         gameView = new GameView();
-        gameView.setBounds(0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         gameView.addListener(gameInputListener);
         stage.addActor(gameView);
 
@@ -188,7 +185,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        stage.setViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, true);
+        stage.setViewport(GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT, true);
         stage.getCamera().translate(-stage.getGutterWidth(), -stage.getGutterHeight(), 0);
     }
 

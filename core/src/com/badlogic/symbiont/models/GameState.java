@@ -39,7 +39,7 @@ public class GameState {
     }
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
-        if (x < 0 || x > SymbiontMain.VIRTUAL_WIDTH || y < 0 || y > SymbiontMain.VIRTUAL_HEIGHT)
+        if (x < 0 || x > GameConstants.VIRTUAL_WIDTH || y < 0 || y > GameConstants.VIRTUAL_HEIGHT)
             return;
         for(MistModel mistModel : mistModels){
             if(mistModel.contains(x, y)){
@@ -87,14 +87,14 @@ public class GameState {
     }
 
     private void setUpWalls(World world) {
-        float halfwidth = 50 / SymbiontMain.PIXELS_PER_METER;
+        float halfwidth = 50 / GameConstants.PIXELS_PER_METER;
 
-        float groundHeight = - halfwidth - SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2;
+        float groundHeight = - halfwidth - GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2;
 
         BodyDef groundBodyDef = new BodyDef();
         // Set its world position
         groundBodyDef.position.set(new Vector2(
-                SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2,
+                GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2,
                 groundHeight
                 )
             );
@@ -114,41 +114,41 @@ public class GameState {
         PolygonShape groundBox = new PolygonShape();
         // Set the polygon shape as a box which is twice the size of our view port and 20 high
         // (setAsBox takes half-width and half-height as arguments)
-        groundBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
+        groundBox.setAsBox(GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         // Create a fixture from our polygon shape and add it to our ground body
         Fixture groundFixture = groundBody.createFixture(groundBox, 0f);
         groundFixture.setFilterData(CollisionFilters.GROUND);
 
         BodyDef topWallDef = new BodyDef();
         topWallDef.position.set(new Vector2(
-                    SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2,
-                    SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER + halfwidth
+                    GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2,
+                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER + halfwidth
                 )
             );
         Body topWallBody = world.createBody(topWallDef);
         topWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape topWallBox = new PolygonShape();
-        topWallBox.setAsBox(SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
+        topWallBox.setAsBox(GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
         topWallBody.createFixture(topWallBox, 0f);
 
         BodyDef leftWallDef = new BodyDef();
-        leftWallDef.position.set(new Vector2(-halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2));
+        leftWallDef.position.set(new Vector2(-halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2));
         Body leftWallBody = world.createBody(leftWallDef);
         leftWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape leftWallBox = new PolygonShape();
-        leftWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
+        leftWallBox.setAsBox(halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2 - groundHeight);
         leftWallBody.createFixture(leftWallBox, 0f);
 
         BodyDef rightWallDef = new BodyDef();
         rightWallDef.position.set(new Vector2(
-                    SymbiontMain.VIRTUAL_WIDTH / SymbiontMain.PIXELS_PER_METER + halfwidth,
-                    SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2
+                    GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER + halfwidth,
+                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2
                 )
             );
         Body rightWallBody = world.createBody(rightWallDef);
         rightWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape rightWallBox = new PolygonShape();
-        rightWallBox.setAsBox(halfwidth, SymbiontMain.VIRTUAL_HEIGHT / SymbiontMain.PIXELS_PER_METER / 2 - groundHeight);
+        rightWallBox.setAsBox(halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2 - groundHeight);
         rightWallBody.createFixture(rightWallBox, halfwidth);
     }
 

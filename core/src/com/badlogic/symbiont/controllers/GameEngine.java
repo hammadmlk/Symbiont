@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
@@ -72,15 +73,15 @@ public class GameEngine {
         }
         deflectorDef.type = BodyDef.BodyType.StaticBody;
         deflectorDef.position.set(
-                SymbiontMain.gameState.deflectorEndpoints[0].x / SymbiontMain.PIXELS_PER_METER,
-                SymbiontMain.gameState.deflectorEndpoints[0].y / SymbiontMain.PIXELS_PER_METER
+                SymbiontMain.gameState.deflectorEndpoints[0].x / GameConstants.PIXELS_PER_METER,
+                SymbiontMain.gameState.deflectorEndpoints[0].y / GameConstants.PIXELS_PER_METER
         );
 
-        float deflector_width = 10 / SymbiontMain.PIXELS_PER_METER;
+        float deflector_width = 10 / GameConstants.PIXELS_PER_METER;
         deflectorPoints[0].set(0,0);
         deflectorPoints[1].set(
-                (SymbiontMain.gameState.deflectorEndpoints[1].x - SymbiontMain.gameState.deflectorEndpoints[0].x) / SymbiontMain.PIXELS_PER_METER,
-                (SymbiontMain.gameState.deflectorEndpoints[1].y - SymbiontMain.gameState.deflectorEndpoints[0].y) / SymbiontMain.PIXELS_PER_METER
+                (SymbiontMain.gameState.deflectorEndpoints[1].x - SymbiontMain.gameState.deflectorEndpoints[0].x) / GameConstants.PIXELS_PER_METER,
+                (SymbiontMain.gameState.deflectorEndpoints[1].y - SymbiontMain.gameState.deflectorEndpoints[0].y) / GameConstants.PIXELS_PER_METER
         );
         deflectorNormal.set(-deflectorPoints[1].y, deflectorPoints[1].x);
         deflectorNormal.nor();

@@ -1,13 +1,13 @@
 package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
@@ -49,9 +49,9 @@ public class GameView extends Actor {
         if (SymbiontMain.debug) {
             batch.end();
             debugRenderer.render(world, batch.getProjectionMatrix().cpy().scale(
-                    SymbiontMain.PIXELS_PER_METER,
-                    SymbiontMain.PIXELS_PER_METER,
-                    SymbiontMain.PIXELS_PER_METER
+                    GameConstants.PIXELS_PER_METER,
+                    GameConstants.PIXELS_PER_METER,
+                    GameConstants.PIXELS_PER_METER
                 )
             );
 
@@ -63,15 +63,15 @@ public class GameView extends Actor {
 
     private void drawTextCenteredBottom(SpriteBatch batch, String text) {
         BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
-        float fontX = SymbiontMain.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
+        float fontX = GameConstants.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
         float fontY = 50;
         bitmapFont.draw(batch, text, fontX, fontY);
     }
 
     private void drawTextCentered(SpriteBatch batch, String text) {
         BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
-        float fontX = SymbiontMain.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
-        float fontY = SymbiontMain.VIRTUAL_HEIGHT / 2 - bitmapFont.getBounds(text).height/2;
+        float fontX = GameConstants.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
+        float fontY = GameConstants.VIRTUAL_HEIGHT / 2 - bitmapFont.getBounds(text).height/2;
         bitmapFont.draw(batch, text, fontX, fontY);
     }
 

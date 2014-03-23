@@ -1,14 +1,13 @@
 package com.badlogic.symbiont.models;
 
-import com.badlogic.gdx.Gdx;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.CollisionFilters;
 
 public class PhysicsEntityModel {
@@ -75,12 +74,12 @@ public class PhysicsEntityModel {
         }
         
         position.set(
-                body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
-                body.getPosition().y * SymbiontMain.PIXELS_PER_METER
+                body.getPosition().x * GameConstants.PIXELS_PER_METER,
+                body.getPosition().y * GameConstants.PIXELS_PER_METER
         );
         linearVelocity.set(
-                body.getLinearVelocity().x * SymbiontMain.PIXELS_PER_METER,
-                body.getLinearVelocity().y * SymbiontMain.PIXELS_PER_METER
+                body.getLinearVelocity().x * GameConstants.PIXELS_PER_METER,
+                body.getLinearVelocity().y * GameConstants.PIXELS_PER_METER
         );
         angle = body.getAngle();
         angularVelocity = body.getAngularVelocity();
@@ -90,13 +89,13 @@ public class PhysicsEntityModel {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
         ConstantsConfig constantsConfig = Assets.constantsConfigLoader.getConfig(name);
-        bodyDef.position.set(position.x / SymbiontMain.PIXELS_PER_METER, position.y / SymbiontMain.PIXELS_PER_METER);
+        bodyDef.position.set(position.x / GameConstants.PIXELS_PER_METER, position.y / GameConstants.PIXELS_PER_METER);
         if (type != null) {
             bodyDef.type = type;
         } else {
             bodyDef.type = constantsConfig.type;
         }
-        bodyDef.linearVelocity.set(linearVelocity.x / SymbiontMain.PIXELS_PER_METER, linearVelocity.y / SymbiontMain.PIXELS_PER_METER);
+        bodyDef.linearVelocity.set(linearVelocity.x / GameConstants.PIXELS_PER_METER, linearVelocity.y / GameConstants.PIXELS_PER_METER);
         bodyDef.linearDamping = constantsConfig.linearDamping;
         bodyDef.active = constantsConfig.active;
         bodyDef.allowSleep = constantsConfig.allowSleep;

@@ -1,9 +1,8 @@
 package com.badlogic.symbiont.models;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.symbiont.SymbiontMain;
-
 import java.util.List;
+
+import com.badlogic.gdx.math.Vector2;
 
 public class MovableObjectModel extends PhysicsEntityModel {
     
@@ -18,8 +17,8 @@ public class MovableObjectModel extends PhysicsEntityModel {
     @Override
     public void update() {
         curPos.set(
-                body.getPosition().x * SymbiontMain.PIXELS_PER_METER,
-                body.getPosition().y * SymbiontMain.PIXELS_PER_METER
+                body.getPosition().x * GameConstants.PIXELS_PER_METER,
+                body.getPosition().y * GameConstants.PIXELS_PER_METER
         );
         
         float dist = curPos.dst(movingPath.get(pathPos));
