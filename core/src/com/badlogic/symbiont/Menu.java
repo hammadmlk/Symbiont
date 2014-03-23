@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
@@ -21,7 +20,7 @@ public class Menu {
         Table mainTable = new Table().top().left();
         mainTable.setFillParent(true);
         mainTable.debug();
-        Table upperTable = new Table();
+        final Table upperTable = new Table();
 
         final Window menuWindow = new Window("Menu", skin);
         menuWindow.setMovable(false);
@@ -33,6 +32,7 @@ public class Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuIsVisible = true;
+                upperTable.setVisible(!menuIsVisible);
                 menuWindow.setVisible(menuIsVisible);
                 menuWindow.setModal(menuIsVisible);
             }
@@ -43,6 +43,7 @@ public class Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuIsVisible = false;
+                upperTable.setVisible(!menuIsVisible);
                 menuWindow.setVisible(menuIsVisible);
                 menuWindow.setModal(menuIsVisible);
             }
@@ -63,13 +64,14 @@ public class Menu {
         style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
         ImageButton loadFileButton = new ImageButton(style);
         upperTable.add(loadFileButton).width(32).height(32);
-        final TextField levelPath = new TextField(SymbiontMain.currentLevelFileName, skin);
+        final List levelPath = new List(new String[] {"first", "second"}, skin);
         menuWindow.add(levelPath);
         menuWindow.row();
-        levelPath.setTextFieldListener(new TextField.TextFieldListener() {
+
+        levelPath.addListener(new ChangeListener() {
             @Override
-            public void keyTyped(TextField textField, char key) {
-                SymbiontMain.currentLevelFileName = textField.getText();
+            public void changed(ChangeEvent event, Actor actor) {
+                SymbiontMain.currentLevelFileName = levelPath.getSelection();
             }
         });
 
