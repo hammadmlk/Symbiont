@@ -22,6 +22,7 @@ public class GameState {
     // References for collision handling (alien and other are also in entities)
     public transient PhysicsEntityModel alien;
     public transient boolean deflected;
+    public transient boolean spedUp;
 
     /*
      * private/transient (don't get serialized)

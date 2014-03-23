@@ -15,7 +15,7 @@ public class PhysicsEntityModel {
     /**
      * used to determine what happens in collisions
      */
-    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR}
+    public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR, POWERUP_SPEED, POWERUP_SHRINK}
 
     /**
      * All physics entities must have textures
@@ -32,6 +32,7 @@ public class PhysicsEntityModel {
     public boolean flipVertical = false;
 
     public transient boolean toBeDestroyed;
+    public transient boolean toBeShrunk;
     private transient Vector2 origin;
 
     /*
