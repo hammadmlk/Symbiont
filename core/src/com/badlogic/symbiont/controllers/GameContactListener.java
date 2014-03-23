@@ -93,7 +93,7 @@ public class GameContactListener implements ContactListener {
     	    SymbiontMain.gameState.spedUp = false;
     	    PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     	    
-            float desiredVel = ConstantsConfig.powerupSpeed;
+            float desiredVel = GameConstants.powerupSpeed;
             Vector2 vel = alien.body.getLinearVelocity();
             
             float velChange = desiredVel - vel.len();

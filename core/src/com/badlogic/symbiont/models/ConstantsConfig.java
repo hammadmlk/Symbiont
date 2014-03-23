@@ -54,11 +54,5 @@ public class ConstantsConfig {
 
     /** A sensor shape collects contact information but never generates a collision response. */
     public boolean isSensor = false;
-    
-    /** The desired velocity of the alien upon hitting an object to reduce loss of momentum */
-    public static float impulseVelocity = 15;
-    
-    /** The desired velocity of the alien upon consuming a speed powerup */
-    public static float powerupSpeed = 25;
 
 }

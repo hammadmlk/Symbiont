@@ -10,4 +10,7 @@ public class GameConstants {
     
     public static final float DEFLECTOR_THICKNESS = 10 / PIXELS_PER_METER;
     public static final float DEFLECTOR_CONSTANT = 0.05f;
+    
+    public static final float powerupSpeed = 25;
+    public static final float powerupScale = 0.6f;
 }
