@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.Util;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
@@ -54,6 +55,21 @@ public class GameEngine {
             for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
                 deflectorEndpoint.update(delta);
             }
+            
+            // Get deflector width and update energy meter
+			if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active) {
+				float length = Util.distance(gameState.deflectorEndpoints[1].x,
+						gameState.deflectorEndpoints[1].y,
+						gameState.deflectorEndpoints[0].x,
+						gameState.deflectorEndpoints[0].y);
+				gameState.currentEnergy -= length
+						* GameConstants.DEFLECTOR_ENERGY;
+			}
+			
+	    	if (gameState.currentEnergy <= 0) {
+	    		gameState.deflectorEndpoints[0].active = false;
+	    		gameState.deflectorEndpoints[1].active = false;
+	    	}
 
             // Check win conditions
             if (gameState.mistModels.size() == 0) {

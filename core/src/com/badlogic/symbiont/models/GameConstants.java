@@ -9,7 +9,8 @@ public class GameConstants {
     public static final int POSITION_ITERATIONS = 2;
     
     public static final float DEFLECTOR_THICKNESS = 10 / PIXELS_PER_METER;
-    public static final float DEFLECTOR_CONSTANT = 0.05f;
+    public static final float DEFLECTOR_IMPULSE = 0.05f;
+    public static final float DEFLECTOR_ENERGY = 0.001f;
     
     public static final float powerupSpeed = 25;
     public static final float powerupScale = 0.6f;
