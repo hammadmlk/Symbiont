@@ -56,8 +56,8 @@ public class GameContactListener implements ContactListener {
         }
         if (other.entityType == PhysicsEntityModel.Type.POWERUP_SHRINK) {
             other.toBeDestroyed = true;
+            alien.toBeShrunk = true;
             SymbiontMain.gameState.alien = alien;
-            SymbiontMain.gameState.shrink = true;
         }
     }
 
@@ -105,12 +105,6 @@ public class GameContactListener implements ContactListener {
             
             alien.body.applyLinearImpulse(vel, alien.body.getWorldCenter(), true);	    
     	}
-    	if (SymbiontMain.gameState.shrink) {
-            SymbiontMain.gameState.shrink = false;
-            PhysicsEntityModel alien = SymbiontMain.gameState.alien;
-            
-            // TODO if we really want this, we will have to set a variable and destroy/create new fixtures in GameEngine
-        }
     }
 
     @Override

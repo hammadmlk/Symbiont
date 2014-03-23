@@ -33,6 +33,7 @@ public class PhysicsEntityModel {
     public boolean flipVertical = false;
 
     public transient boolean toBeDestroyed;
+    public transient boolean toBeShrunk;
     private transient Vector2 origin;
 
     /*
