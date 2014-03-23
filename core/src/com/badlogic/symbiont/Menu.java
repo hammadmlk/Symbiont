@@ -72,6 +72,7 @@ public class Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SymbiontMain.currentLevelFileName = levelPath.getSelection();
+                SymbiontMain.loadFile();
             }
         });
 
