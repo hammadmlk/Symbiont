@@ -159,7 +159,7 @@ public class SymbiontMain extends ApplicationAdapter {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
         // set up deflector
-        Body deflectorBody = null;
+        Body deflectorBody[] = null; //
         if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active &&
                 Util.distance(
                         gameState.deflectorEndpoints[1].x,

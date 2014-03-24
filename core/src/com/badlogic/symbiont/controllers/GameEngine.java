@@ -2,8 +2,6 @@ package com.badlogic.symbiont.controllers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.Util;
@@ -78,25 +76,19 @@ public class GameEngine {
         }
     }
 
-    private static BodyDef deflectorDef = new BodyDef();
     private static Vector2[] deflectorPoints = new Vector2[4];
     private static Vector2 deflectorNormal = new Vector2();
-    private static PolygonShape deflectorBox = new PolygonShape();
+    //private static PolygonShape deflectorBox = new PolygonShape();
     static {
         for (int i = 0; i < 4; i++) {
             deflectorPoints[i] = new Vector2();
         }
     }
 
-    public static Body setUpDeflector() {
+    public static Body[] setUpDeflector() {
         if (!SymbiontMain.gameState.deflector()) {
             return null;
         }
-        deflectorDef.type = BodyDef.BodyType.StaticBody;
-        deflectorDef.position.set(
-                SymbiontMain.gameState.deflectorEndpoints[0].x / GameConstants.PIXELS_PER_METER,
-                SymbiontMain.gameState.deflectorEndpoints[0].y / GameConstants.PIXELS_PER_METER
-        );
 
         deflectorPoints[0].set(0,0);
         deflectorPoints[1].set(
@@ -115,18 +107,28 @@ public class GameEngine {
         for (Vector2 point : deflectorPoints) {
             point.set(point.x - deflectorNormal.x / 2, point.y - deflectorNormal.y / 2);
         }
-        Body deflectorBody = SymbiontMain.world.createBody(deflectorDef);
-        deflectorBody.setUserData(PhysicsEntityModel.getDeflectorInstance());
-        deflectorBox.set(deflectorPoints);
-        deflectorBody.createFixture(deflectorBox, 0f);
-        return deflectorBody;
+        RopeBody rope = new RopeBody();
+        Body[] ropeBodies = rope.MakeRope(
+        		deflectorPoints[0].x, 
+        		deflectorPoints[0].y, 
+        		deflectorPoints[1].x, 
+        		deflectorPoints[1].y,
+        		SymbiontMain.world);
+        
+        for (int i = 0; i<ropeBodies.length; i++){
+          ropeBodies[i].setUserData(PhysicsEntityModel.getDeflectorInstance());
+        }
+        
+        return ropeBodies;
     }
 
     public static void dispose() {
-        deflectorBox.dispose();
+        //deflectorBox.dispose();
     }
 
-    public static void tearDownDeflector(Body deflectorBody) {
-        SymbiontMain.world.destroyBody(deflectorBody);
+    public static void tearDownDeflector(Body[] deflectorBody) {
+        for (int i = 0; i<deflectorBody.length; i++){
+        	SymbiontMain.world.destroyBody(deflectorBody[i]);
+        }
     }
 }

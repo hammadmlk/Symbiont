@@ -14,4 +14,8 @@ public class GameConstants {
     
     public static final float powerupSpeed = 25;
     public static final float powerupScale = 0.6f;
+    
+    //rope simulation constants
+    public static final int noOfJointsInRope = 20;
+    
 }
