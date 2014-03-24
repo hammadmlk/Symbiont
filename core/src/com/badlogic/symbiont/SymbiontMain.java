@@ -114,7 +114,6 @@ public class SymbiontMain extends ApplicationAdapter {
         GameEngine.step(gameState, world, delta);
 
         stage.draw();
-        Table.drawDebug(stage);
 
         if (deflectorBody != null) {
             GameEngine.tearDownDeflector(deflectorBody);

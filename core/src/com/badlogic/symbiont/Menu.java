@@ -20,7 +20,6 @@ public class Menu {
         // TODO padding needs to get updated on resize
         Table mainTable = new Table().top().left().padTop(padTop);
         mainTable.setFillParent(true);
-        mainTable.debug();
         final Table upperTable = new Table();
 
         final Window menuWindow = new Window("Menu", skin);
