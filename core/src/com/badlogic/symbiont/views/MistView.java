@@ -1,10 +1,13 @@
 package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 
@@ -15,6 +18,8 @@ import com.badlogic.symbiont.models.MistModel;
 public class MistView {
 
 	final ShapeRenderer shapes;
+
+    private Texture mistLayer = Assets.loadTexture("non-git/mistlayer.png");
 
     public MistView() {
         shapes = new ShapeRenderer();
@@ -51,8 +56,7 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-        // color roughly taken from `particles/mist.p` TODO keep up to date
-        shapes.setColor(0.44f, 0.28f, 0.79f, 0.20f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
+        shapes.setColor(0.44f, 0.28f, 0.79f, 0.10f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
 
         shapes.rect(mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
 
@@ -75,6 +79,15 @@ public class MistView {
 		Gdx.gl.glDepthFunc(GL10.GL_EQUAL);
 
 		//push to the batch
+        Color oldColor = batch.getColor();
+
+        // color roughly taken from `particles/mist.p` TODO keep up to date
+        batch.setColor(0.44f, 0.28f, 0.79f, 0.50f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
+
+        batch.draw(mistLayer, mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
+
+        batch.setColor(oldColor);
+
         mistModel.getMistEffect().draw(batch);
 
         // turn off masking so that the rest of the scene doesn't get nuked
