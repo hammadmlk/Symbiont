@@ -1,0 +1,46 @@
+{
+    "backgroundPath": "non-git/level2bg.png",
+    "currentEnergy": 75,
+    "entities": [
+        {
+            "linearVelocity": {
+                "y": -250
+            },
+            "name": "ball",
+            "position": {
+                "x": 350,
+                "y": 600
+            }
+        },
+        {
+            "flipVertical": true,
+            "name": "branch",
+            "position": {
+                "x": 124,
+                "y": 471.99997
+            }
+        },
+        {
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 107.18923,
+                        "y": 620.5473
+                    },
+                    "rectangle": {
+                        "height": 600,
+                        "width": 480,
+                        "x": 0,
+                        "y": 200
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 107.18923,
+                "y": 620.5473
+            }
+        }
+    ]
+}
