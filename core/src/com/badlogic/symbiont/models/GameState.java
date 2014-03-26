@@ -18,6 +18,7 @@ public class GameState {
 
     public String backgroundPath;
     public float currentEnergy;
+    public transient float totalEnergy;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
     
     // References for collision handling (alien and other are also in entities)
@@ -72,6 +73,7 @@ public class GameState {
                 gameState.mistModels.addAll(plantModel.mistModels);
             }
         }
+        gameState.totalEnergy = gameState.currentEnergy;
         return gameState;
     }
 

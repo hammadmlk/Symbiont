@@ -16,6 +16,7 @@ public class GameView extends Actor {
     private MistView mistView = new MistView();
     private DeflectorView deflectorView = new DeflectorView();
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
+    private EnergyBarView energyBarView = new EnergyBarView();
 
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
@@ -44,9 +45,8 @@ public class GameView extends Actor {
         } else if (gameState.state == GameState.State.LOST) {
             drawTextCentered(batch, "YOU LOST!");
         }
-        
-        // Currently covers up FPS display, won't be an issue when it is an actual meter
-        this.drawTextCenteredBottom(batch, ""+SymbiontMain.gameState.currentEnergy);
+
+        energyBarView.draw(batch, gameState.currentEnergy / gameState.totalEnergy);
 
         // debug render
         if (SymbiontMain.debug) {
