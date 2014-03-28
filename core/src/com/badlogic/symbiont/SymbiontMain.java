@@ -23,7 +23,7 @@ public class SymbiontMain extends ApplicationAdapter {
     public static GameView gameView;
 
     public static GameState gameState;
-    public static String currentLevelFileName = "first";
+    public static String currentLevelFileName = "01";
     public static World world;
 
     public static Skin skin;
