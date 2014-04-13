@@ -38,7 +38,8 @@ public class GameEngine {
                 }
             }
 
-            // update mist, and clean up mist
+            // update mist, and clean up mist. Also checks for win condition
+            boolean allFading = true;
             Iterator<MistModel> mistModelIterator = gameState.mistModels.iterator();
             while (mistModelIterator.hasNext()) {
                 MistModel mistModel = mistModelIterator.next();
@@ -49,6 +50,8 @@ public class GameEngine {
                         mistModel.getMistEffect().dispose();
                         mistModelIterator.remove();
                     }
+                } else {
+                	allFading = false;
                 }
             }
 
@@ -73,7 +76,7 @@ public class GameEngine {
 	    	}
 
             // Check win conditions
-            if (gameState.mistModels.size() == 0) {
+            if (allFading) {
                 gameState.state = GameState.State.WON;
             }
         }
