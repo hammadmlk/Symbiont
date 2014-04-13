@@ -3,29 +3,19 @@
     "currentEnergy": 100,
     "entities": [
         {
-            "class": "com.badlogic.symbiont.models.MovableObjectModel",
+            "breakable": false,
+            "class": "com.badlogic.symbiont.models.RotatableObjectModel",
+            "endAngle": 0.6,
             "entityType": "BRANCH",
             "flipHorizontal": true,
-            "movingPath": [
-                {
-                    "x": 354,
-                    "y": 596
-                },
-                {
-                    "x": 354,
-                    "y": 296
-                },
-                {
-                    "x": 354,
-                    "y": 596
-                }
-            ],
-            "movingSpeed": 2,
             "name": "branch",
             "position": {
                 "x": 354,
                 "y": 596
             },
+            "rotatingVelocity": 1,
+            "scale": 1,
+            "startAngle": -0.6,
             "type": "KinematicBody"
         },
         {
