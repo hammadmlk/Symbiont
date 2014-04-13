@@ -5,10 +5,13 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class ConstantsConfigLoader {
 
     HashMap<String, ConstantsConfig> namesToConfigs;
+
+    public String[] listOfLevels;
 
     public static ConstantsConfigLoader fromFileFactory(String file) {
         FileHandle fileHandle = Gdx.files.internal(file);

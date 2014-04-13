@@ -64,7 +64,7 @@ public class Menu {
         style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
         ImageButton loadFileButton = new ImageButton(style);
         upperTable.add(loadFileButton).width(32).height(32);
-        final List levelPath = new List(new String[] {"01","02","03","first", "second"}, skin);
+        final List levelPath = new List(Assets.constantsConfigLoader.listOfLevels, skin);
         menuWindow.add(levelPath);
         menuWindow.row();
 

@@ -1,4 +1,11 @@
 {
+    "listOfLevels": [
+        "01",
+        "02",
+        "03",
+        "first",
+        "second"
+    ],
     "namesToConfigs": {
         "ball": {
             "bullet": true,
@@ -8,6 +15,11 @@
             "restitution": 1,
             "scale": 0.5,
             "type": "DynamicBody"
+        },
+        "bluepower": {
+            "entityType": "POWERUP_SPEED",
+            "isSensor": true,
+            "scale": 1
         },
         "branch": {
             "entityType": "BRANCH"
@@ -25,12 +37,6 @@
             "entityType": "POWERUP_SHRINK",
             "isSensor": true,
             "scale": 1
-        },
-        "bluepower": {
-            "entityType": "POWERUP_SPEED",
-            "isSensor": true,
-            "scale": 1
-            
         }
     }
 }

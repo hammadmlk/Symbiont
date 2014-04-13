@@ -23,7 +23,7 @@ public class SymbiontMain extends ApplicationAdapter {
     public static GameView gameView;
 
     public static GameState gameState;
-    public static String currentLevelFileName = "01";
+    public static String currentLevelFileName;
     public static World world;
 
     public static Skin skin;
@@ -42,6 +42,7 @@ public class SymbiontMain extends ApplicationAdapter {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
+        currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[0];
         
         gameView = new GameView();
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
