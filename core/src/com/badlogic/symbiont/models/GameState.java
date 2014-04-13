@@ -6,11 +6,14 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.CollisionFilters;
 
 public class GameState {
@@ -38,8 +41,8 @@ public class GameState {
     public transient State state = State.WAITING_TO_START;
 
     public void startIfWaiting() {
-        if (SymbiontMain.gameState.state == GameState.State.WAITING_TO_START) {
-            SymbiontMain.gameState.state = GameState.State.PLAYING;
+        if (state == GameState.State.WAITING_TO_START) {
+            state = GameState.State.PLAYING;
         }
     }
 

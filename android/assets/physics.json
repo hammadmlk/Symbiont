@@ -342,7 +342,7 @@
         },
         {
             "circles": [],
-            "imagePath": "non-git/textures/branch2.png",
+            "imagePath": "non-git/textures/branch1.png",
             "name": "branch",
             "origin": {
                 "x": 0.5012500286102295,
@@ -778,7 +778,7 @@
         },
         {
             "circles": [],
-            "imagePath": "non-git/textures/branchbreakable.png",
+            "imagePath": "non-git/textures/breakablebranch1.png",
             "name": "branchbreakable",
             "origin": {
                 "x": 0.5037500262260437,
