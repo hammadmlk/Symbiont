@@ -41,7 +41,6 @@ public class GameContactListener implements ContactListener {
      * @param other
      */
     private void handleAlienContact(PhysicsEntityModel alien, PhysicsEntityModel other) {
-        System.out.println(alien.linearVelocity.len()/GameConstants.PIXELS_PER_METER);
         if (other.breakable && (alien.linearVelocity.len() / GameConstants.PIXELS_PER_METER) >= 
                 (GameConstants.powerupSpeed * 0.8)) {
             other.entityType = PhysicsEntityModel.Type.BROKEN;
