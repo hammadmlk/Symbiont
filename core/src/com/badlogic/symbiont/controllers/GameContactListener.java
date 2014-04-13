@@ -36,7 +36,9 @@ public class GameContactListener implements ContactListener {
     }
 
     private void handleAlienContact(PhysicsEntityModel alien, PhysicsEntityModel other) {
-        if (other.breakable) {
+        System.out.println(alien.linearVelocity.len()/GameConstants.PIXELS_PER_METER);
+        if (other.breakable && (alien.linearVelocity.len() / GameConstants.PIXELS_PER_METER) >= 
+                (GameConstants.powerupSpeed * 0.8)) {
             other.entityType = PhysicsEntityModel.Type.BROKEN;
         }
         if (other.entityType == PhysicsEntityModel.Type.PLANT) {
