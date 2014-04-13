@@ -50,7 +50,6 @@
 		"scale": 0.4,
 		"name": "bluepower",
 		"breakable": false,
-		"entityType": "POWERUP_SPEED"
 	},
 	{
 		"position": {
@@ -60,7 +59,6 @@
 		"scale": 0.4,
 		"name": "redpower",
 		"breakable": false,
-		"entityType": "POWERUP_SHRINK"
 	},
 	{
 		"class": "com.badlogic.symbiont.models.PlantModel",
