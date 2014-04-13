@@ -8,15 +8,14 @@ import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 
 public class EnergyBarView {
-	
+
 	private static int barWidth = GameConstants.VIRTUAL_WIDTH/2;
 	private static int barHeight = 20;
-	private static int barStartX = GameConstants.VIRTUAL_WIDTH/2 - barWidth/2;
-	private static int barStartY = GameConstants.VIRTUAL_HEIGHT - barHeight;
-			
+	
+	//the energy bar region
     private Rectangle region = new Rectangle(
-    		barStartX, 
-    		barStartY, 
+    		GameConstants.VIRTUAL_WIDTH/2 - barWidth/2, 
+    		GameConstants.VIRTUAL_HEIGHT - barHeight, 
     		barWidth, 
     		barHeight);
 
@@ -26,19 +25,21 @@ public class EnergyBarView {
     }
 
     /**
+     * Draws the energy bar and the glowing particles on right corner
      * @param batch
      * @param energyFraction 0 <= energyFraction <= 1
      */
     public void draw(SpriteBatch batch, float energyFraction) {
         assert (0 <= energyFraction && energyFraction <= 1);
-        
+        //draw the bar
         batch.draw(
         		atlasRegion, 
         		region.x, 
         		region.y, 
-        		region.width* energyFraction, 
+        		region.width* energyFraction,
         		region.height);
-
+        
+        //draw the glowing particle on the right corner of the energy bar
         SymbiontMain.gameState.energyBarParticleEffect.setPosition(
         		region.x + region.width*energyFraction ,  // 
         		region.y);
