@@ -1,0 +1,87 @@
+{
+    "backgroundPath": "non-git/level3bg.png",
+    "currentEnergy": 100,
+    "entities": [
+        {
+            "breakable": true,
+            "entityType": "BRANCH",
+            "flipHorizontal": true,
+            "name": "branchbreakable",
+            "position": {
+                "x": 353,
+                "y": 680
+            },
+            "scale": 1
+        },
+        {
+            "breakable": false,
+            "entityType": "ALIEN",
+            "linearVelocity": {
+                "y": -250
+            },
+            "name": "ball",
+            "position": {
+                "x": 212.53258,
+                "y": 584.32574
+            },
+            "scale": 0.5
+        },
+        {
+            "breakable": false,
+            "entityType": "POWERUP_SPEED",
+            "name": "bluepower",
+            "position": {
+                "x": 92.50503,
+                "y": 407.6119
+            },
+            "scale": 0.4
+        },
+        {
+            "breakable": false,
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 423,
+                        "y": 748
+                    },
+                    "rectangle": {
+                        "height": 600,
+                        "width": 240,
+                        "x": 240,
+                        "y": 200
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 423,
+                "y": 748
+            },
+            "scale": 0.4
+        },
+        {
+            "breakable": false,
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 316.09467,
+                        "y": 571.8366
+                    },
+                    "rectangle": {
+                        "height": 600,
+                        "width": 240,
+                        "y": 200
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 316.09467,
+                "y": 571.8366
+            },
+            "scale": 0.4
+        }
+    ]
+}
