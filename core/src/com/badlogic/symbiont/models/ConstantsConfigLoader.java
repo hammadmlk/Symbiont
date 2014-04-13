@@ -1,11 +1,10 @@
 package com.badlogic.symbiont.models;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class ConstantsConfigLoader {
 
