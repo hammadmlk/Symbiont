@@ -23,7 +23,25 @@ public class EnergyBarView {
     public void draw(SpriteBatch batch, float energyFraction) {
         assert (0 <= energyFraction && energyFraction <= 1);
 
-        batch.draw(atlasRegion, region.x, region.y, region.width, region.height * energyFraction);
+        float x1 = region.x + region.width / 2;
+        float y1 = region.y;
+        float x2 = region.x + region.width / 2;
+        float y2 = region.height * energyFraction;
+
+        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+
+        batch.draw(
+                atlasRegion,                                                         // Texture atlasRegion
+                x1,                                                                  // float x
+                y1 - atlasRegion.originalHeight / 2,                                 // float y
+                0,                                                                   // float originX
+                atlasRegion.originalHeight / 2,                                      // float originY
+                (float) Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)),        // float width
+                atlasRegion.originalHeight,                                          // float height
+                1,                                                                   // float scaleX
+                1,                                                                   // float scaleY
+                angle                                                                // float rotation
+        );
 
         SymbiontMain.gameState.energyBarParticleEffect.setPosition(region.x + region.width / 2, region.height * energyFraction);
         SymbiontMain.gameState.energyBarParticleEffect.draw(batch);
