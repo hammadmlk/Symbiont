@@ -8,8 +8,17 @@ import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 
 public class EnergyBarView {
-
-    private Rectangle region = new Rectangle(0, 0, 20, GameConstants.VIRTUAL_HEIGHT);
+	
+	private static int barWidth = GameConstants.VIRTUAL_WIDTH/2;
+	private static int barHeight = 20;
+	private static int barStartX = GameConstants.VIRTUAL_WIDTH/2 - barWidth/2;
+	private static int barStartY = GameConstants.VIRTUAL_HEIGHT - barHeight;
+			
+    private Rectangle region = new Rectangle(
+    		barStartX, 
+    		barStartY, 
+    		barWidth, 
+    		barHeight);
 
     private TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
 
@@ -22,28 +31,17 @@ public class EnergyBarView {
      */
     public void draw(SpriteBatch batch, float energyFraction) {
         assert (0 <= energyFraction && energyFraction <= 1);
-
-        float x1 = region.x + region.width / 2;
-        float y1 = region.y;
-        float x2 = region.x + region.width / 2;
-        float y2 = region.height * energyFraction;
-
-        float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
-
+        
         batch.draw(
-                atlasRegion,                                                         // Texture atlasRegion
-                x1,                                                                  // float x
-                y1 - atlasRegion.originalHeight / 2,                                 // float y
-                0,                                                                   // float originX
-                atlasRegion.originalHeight / 2,                                      // float originY
-                (float) Math.sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)),        // float width
-                atlasRegion.originalHeight,                                          // float height
-                1,                                                                   // float scaleX
-                1,                                                                   // float scaleY
-                angle                                                                // float rotation
-        );
+        		atlasRegion, 
+        		region.x, 
+        		region.y, 
+        		region.width* energyFraction, 
+        		region.height);
 
-        SymbiontMain.gameState.energyBarParticleEffect.setPosition(region.x + region.width / 2, region.height * energyFraction);
+        SymbiontMain.gameState.energyBarParticleEffect.setPosition(
+        		region.x + region.width*energyFraction ,  // 
+        		region.y);
         SymbiontMain.gameState.energyBarParticleEffect.draw(batch);
     }
 
