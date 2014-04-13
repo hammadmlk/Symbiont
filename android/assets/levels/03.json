@@ -1,0 +1,86 @@
+{
+    "backgroundPath": "non-git/level3bg.png",
+    "currentEnergy": 100,
+    "entities": [
+        {
+            "class": "com.badlogic.symbiont.models.MovableObjectModel",
+            "entityType": "BRANCH",
+            "flipHorizontal": true,
+            "movingPath": [
+                {
+                    "x": 354,
+                    "y": 596
+                },
+                {
+                    "x": 354,
+                    "y": 296
+                },
+                {
+                    "x": 354,
+                    "y": 596
+                }
+            ],
+            "movingSpeed": 2,
+            "name": "branch",
+            "position": {
+                "x": 354,
+                "y": 596
+            },
+            "type": "KinematicBody"
+        },
+        {
+            "linearVelocity": {
+                "y": -250
+            },
+            "name": "ball",
+            "position": {
+                "x": 188,
+                "y": 608
+            }
+        },
+        {
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 392,
+                        "y": 647
+                    },
+                    "rectangle": {
+                        "height": 600,
+                        "width": 240,
+                        "x": 240,
+                        "y": 200
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 392,
+                "y": 647
+            }
+        },
+        {
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 94.09465,
+                        "y": 623.8366
+                    },
+                    "rectangle": {
+                        "height": 600,
+                        "width": 240,
+                        "x": 0,
+                        "y": 200
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 94.09465,
+                "y": 623.8366
+            }
+        }
+    ]
+}

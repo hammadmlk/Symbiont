@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.controllers.GameInputListener;
@@ -24,7 +23,7 @@ public class SymbiontMain extends ApplicationAdapter {
     public static GameView gameView;
 
     public static GameState gameState;
-    public static String currentLevelFileName = "first";
+    public static String currentLevelFileName = "01";
     public static World world;
 
     public static Skin skin;
@@ -43,6 +42,7 @@ public class SymbiontMain extends ApplicationAdapter {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
+        
         gameView = new GameView();
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         gameView.addListener(gameInputListener);
