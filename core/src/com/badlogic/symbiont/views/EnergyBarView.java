@@ -42,7 +42,7 @@ public class EnergyBarView {
         //draw the glowing particle on the right corner of the energy bar
         SymbiontMain.gameState.energyBarParticleEffect.setPosition(
         		region.x + region.width*energyFraction ,  // 
-        		region.y);
+        		region.y+region.height/2);
         SymbiontMain.gameState.energyBarParticleEffect.draw(batch);
     }
 
