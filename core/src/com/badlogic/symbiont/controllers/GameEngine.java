@@ -64,8 +64,9 @@ public class GameEngine {
 						gameState.deflectorEndpoints[0].y);
 				gameState.currentEnergy -= length
 						* GameConstants.DEFLECTOR_ENERGY;
-			}
-			
+  			}
+            gameState.energyBarParticleEffect.update(delta);
+
 	    	if (gameState.currentEnergy <= 0) {
 	    		gameState.deflectorEndpoints[0].active = false;
 	    		gameState.deflectorEndpoints[1].active = false;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Json;
@@ -32,6 +33,7 @@ public class GameState {
     private transient Texture backgroundTexture;
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
+    public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
 
     public transient State state = State.WAITING_TO_START;
 
