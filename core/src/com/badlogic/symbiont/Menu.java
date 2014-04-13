@@ -11,10 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
-
-public class Menu {
+ public class Menu {
+    /**
+     * is the menu visible
+     */
     public static boolean menuIsVisible = false;
 
+    /**
+     * create the menu
+     * @param skin
+     * @param padTop how much to pad on top
+     * @return
+     */
     public static Actor createMenu(Skin skin, float padTop) {
         // Create a table that fills the screen. Everything else will go inside this table.
         // TODO padding needs to get updated on resize

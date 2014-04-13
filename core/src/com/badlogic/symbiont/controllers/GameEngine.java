@@ -16,6 +16,12 @@ import com.badlogic.symbiont.models.PhysicsEntityModel;
 import java.util.Iterator;
 
 public class GameEngine {
+    /**
+     * This is where our main game loop logic is implemented.
+     * @param gameState The gameState to update
+     * @param world The physics world associated with gameState
+     * @param delta Milliseconds passed since last animation frame
+     */
     public static void step(GameState gameState, World world, float delta) {
         if (gameState.state == GameState.State.PLAYING) {
             world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
@@ -55,6 +61,7 @@ public class GameEngine {
                 }
             }
 
+            // update deflector endpoints
             for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
                 deflectorEndpoint.update(delta);
             }
@@ -70,6 +77,7 @@ public class GameEngine {
   			}
             gameState.energyBarParticleEffect.update(delta);
 
+            // check if energy depleted
 	    	if (gameState.currentEnergy <= 0) {
 	    		gameState.deflectorEndpoints[0].active = false;
 	    		gameState.deflectorEndpoints[1].active = false;
@@ -92,6 +100,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * set up the deflector in the physics engine. Happens every animation frame
+     * @return
+     */
     public static Body setUpDeflector() {
         if (!SymbiontMain.gameState.deflector()) {
             return null;
@@ -130,6 +142,10 @@ public class GameEngine {
         deflectorBox.dispose();
     }
 
+    /**
+     * tear down deflectorBody. Happens every animation frame
+     * @param deflectorBody
+     */
     public static void tearDownDeflector(Body deflectorBody) {
         SymbiontMain.world.destroyBody(deflectorBody);
     }

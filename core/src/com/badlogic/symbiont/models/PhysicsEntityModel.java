@@ -22,17 +22,47 @@ public class PhysicsEntityModel {
      * unless they're walls or grounds or the deflector, which aren't in
      * the gameState's list of physics entities, so won't get drawn or loaded from JSON
      */
-    public transient TextureAtlas.AtlasRegion atlasRegion;
+    private transient TextureAtlas.AtlasRegion atlasRegion;
+    /**
+     * used to look up texture, shape, physics constants, etc
+     */
     public String name;
+    /**
+     * boxed so that we can have an overridable default
+     */
     public Float scale;
+    /**
+     * boxed so that we can have an overridable default
+     */
     public Boolean breakable;
+
+    /**
+     * used to decide what to do for collisions
+     */
     public Type entityType;
 
+    /**
+     * whether to flip the texture, shape horizontally
+     */
     public boolean flipHorizontal = false;
+
+    /**
+     * whether to flip the texture, shape vertically
+     */
     public boolean flipVertical = false;
 
+    /**
+     * can't destroy from physics callback, so mark it to be destroyed by
+     * GameEngine
+     */
     public transient boolean toBeDestroyed;
+
+    /**
+     * can't shrink from physics callback, so mark it to be destroyed by
+     * GameEngine
+     */
     public transient boolean toBeShrunk;
+
     private transient Vector2 origin;
 
     /*
@@ -86,6 +116,11 @@ public class PhysicsEntityModel {
         angularVelocity = body.getAngularVelocity();
     }
 
+    /**
+     * Add this PhysicsEntityModel to world.
+     * Looks up it's shape, etc by name
+     * @param world
+     */
     public void addToWorld(World world) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
@@ -139,6 +174,10 @@ public class PhysicsEntityModel {
         );
     }
 
+    /**
+     * get current texture. Should add animation logic here
+     * @return
+     */
     public TextureAtlas.AtlasRegion getImg() {
         if (atlasRegion != null) {
             return atlasRegion;

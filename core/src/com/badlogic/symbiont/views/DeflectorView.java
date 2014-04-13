@@ -10,6 +10,10 @@ public class DeflectorView {
 
     private TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
 
+    /**
+     * render the deflector
+     * @param batch
+     */
     public void render(SpriteBatch batch) {
         if (SymbiontMain.edit) {
             return;

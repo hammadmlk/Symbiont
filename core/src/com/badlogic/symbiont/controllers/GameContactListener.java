@@ -35,6 +35,11 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    /**
+     * We only handle collisions between the alien and other entities at the moment
+     * @param alien
+     * @param other
+     */
     private void handleAlienContact(PhysicsEntityModel alien, PhysicsEntityModel other) {
         System.out.println(alien.linearVelocity.len()/GameConstants.PIXELS_PER_METER);
         if (other.breakable && (alien.linearVelocity.len() / GameConstants.PIXELS_PER_METER) >= 

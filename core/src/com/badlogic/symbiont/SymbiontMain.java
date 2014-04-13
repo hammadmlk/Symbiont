@@ -28,8 +28,14 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static Skin skin;
 
+    /**
+     * when true we draw debug polygons and fps
+     */
     public static boolean debug = false;
 
+    /**
+     * when true the level editor is our main
+     */
     public static boolean edit = false;
 
     public static LevelEditor levelEditor;
@@ -56,6 +62,9 @@ public class SymbiontMain extends ApplicationAdapter {
         loadFile();
     }
 
+    /**
+     * loads currentLevelFileName
+     */
     public static void loadFile() {
         if (world != null) {
             world.dispose();
@@ -92,6 +101,9 @@ public class SymbiontMain extends ApplicationAdapter {
         Assets.dispose();
     }
 
+    /**
+     * main game loop. called once per animation frame
+     */
     @Override
     public void render() {
         // clear the window
@@ -111,7 +123,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
         float delta = Gdx.graphics.getDeltaTime();
 
-        // step physics engine
+        // step main game loop
         GameEngine.step(gameState, world, delta);
 
         stage.draw();

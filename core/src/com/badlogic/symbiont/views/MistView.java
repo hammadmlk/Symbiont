@@ -25,12 +25,22 @@ public class MistView {
         shapes = new ShapeRenderer();
     }
 
+    /**
+     * render all the mist in gamestate
+     * @param batch
+     * @param gamestate
+     */
     public void render(SpriteBatch batch, GameState gamestate) {
         for (MistModel mistModel : gamestate.mistModels) {
             renderMist(batch, mistModel);
         }
     }
 
+    /**
+     * render one mist
+     * @param batch
+     * @param mistModel
+     */
 	private void renderMist(SpriteBatch batch, MistModel mistModel) {
         batch.end();
 

@@ -5,6 +5,9 @@ import java.util.List;
 
 public class PlantModel extends PhysicsEntityModel {
 
+    /**
+     * This plant's mist
+     */
     public List<MistModel> mistModels = new ArrayList<MistModel>();
 
     public PlantModel() {

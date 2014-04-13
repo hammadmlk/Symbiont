@@ -1,5 +1,8 @@
 package com.badlogic.symbiont.models;
 
+/**
+ * keep all constants not loaded from json in one location
+ */
 public class GameConstants {
     public static final int VIRTUAL_WIDTH = 480;
     public static final int VIRTUAL_HEIGHT = 800;

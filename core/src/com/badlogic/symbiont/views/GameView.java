@@ -18,6 +18,11 @@ public class GameView extends Actor {
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     private EnergyBarView energyBarView = new EnergyBarView();
 
+    /**
+     * render the game. calls the other views
+     * @param batch
+     * @param parentAlpha
+     */
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
         GameState gameState = SymbiontMain.edit ? SymbiontMain.levelEditor.editorGameState : SymbiontMain.gameState;
