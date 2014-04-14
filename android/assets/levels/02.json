@@ -1,5 +1,5 @@
 {
-    "backgroundPath": "non-git/level2bg.png",
+    "backgroundPath": "non-git/level1bg.png",
     "currentEnergy": 75,
     "entities": [
         {
@@ -13,8 +13,7 @@
             }
         },
         {
-            "flipVertical": true,
-            "name": "branch",
+            "name": "branch2",
             "position": {
                 "x": 124,
                 "y": 471.99997

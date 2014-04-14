@@ -4,8 +4,11 @@
         "02",
         "03",
         "04",
+        "05",
+        "06",
         "first",
-        "second"
+        "second",
+        "third"
     ],
     "namesToConfigs": {
         "ball": {
@@ -28,6 +31,10 @@
         "branchbreakable": {
             "breakable": true,
             "entityType": "BRANCH"
+        },
+        "branch2": {
+            "entityType": "BRANCH",
+            "scale": 0.4
         },
         "plant": {
             "entityType": "PLANT",

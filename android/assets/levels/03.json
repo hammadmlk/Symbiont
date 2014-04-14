@@ -1,76 +1,77 @@
 {
-    "backgroundPath": "non-git/level3bg.png",
-    "currentEnergy": 100,
-    "entities": [
-        {
-            "breakable": false,
-            "class": "com.badlogic.symbiont.models.RotatableObjectModel",
-            "endAngle": 0.6,
-            "entityType": "BRANCH",
-            "flipHorizontal": true,
-            "name": "branch",
-            "position": {
-                "x": 354,
-                "y": 596
-            },
-            "rotatingVelocity": 1,
-            "scale": 1,
-            "startAngle": -0.6,
-            "type": "KinematicBody"
-        },
-        {
-            "linearVelocity": {
-                "y": -250
-            },
-            "name": "ball",
-            "position": {
-                "x": 188,
-                "y": 608
-            }
-        },
-        {
-            "class": "com.badlogic.symbiont.models.PlantModel",
-            "mistModels": [
-                {
-                    "position": {
-                        "x": 392,
-                        "y": 647
-                    },
-                    "rectangle": {
-                        "height": 600,
-                        "width": 240,
-                        "x": 240,
-                        "y": 200
-                    }
-                }
-            ],
-            "name": "plant",
-            "position": {
-                "x": 392,
-                "y": 647
-            }
-        },
-        {
-            "class": "com.badlogic.symbiont.models.PlantModel",
-            "mistModels": [
-                {
-                    "position": {
-                        "x": 94.09465,
-                        "y": 623.8366
-                    },
-                    "rectangle": {
-                        "height": 600,
-                        "width": 240,
-                        "x": 0,
-                        "y": 200
-                    }
-                }
-            ],
-            "name": "plant",
-            "position": {
-                "x": 94.09465,
-                "y": 623.8366
-            }
-        }
-    ]
+	"backgroundPath": "non-git/level1bg.png",
+	"currentEnergy": 100,
+	"entities": [
+		{
+			"position": {
+				"x": 354,
+				"y": 627.7281
+			},
+			"scale": 1,
+			"name": "branch",
+			"flipHorizontal": true,
+			"breakable": false,
+			"entityType": "BRANCH"
+		},
+		{
+			"linearVelocity": {
+				"y": -250
+			},
+			"position": {
+				"x": 188,
+				"y": 608
+			},
+			"scale": 0.5,
+			"name": "ball",
+			"breakable": false,
+			"entityType": "ALIEN"
+		},
+		{
+			"class": "com.badlogic.symbiont.models.PlantModel",
+			"mistModels": [
+				{
+					"position": {
+						"x": 392,
+						"y": 700.2578
+					},
+					"rectangle": {
+						"width": 240,
+						"height": 600,
+						"x": 240,
+						"y": 200
+					}
+				}
+			],
+			"position": {
+				"x": 392,
+				"y": 700.2578
+			},
+			"scale": 0.4,
+			"name": "plant",
+			"breakable": false
+		},
+		{
+			"class": "com.badlogic.symbiont.models.PlantModel",
+			"mistModels": [
+				{
+					"position": {
+						"x": 94.09465,
+						"y": 623.8366
+					},
+					"rectangle": {
+						"width": 260,
+						"height": 600,
+						"y": 200
+					}
+				}
+			],
+			"position": {
+				"x": 94.09465,
+				"y": 623.8366
+			},
+			"scale": 0.4,
+			"name": "plant",
+			"breakable": false
+		}
+	]
 }
