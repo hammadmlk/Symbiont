@@ -57,9 +57,9 @@ public class GameState {
             } catch (NumberFormatException e) {
                 return;
             }
-            if (currentLevelNum < 6) {
+            if (currentLevelNum < Assets.constantsConfigLoader.listOfLevels.length) {
                 state = GameState.State.PLAYING;
-                SymbiontMain.currentLevelFileName = "0" + (++currentLevelNum);
+                SymbiontMain.currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[currentLevelNum];
                 SymbiontMain.loadFileKeepListeners();
             }
         }
