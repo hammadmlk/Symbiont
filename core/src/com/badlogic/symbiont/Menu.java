@@ -115,7 +115,6 @@ import com.badlogic.symbiont.models.GameState;
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SymbiontMain.currentLevelNum = levelPath.getSelectedIndex();
-                System.out.println(SymbiontMain.currentLevelNum);
                 SymbiontMain.currentLevelFileName = levelPath.getSelection();
                 SymbiontMain.loadFile();
             }

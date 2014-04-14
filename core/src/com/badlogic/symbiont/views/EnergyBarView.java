@@ -32,12 +32,14 @@ public class EnergyBarView {
     public void draw(SpriteBatch batch, float energyFraction) {
         assert (0 <= energyFraction && energyFraction <= 1);
         //draw the bar
-        batch.draw(
-        		atlasRegion, 
-        		region.x, 
-        		region.y, 
-        		region.width* energyFraction,
-        		region.height);
+        if (SymbiontMain.gameState.currentEnergy > 0) {
+            batch.draw(
+                    atlasRegion,
+                    region.x,
+                    region.y,
+                    region.width* energyFraction,
+                    region.height);
+        }
         
         //draw the glowing particle on the right corner of the energy bar
         SymbiontMain.gameState.energyBarParticleEffect.setPosition(
