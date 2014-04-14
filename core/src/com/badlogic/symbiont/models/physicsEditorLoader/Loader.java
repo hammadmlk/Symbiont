@@ -45,7 +45,10 @@ public class Loader {
     ) {
         float combinedScale = scale * imgWidth / GameConstants.PIXELS_PER_METER;
         RigidBody rigidBody = rigidBodyMap.get(name);
-        Vector2 origin = new Vector2(rigidBody.origin.x, rigidBody.origin.y).scl(combinedScale);
+        Vector2 origin = new Vector2(
+                flipHorizontal ? 1 - rigidBody.origin.x : rigidBody.origin.x,
+                flipVertical ? 1 - rigidBody.origin.y : rigidBody.origin.y
+        ).scl(combinedScale);
         for (Circle circle : rigidBody.circles) {
             CircleShape circleShape = new CircleShape();
             circleShape.setRadius(circle.r * combinedScale);

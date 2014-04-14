@@ -193,7 +193,10 @@ public class PhysicsEntityModel {
             return origin;
         float combinedScale = getImg().originalWidth;
         Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
-        origin = new Vector2(unscaledOrigin.x, unscaledOrigin.y).scl(combinedScale);
+        origin = new Vector2(
+                flipHorizontal ? 1 - unscaledOrigin.x : unscaledOrigin.x,
+                flipVertical ? 1 - unscaledOrigin.y : unscaledOrigin.y
+        ).scl(combinedScale);
         return origin;
     }
 

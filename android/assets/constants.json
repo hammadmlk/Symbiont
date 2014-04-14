@@ -28,10 +28,6 @@
         "branch": {
             "entityType": "BRANCH"
         },
-        "branchbreakable": {
-            "breakable": true,
-            "entityType": "BRANCH"
-        },
         "branch2": {
             "entityType": "BRANCH",
             "scale": 0.4
@@ -39,6 +35,13 @@
         "branch3": {
             "entityType": "BRANCH",
             "scale": 0.4
+        },
+        "branchbreakable": {
+            "breakable": true,
+            "entityType": "BRANCH"
+        },
+        "pivoting-branch": {
+            "entityType": "BRANCH"
         },
         "plant": {
             "entityType": "PLANT",
