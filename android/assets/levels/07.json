@@ -1,0 +1,166 @@
+{
+"currentEnergy": 100,
+"entities": [
+	{
+		"linearVelocity": {
+			"y": -250
+		},
+		"position": {
+			"x": 232.92915,
+			"y": 230.78474
+		},
+		"scale": 0.5,
+		"name": "ball",
+		"breakable": false,
+		"entityType": "ALIEN"
+	},
+	{
+		"position": {
+			"x": 112.66855,
+			"y": 452.7365
+		},
+		"scale": 1,
+		"name": "branch",
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 360.8272,
+			"y": 442.5382
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 52.844917,
+			"y": 265.96893
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 243.21326,
+			"y": 275.03394
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 155.96115,
+			"y": 275.03412
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 348.5956,
+			"y": 270.5014
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": -3.8122253,
+			"y": 218.37675
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 415.45126,
+			"y": 224.04266
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 106.10271,
+			"y": 216.11052
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
+			"x": 294.20477,
+			"y": 222.90936
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 78.52409,
+					"y": 393.32578
+				},
+				"rectangle": {
+					"width": 480,
+					"height": 150,
+					"y": 650
+				}
+			}
+		],
+		"position": {
+			"x": 78.52409,
+			"y": 393.32578
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 424.8765,
+					"y": 375.80264
+				},
+				"rectangle": {
+					"width": 480,
+					"height": 450,
+					"y": 200
+				}
+			}
+		],
+		"position": {
+			"x": 424.8765,
+			"y": 375.80264
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	}
+],
+"backgroundPath": "non-git/level3bg.png"
+}

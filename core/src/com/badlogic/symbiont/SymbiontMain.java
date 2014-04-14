@@ -49,6 +49,7 @@ public class SymbiontMain extends ApplicationAdapter {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
+        currentLevelNum = 0;
         currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[0];
         
         gameView = new GameView();

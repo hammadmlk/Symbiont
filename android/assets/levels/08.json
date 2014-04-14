@@ -3,10 +3,9 @@
 "entities": [
 	{
 		"class": "com.badlogic.symbiont.models.RotatableObjectModel",
-		"flipHorizontal": true,
 		"position": {
-			"x": 483.87012,
-			"y": 549.9889
+			"x": -10.180939,
+			"y": 477.46768
 		},
 		"scale": 1,
 		"name": "pivoting-branch",
@@ -18,12 +17,23 @@
 		"entityType": "BRANCH"
 	},
 	{
+		"position": {
+			"x": 373.29175,
+			"y": 441.40506
+		},
+		"scale": 0.4,
+		"name": "branch2",
+		"flipHorizontal": true,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
 		"linearVelocity": {
 			"y": -250
 		},
 		"position": {
-			"x": 188,
-			"y": 608
+			"x": 355.70535,
+			"y": 342.8442
 		},
 		"scale": 0.5,
 		"name": "ball",
@@ -59,8 +69,8 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 94.09465,
-					"y": 623.8366
+					"x": 107.69237,
+					"y": 315.62134
 				},
 				"rectangle": {
 					"width": 240,
@@ -70,8 +80,8 @@
 			}
 		],
 		"position": {
-			"x": 94.09465,
-			"y": 623.8366
+			"x": 107.69237,
+			"y": 315.62134
 		},
 		"scale": 0.4,
 		"name": "plant",

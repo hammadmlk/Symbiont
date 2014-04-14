@@ -6,9 +6,10 @@
         "04",
         "05",
         "06",
+        "07",
+        "08",
         "first",
-        "second",
-        "third"
+        "second"
     ],
     "namesToConfigs": {
         "ball": {
