@@ -24,18 +24,34 @@ import com.badlogic.symbiont.models.GameState;
      * @return
      */
     public static Actor createMenu(Skin skin, float padTop) {
-        // Create a table that fills the screen. Everything else will go inside this table.
-        // TODO padding needs to get updated on resize
-        Table mainTable = new Table().top().left().padTop(padTop);
-        mainTable.setFillParent(true);
+        // Create a table (mainTable) consisting of upperTable and menuwindow 
+    	// that fills the screen. Everything else will go inside this table.
+        // A good table guide at: 
+    	//  	https://github.com/EsotericSoftware/tablelayout
+    	// TODO padding needs to get updated on resize
+    	
+    	
+    	final Window menuWindow = new Window("Menu", skin);
         final Table upperTable = new Table();
-
-        final Window menuWindow = new Window("Menu", skin);
-        menuWindow.setMovable(false);
-        menuWindow.setVisible(menuIsVisible);
-        menuWindow.setModal(menuIsVisible);
-
+        
+        
+    	//========== upperTable
+        upperTable.setWidth(GameConstants.VIRTUAL_WIDTH);
+        upperTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        upperTable.setPosition(0,0);
+        upperTable.left().top(); //internal left top align
+        
+        // === add things to upperTable
+        //menu button
         final TextButton menuTextButton = new TextButton("Menu", skin);
+        upperTable.add(menuTextButton).expandX().left();//width(100).height(32);
+        //reload button
+        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
+        style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
+        ImageButton loadFileButton = new ImageButton(style);
+        upperTable.add(loadFileButton).width(32).height(32);
+        
+        //=== upperTable listeners
         menuTextButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -46,19 +62,28 @@ import com.badlogic.symbiont.models.GameState;
             }
         });
 
-        final TextButton returnTextButton = new TextButton("Return", skin);
-        returnTextButton.addListener(new ChangeListener() {
+        loadFileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                menuIsVisible = false;
-                upperTable.setVisible(!menuIsVisible);
-                menuWindow.setVisible(menuIsVisible);
-                menuWindow.setModal(menuIsVisible);
+                SymbiontMain.loadFile();
             }
         });
-
-        upperTable.add(menuTextButton);
-
+        //============ end upperTable
+        
+        
+        // ====== menuWindow
+        //menuWindow.setFillParent(true);
+        menuWindow.setWidth(GameConstants.VIRTUAL_WIDTH);
+        menuWindow.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        menuWindow.setPosition(0,0);
+        menuWindow.center(); //internal left top align
+        
+        //menuWindow.setPosition(0, 0);
+        menuWindow.setMovable(false);
+        menuWindow.setVisible(menuIsVisible);
+        menuWindow.setModal(menuIsVisible);
+        
+        //===add things to menuwindow
         final CheckBox debugCheckBox = new CheckBox("Debug", skin);
         menuWindow.add(debugCheckBox);
         menuWindow.row();
@@ -68,14 +93,24 @@ import com.badlogic.symbiont.models.GameState;
         final TextButton saveFileButton = new TextButton("Save", skin);
         menuWindow.add(saveFileButton);
         menuWindow.row();
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
-        style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
-        ImageButton loadFileButton = new ImageButton(style);
-        upperTable.add(loadFileButton).width(32).height(32);
         final List levelPath = new List(Assets.constantsConfigLoader.listOfLevels, skin);
         menuWindow.add(levelPath);
         menuWindow.row();
-
+        final TextButton returnTextButton = new TextButton("Return", skin);
+        menuWindow.add(returnTextButton);
+        menuWindow.row();
+        
+        // === MenuWindow Listeners         
+        returnTextButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuIsVisible = false;
+                upperTable.setVisible(!menuIsVisible);
+                menuWindow.setVisible(menuIsVisible);
+                menuWindow.setModal(menuIsVisible);
+            }
+        });
+        
         levelPath.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -83,7 +118,7 @@ import com.badlogic.symbiont.models.GameState;
                 SymbiontMain.loadFile();
             }
         });
-
+        
         debugCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 SymbiontMain.debug = !SymbiontMain.debug;
@@ -109,14 +144,7 @@ import com.badlogic.symbiont.models.GameState;
                 }
             }
         });
-
-        loadFileButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.loadFile();
-            }
-        });
-
+        
         saveFileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -124,14 +152,24 @@ import com.badlogic.symbiont.models.GameState;
                 fileHandle.writeString(SymbiontMain.levelEditor.editorGameState.toJSON(), false);
             }
         });
+        //======== end menuWindow
+        
 
-        menuWindow.row();
-        menuWindow.add(returnTextButton);
-
-        mainTable.add(upperTable);
+        
+        //=== mainTable
+        Table mainTable = new Table();
+        
+        mainTable.setWidth(GameConstants.VIRTUAL_WIDTH);
+        mainTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        mainTable.setPosition(0,0);
+        mainTable.left().top(); //internal left top align
+        
+        int w=GameConstants.VIRTUAL_WIDTH;
+        mainTable.add(upperTable).width(w).height(50);
         mainTable.row();
-        mainTable.add(menuWindow).width(GameConstants.VIRTUAL_WIDTH);
-
+        mainTable.add(menuWindow).width(w).expandY();
+        
         return mainTable;
+        //return upperTable;
     }
 }
