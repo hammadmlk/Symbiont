@@ -75,6 +75,9 @@ public class GameEngine {
 				gameState.currentEnergy -= length
 						* GameConstants.DEFLECTOR_ENERGY;
   			}
+            if (gameState.currentEnergy < 0) {
+                gameState.energyBarParticleEffect.allowCompletion();
+            }
             gameState.energyBarParticleEffect.update(delta);
 
             // check if energy depleted
