@@ -19,6 +19,7 @@ import com.badlogic.symbiont.views.GameView;
 
 public class SymbiontMain extends ApplicationAdapter {
 
+    public static int currentLevelNum = 0;
     private Stage stage;
     public static GameView gameView;
 

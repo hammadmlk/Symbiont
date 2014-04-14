@@ -51,15 +51,10 @@ public class GameState {
             state = GameState.State.PLAYING;
             SymbiontMain.loadFileKeepListeners();
         } else if (state == GameState.State.WON) {
-            int currentLevelNum;
-            try {
-                currentLevelNum = Integer.valueOf(SymbiontMain.currentLevelFileName);
-            } catch (NumberFormatException e) {
-                return;
-            }
-            if (currentLevelNum < Assets.constantsConfigLoader.listOfLevels.length) {
+            if (SymbiontMain.currentLevelNum < Assets.constantsConfigLoader.listOfLevels.length) {
                 state = GameState.State.PLAYING;
-                SymbiontMain.currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[currentLevelNum];
+                SymbiontMain.currentLevelNum++;
+                SymbiontMain.currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[SymbiontMain.currentLevelNum];
                 SymbiontMain.loadFileKeepListeners();
             }
         }
