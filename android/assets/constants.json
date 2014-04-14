@@ -36,6 +36,10 @@
             "entityType": "BRANCH",
             "scale": 0.4
         },
+        "branch3": {
+            "entityType": "BRANCH",
+            "scale": 0.4
+        },
         "plant": {
             "entityType": "PLANT",
             "isSensor": true,

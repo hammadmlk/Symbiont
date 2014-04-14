@@ -90,6 +90,23 @@ public class SymbiontMain extends ApplicationAdapter {
         }
     }
 
+    /**
+     * loads currentLevelFileName without clearing listeners. If we called the regular loadFile
+     * from where we call this it would crash the game. Not sure if there are any side effects
+     * of doing it this way, but it appears to work.
+     */
+    public static void loadFileKeepListeners() {
+        if (world != null) {
+            world.dispose();
+        }
+        world = new World(new Vector2(0, -10), true);
+        world.setContactListener(new GameContactListener());
+
+        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
+        String rawGameStateJSON = gamestateFile.readString();
+        gameState = GameState.fromJSON(rawGameStateJSON);
+        gameState.addToWorld(world);
+    }
 
     @Override
     public void dispose() {

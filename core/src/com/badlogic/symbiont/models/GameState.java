@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
+import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.CollisionFilters;
 
 public class GameState {
@@ -40,9 +41,27 @@ public class GameState {
 
     public transient State state = State.WAITING_TO_START;
 
+    // TODO this probably shouldn't be done like this
     public void startIfWaiting() {
-        if (state == GameState.State.WAITING_TO_START) {
+        if (state == GameState.State.PLAYING) {
+            return;
+        } else if (state == GameState.State.WAITING_TO_START) {
             state = GameState.State.PLAYING;
+        } else if (state == GameState.State.LOST) {
+            state = GameState.State.PLAYING;
+            SymbiontMain.loadFileKeepListeners();
+        } else if (state == GameState.State.WON) {
+            int currentLevelNum;
+            try {
+                currentLevelNum = Integer.valueOf(SymbiontMain.currentLevelFileName);
+            } catch (NumberFormatException e) {
+                return;
+            }
+            if (currentLevelNum < 6) {
+                state = GameState.State.PLAYING;
+                SymbiontMain.currentLevelFileName = "0" + (++currentLevelNum);
+                SymbiontMain.loadFileKeepListeners();
+            }
         }
     }
 
