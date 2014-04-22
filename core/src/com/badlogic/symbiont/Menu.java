@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
- public class Menu {
+
+public class Menu {
     /**
      * is the menu visible
      */
@@ -20,10 +21,9 @@ import com.badlogic.symbiont.models.GameState;
     /**
      * create the menu
      * @param skin
-     * @param padTop how much to pad on top
      * @return
      */
-    public static Actor createMenu(Skin skin, float padTop) {
+    public static Actor createMenu(Skin skin) {
         // Create a table (mainTable) consisting of upperTable and menuwindow 
     	// that fills the screen. Everything else will go inside this table.
         // A good table guide at: 
