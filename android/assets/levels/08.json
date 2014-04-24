@@ -4,13 +4,13 @@
 	{
 		"class": "com.badlogic.symbiont.models.RotatableObjectModel",
 		"position": {
-			"x": -10.180939,
-			"y": 477.46768
+			"x": -11.314087,
+			"y": 534.8584
 		},
 		"scale": 1,
 		"name": "pivoting-branch",
 		"startAngle": -0.6,
-		"rotatingVelocity": 1,
+		"rotatingVelocity": 0.7,
 		"endAngle": 0.6,
 		"breakable": false,
 		"type": "KinematicBody",
@@ -18,8 +18,8 @@
 	},
 	{
 		"position": {
-			"x": 373.29175,
-			"y": 441.40506
+			"x": 371.02545,
+			"y": 421.00845
 		},
 		"scale": 0.4,
 		"name": "branch2",
@@ -32,8 +32,8 @@
 			"y": -250
 		},
 		"position": {
-			"x": 355.70535,
-			"y": 342.8442
+			"x": 101.88101,
+			"y": 317.91504
 		},
 		"scale": 0.5,
 		"name": "ball",
@@ -45,20 +45,19 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 392,
-					"y": 647
+					"x": 350.07367,
+					"y": 628.8697
 				},
 				"rectangle": {
-					"width": 240,
-					"height": 600,
-					"x": 240,
-					"y": 200
+					"width": 480,
+					"height": 400,
+					"y": 400
 				}
 			}
 		],
 		"position": {
-			"x": 392,
-			"y": 647
+			"x": 350.07367,
+			"y": 628.8697
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -69,19 +68,19 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 107.69237,
-					"y": 315.62134
+					"x": 358.11728,
+					"y": 297.49103
 				},
 				"rectangle": {
-					"width": 240,
-					"height": 600,
+					"width": 480,
+					"height": 200,
 					"y": 200
 				}
 			}
 		],
 		"position": {
-			"x": 107.69237,
-			"y": 315.62134
+			"x": 358.11728,
+			"y": 297.49103
 		},
 		"scale": 0.4,
 		"name": "plant",
