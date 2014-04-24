@@ -41,7 +41,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static LevelEditor levelEditor;
 
-    public static GameInputListener gameInputListener = new GameInputListener();
+    public static GameInputListener gameInputListener;
 
     @Override
     public void create() {
@@ -52,6 +52,8 @@ public class SymbiontMain extends ApplicationAdapter {
         currentLevelNum = 0;
         currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[0];
         
+        gameInputListener = new GameInputListener();
+        
         gameView = new GameView();
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         gameView.addListener(gameInputListener);
@@ -60,6 +62,11 @@ public class SymbiontMain extends ApplicationAdapter {
 		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         stage.addActor(Menu.createMenu(skin));
+        
+        // Play background music
+        // TODO this needs to change depending on the level or world
+        Assets.loadSoundEffects();
+        Assets.playSong("song1.wav");
 
         loadFile();
     }

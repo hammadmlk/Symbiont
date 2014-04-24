@@ -2,8 +2,11 @@ package com.badlogic.symbiont;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,6 +24,10 @@ public class Assets {
     public static final Loader physicsLoader = new Loader("physics.json");
 
     public static final ConstantsConfigLoader constantsConfigLoader = ConstantsConfigLoader.fromFileFactory("constants.json");
+    
+    private static Music music;
+    
+    private static Map<String, Sound> soundBank = new HashMap<String, Sound>();
 
     public static ParticleEffect getParticleEffect(String name) {
         ParticleEffect particleEffect = new ParticleEffect();
@@ -68,6 +75,62 @@ public class Assets {
             texture.dispose();
         }
         textureDictionary = new HashMap<String, Texture>();
+
+        if (music != null) {
+            music.dispose();
+        }
+        
+        for (Sound sound : soundBank.values()) {
+            sound.dispose();
+        }
+    }
+    
+    /**
+     * Plays a song, specified by it's filename. Stops any currently playing song.
+     * @param filename the name of the file (with file extension)
+     */
+    public static void playSong(String filename) {
+        if (music != null) {
+            music.stop();
+            music.dispose();
+        }
+        music = Gdx.audio.newMusic(Gdx.files.internal("non-git/audio/"+filename));
+        music.setVolume(0.5f);
+        music.setLooping(true);
+        music.play();
+    }
+    
+    /**
+     * Preload and cache sound effects to prevent lag.
+     */
+    public static void loadSoundEffects() {
+        // TODO make this use JSON
+        Sound effect1 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce1.ogg"));
+        soundBank.put("bounce1.ogg", effect1);
+        Sound effect2 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce2.ogg"));
+        soundBank.put("bounce2.ogg", effect2);   
+    }
+    
+    /**
+     * Plays a sound effect, specified by it's filename.
+     * @param filename the name of the file (with file extension)
+     */
+    public static void playEffect(String filename) {
+        soundBank.get(filename).play(0.6f);
+    }
+
+    private static final Random rand = new Random();
+
+    /**
+     * Helper function to play different sounds, quasi-randomly.
+     * Maybe should be refactored elsewhere.
+     */
+    public static void playBeepEffect() {
+        if (rand.nextBoolean()) {
+            soundBank.get("bounce1.ogg").play();
+        } else {
+            soundBank.get("bounce2.ogg").play();
+        }
     }
 
 }
