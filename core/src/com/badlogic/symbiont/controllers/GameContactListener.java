@@ -52,6 +52,7 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
+        	//TODO: This should be removed, no deflector now.
         	SymbiontMain.gameState.alien = alien;
         	SymbiontMain.gameState.deflected = true;
         }
@@ -70,6 +71,10 @@ public class GameContactListener implements ContactListener {
     @Override
     public void endContact(Contact contact) {
     	if (SymbiontMain.gameState.deflected) {
+    		//TODO: this block can be removed. No deflector now.
+    		// If we keep it, the rope length should affect the 
+    		// power (in deflectorView), not the impulse directly
+    		
     		SymbiontMain.gameState.deflected = false;
     		PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     		
