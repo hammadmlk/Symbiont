@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
@@ -14,8 +15,7 @@ import com.badlogic.symbiont.models.PlantModel;
 public class DeflectorView {
 	
     private TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
-    private ShapeRenderer shapeRenderer = new ShapeRenderer(); //todo: perhaps this should 
-    														   //	   not he initialized here
+
     /**
      * render the deflector
      * @param batch
@@ -98,6 +98,11 @@ public class DeflectorView {
 	    	float h2 = (float) Math.sqrt(dx2*dx2 + dy2*dy2);
 	    	float p2 = (float) Math.sqrt(h2*h2 - r*r);
 	    	
+	    	// Dont continue if the ball touches points
+			if ( h1 < r || h2 < r ) {
+				return;
+			}
+	    	
 	    	// Calculate angles (LEFT)
 	    	float a1 = (float) Math.atan2(dy1, dx1);
 	    	float b1 = (float) Math.asin(r / h1);
@@ -115,6 +120,27 @@ public class DeflectorView {
 	    	// Tangent/Ball intersection coordinates (RIGHT)
 	    	float ix2 = (float) Math.cos(a2+b2) * p2 + x2;
 	    	float iy2 = (float) Math.sin(a2+b2) * p2 + y2;
+	    	
+	    	//Midpoint between the two tangent points (ix1,iy1) and (ix2,iy2)
+	    	float mpx = (ix1 + ix2) / 2;
+	    	float mpy = (iy1 + iy2) / 2;
+	    	// Angle of acceleration
+	    	float accAngle = (float) Math.atan2(mpy - cy, mpx - cx);
+
+	    	// Power is dependent on how far the elastic's been stretched
+	    	float power = py1 /8;
+	    	
+	    	//Change in velocity x and y 
+	    	float dvx = (float) Math.cos(accAngle) * power;
+	    	float dvy = (float) Math.sin(accAngle) * power;
+		    
+	    	//Impulse (changeInVelocity*mass)
+	    	Vector2 impulse = new Vector2( 
+	    			-dvx*alien.body.getMass(), 
+	    			-dvy*alien.body.getMass()
+			);	    	
+	    	alien.body.applyLinearImpulse(
+	    			impulse, alien.body.getWorldCenter(), true);
 	    	
 	    	// Draw lines
 	    	drawline(batch, x1, y1, ix1, iy1);   	
