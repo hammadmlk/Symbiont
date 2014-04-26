@@ -50,6 +50,14 @@ public class DeflectorView {
     	float r = alien.body.getFixtureList().first()
     			.getShape().getRadius() * GameConstants.PIXELS_PER_METER;
     	
+    	
+    	// swap points so pointA is always on right (bug fix)
+    	if(pointA.x< pointB.x){
+    		DeflectorEndpoint temp = pointA;
+    		pointA = pointB;
+    		pointB = temp;
+    	}
+    	
     	// pointA coords
     	float x1 = pointA.x;
     	float y1 = pointA.y;
