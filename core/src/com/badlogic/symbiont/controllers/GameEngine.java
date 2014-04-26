@@ -112,15 +112,29 @@ public class GameEngine {
             return null;
         }
         deflectorDef.type = BodyDef.BodyType.StaticBody;
+        
+        //DeflectorEndpoint defPoint0 = SymbiontMain.gameState.deflectorEndpoints[0];
+        //DeflectorEndpoint defPoint1 = SymbiontMain.gameState.deflectorEndpoints[1];
+        
+        //TODO: TEMP CODE
+        DeflectorEndpoint defPoint0 = new DeflectorEndpoint();
+        DeflectorEndpoint defPoint1 = new DeflectorEndpoint();
+        
+        defPoint0.x=0;
+        defPoint0.y=0;
+        defPoint1.x=500;
+        defPoint1.y=0;
+        //
+        
         deflectorDef.position.set(
-                SymbiontMain.gameState.deflectorEndpoints[0].x / GameConstants.PIXELS_PER_METER,
-                SymbiontMain.gameState.deflectorEndpoints[0].y / GameConstants.PIXELS_PER_METER
+                defPoint0.x / GameConstants.PIXELS_PER_METER,
+                defPoint0.y / GameConstants.PIXELS_PER_METER
         );
 
         deflectorPoints[0].set(0,0);
         deflectorPoints[1].set(
-                (SymbiontMain.gameState.deflectorEndpoints[1].x - SymbiontMain.gameState.deflectorEndpoints[0].x) / GameConstants.PIXELS_PER_METER,
-                (SymbiontMain.gameState.deflectorEndpoints[1].y - SymbiontMain.gameState.deflectorEndpoints[0].y) / GameConstants.PIXELS_PER_METER
+                (defPoint1.x - defPoint0.x) / GameConstants.PIXELS_PER_METER,
+                (defPoint1.y - defPoint0.y) / GameConstants.PIXELS_PER_METER
         );
         deflectorNormal.set(-deflectorPoints[1].y, deflectorPoints[1].x);
         deflectorNormal.nor();
