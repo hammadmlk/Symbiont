@@ -135,13 +135,25 @@ public class DeflectorView {
 	    	// Angle of acceleration
 	    	float accAngle = (float) Math.atan2(mpy - cy, mpx - cx);
 
-	    	// Power is dependent on how far the elastic's been stretched
-	    	float power = py1 /8;
+	    	//distance between pointA and pointB
+	    	float d = (float) Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+	    	
+	    	// Power is dependent on how far the elastic's been stretched 
+	    	//	and the distance between pointA and pointB 
+	    	float power = py1/50 ;//* (1+(10*d/GameConstants.VIRTUAL_WIDTH));
+	    	//System.out.println("power1: "+py1 /50);
 	    	
 	    	//Change in velocity x and y 
 	    	float dvx = (float) Math.cos(accAngle) * power;
 	    	float dvy = (float) Math.sin(accAngle) * power;
 		    
+	    	//
+	    	Vector2 velo = alien.body.getLinearVelocity();
+	    	velo.x-=dvx;
+	    	velo.y-=dvy;
+	    	alien.body.setLinearVelocity(velo.x, velo.y);
+	    	
+	    	/*
 	    	//Impulse (changeInVelocity*mass)
 	    	Vector2 impulse = new Vector2( 
 	    			-dvx*alien.body.getMass(), 
@@ -149,6 +161,7 @@ public class DeflectorView {
 			);	    	
 	    	alien.body.applyLinearImpulse(
 	    			impulse, alien.body.getWorldCenter(), true);
+	    	*/
 	    	
 	    	// Draw lines
 	    	drawline(batch, x1, y1, ix1, iy1);   	
