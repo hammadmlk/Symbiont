@@ -152,7 +152,8 @@ public class GameState {
         topWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape topWallBox = new PolygonShape();
         topWallBox.setAsBox(GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2 + halfwidth, halfwidth);
-        topWallBody.createFixture(topWallBox, 0f);
+        Fixture topFixture = topWallBody.createFixture(topWallBox, 0f);
+        topFixture.setRestitution(1);
 
         BodyDef leftWallDef = new BodyDef();
         leftWallDef.position.set(new Vector2(-halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2));
@@ -160,7 +161,8 @@ public class GameState {
         leftWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape leftWallBox = new PolygonShape();
         leftWallBox.setAsBox(halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2 - groundHeight);
-        leftWallBody.createFixture(leftWallBox, 0f);
+        Fixture leftFixture = leftWallBody.createFixture(leftWallBox, 0f);
+        leftFixture.setRestitution(1);
 
         BodyDef rightWallDef = new BodyDef();
         rightWallDef.position.set(new Vector2(
@@ -172,7 +174,8 @@ public class GameState {
         rightWallBody.setUserData(wallPhysicsEntityModel);
         PolygonShape rightWallBox = new PolygonShape();
         rightWallBox.setAsBox(halfwidth, GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2 - groundHeight);
-        rightWallBody.createFixture(rightWallBox, halfwidth);
+        Fixture rightFixture = rightWallBody.createFixture(rightWallBox, halfwidth);
+        rightFixture.setRestitution(1);
     }
 
     public Texture getBackgroundTexture() {

@@ -8,6 +8,7 @@
         "06",
         "07",
         "08",
+        "middleStrip",
         "first",
         "second"
     ],
@@ -17,7 +18,7 @@
             "density": 0.5,
             "entityType": "ALIEN",
             "friction": 0.4,
-            "restitution": 1,
+            "restitution": 0,
             "scale": 0.5,
             "type": "DynamicBody"
         },
@@ -27,22 +28,27 @@
             "scale": 1
         },
         "branch": {
-            "entityType": "BRANCH"
+            "entityType": "BRANCH",
+            "restitution": 0.5
         },
         "branch2": {
             "entityType": "BRANCH",
+            "restitution": 1,
             "scale": 0.4
         },
         "branch3": {
             "entityType": "BRANCH",
+            "restitution": 1,
             "scale": 0.4
         },
         "branchbreakable": {
             "breakable": true,
-            "entityType": "BRANCH"
+            "entityType": "BRANCH",
+            "restitution": 1
         },
         "pivoting-branch": {
-            "entityType": "BRANCH"
+            "entityType": "BRANCH",
+            "restitution": 1
         },
         "plant": {
             "entityType": "PLANT",

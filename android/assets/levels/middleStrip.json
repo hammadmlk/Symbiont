@@ -1,0 +1,97 @@
+{
+    "backgroundPath": "non-git/level2bg.png",
+    "currentEnergy": 100,
+    "entities": [
+        {
+            "angle": 0.6,
+            "breakable": false,
+            "entityType": "BRANCH",
+            "flipHorizontal": true,
+            "name": "branch",
+            "position": {
+                "x": 409,
+                "y": 513
+            },
+            "scale": 1
+        },
+        {
+            "angle": -0.5,
+            "breakable": false,
+            "entityType": "BRANCH",
+            "name": "branch",
+            "position": {
+                "x": 101,
+                "y": 643
+            },
+            "scale": 1
+        },
+        {
+            "breakable": false,
+            "entityType": "ALIEN",
+            "linearVelocity": {
+                "y": -300
+            },
+            "name": "ball",
+            "position": {
+                "x": 49.532555,
+                "y": 750
+            },
+            "scale": 0.5
+        },
+        {
+            "breakable": false,
+            "entityType": "POWERUP_SHRINK",
+            "name": "redpower",
+            "position": {
+                "x": 338.4077,
+                "y": 519.4137
+            },
+            "scale": 0.4
+        },
+        {
+            "breakable": false,
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 387,
+                        "y": 377
+                    },
+                    "rectangle": {
+                        "height": 800,
+                        "width": 180,
+                        "x": 300
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 387,
+                "y": 377
+            },
+            "scale": 0.4
+        },
+        {
+            "breakable": false,
+            "class": "com.badlogic.symbiont.models.PlantModel",
+            "mistModels": [
+                {
+                    "position": {
+                        "x": 90.09465,
+                        "y": 111.83659
+                    },
+                    "rectangle": {
+                        "height": 800,
+                        "width": 180
+                    }
+                }
+            ],
+            "name": "plant",
+            "position": {
+                "x": 90.09465,
+                "y": 111.83659
+            },
+            "scale": 0.4
+        }
+    ]
+}
