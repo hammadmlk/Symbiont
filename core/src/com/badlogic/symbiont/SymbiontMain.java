@@ -168,7 +168,7 @@ public class SymbiontMain extends ApplicationAdapter {
             gameState.state = GameState.State.WAITING_TO_START;
         }
 
-        Preferences prefs = Gdx.app.getPreferences("state");
+        Preferences prefs = Gdx.app.getPreferences(GameConstants.PREFERENCES);
 
         prefs.putInteger("levelNum", currentLevelNum);
         prefs.putString("levelFileName", currentLevelFileName);
@@ -181,7 +181,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
     @Override
     public void resume() {
-        Preferences prefs = Gdx.app.getPreferences("state");
+        Preferences prefs = Gdx.app.getPreferences(GameConstants.PREFERENCES);
 
         initialize();
 
