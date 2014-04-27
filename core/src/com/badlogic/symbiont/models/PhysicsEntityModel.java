@@ -172,7 +172,7 @@ public class PhysicsEntityModel {
         );
     }
 
-    private Animator getAnimator() {
+    public Animator getAnimator() {
         if (animator != null) {
             return animator;
         }

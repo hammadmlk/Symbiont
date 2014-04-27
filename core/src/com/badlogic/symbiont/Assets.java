@@ -82,6 +82,10 @@ public class Assets {
 
         AnimationModel animationModel = constantsConfigLoader.animations.get(name);
 
+        if (animationModel == null) {
+            System.out.println(name);
+        }
+
         animationModel.frames = new TextureAtlas.AtlasRegion[animationModel.numFrames];
 
         for (int i = 0; i < animationModel.numFrames; i++) {

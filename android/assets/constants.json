@@ -61,7 +61,7 @@
             "scale": 1
         },
         "branch": {
-            "animation": "branch",
+            "animation": "branch1",
             "entityType": "BRANCH",
             "restitution": 0.5
         },

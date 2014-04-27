@@ -48,6 +48,7 @@ public class GameContactListener implements ContactListener {
         }
         if (other.entityType == PhysicsEntityModel.Type.PLANT) {
             other.toBeDestroyed = true;
+            alien.getAnimator().overrideAnimation(Assets.loadAnimation("eating"));
         }
         if (other.entityType == PhysicsEntityModel.Type.GROUND) {
             SymbiontMain.gameState.state = GameState.State.LOST;
