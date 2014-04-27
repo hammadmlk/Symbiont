@@ -29,10 +29,6 @@ public class Animator {
 
     public void update(float delta) {
         timeElapsed += delta;
-        if (currentAnimation().numFrames > 1) {
-            System.out.println(currentFrame);
-            System.out.println(timeElapsed);
-        }
         if (timeElapsed > currentAnimation().delta) {
             timeElapsed -= currentAnimation().delta;
             currentFrame++;
