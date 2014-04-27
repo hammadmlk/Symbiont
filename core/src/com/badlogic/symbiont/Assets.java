@@ -116,7 +116,7 @@ public class Assets {
      * @param filename the name of the file (with file extension)
      */
     public static void playEffect(String filename) {
-        soundBank.get(filename).play(0.6f);
+        soundBank.get(filename).play();
     }
 
     private static final Random rand = new Random();
@@ -127,9 +127,9 @@ public class Assets {
      */
     public static void playBeepEffect() {
         if (rand.nextBoolean()) {
-            soundBank.get("bounce1.ogg").play();
+            playEffect("bounce1.ogg");
         } else {
-            soundBank.get("bounce2.ogg").play();
+            playEffect("bounce2.ogg");
         }
     }
 
