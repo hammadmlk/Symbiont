@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.symbiont.models.ConstantsConfigLoader;
+import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
 
 public class Assets {
@@ -95,7 +96,7 @@ public class Assets {
             music.dispose();
         }
         music = Gdx.audio.newMusic(Gdx.files.internal("non-git/audio/"+filename));
-        music.setVolume(0.5f);
+        music.setVolume(GameConstants.DEFAULT_MUSIC_VOLUME);
         music.setLooping(true);
         music.play();
     }
