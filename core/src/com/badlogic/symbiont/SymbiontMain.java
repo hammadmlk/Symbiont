@@ -2,6 +2,7 @@ package com.badlogic.symbiont;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector2;
@@ -41,48 +42,58 @@ public class SymbiontMain extends ApplicationAdapter {
 
     public static LevelEditor levelEditor;
 
-    public static GameInputListener gameInputListener = new GameInputListener();
+    public static GameInputListener gameInputListener;
 
     @Override
     public void create() {
-
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+        initialize();
 
         currentLevelNum = 0;
         currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[0];
         
+        loadFile();
+    }
+
+    private void initialize() {
+        gameInputListener = new GameInputListener();
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
         gameView = new GameView();
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         gameView.addListener(gameInputListener);
         stage.addActor(gameView);
 
-		skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         stage.addActor(Menu.createMenu(skin));
+    }
 
-        loadFile();
+    private static void loadGameState(String gs) {
+        if (world != null) {
+            world.dispose();
+        }
+        world = new World(new Vector2(0, -10), true);
+        world.setContactListener(new GameContactListener());
+        gameState = GameState.fromJSON(gs);
+        gameState.addToWorld(world);
+
+        levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
     }
 
     /**
      * loads currentLevelFileName
      */
     public static void loadFile() {
-        if (world != null) {
-            world.dispose();
-        }
-        world = new World(new Vector2(0, -10), true);
-        world.setContactListener(new GameContactListener());
-
-        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
-        String rawGameStateJSON = gamestateFile.readString();
-        gameState = GameState.fromJSON(rawGameStateJSON);
-        gameState.addToWorld(world);
+        FileHandle gameStateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
+        String rawGameStateJSON = gameStateFile.readString();
+        loadGameState(rawGameStateJSON);
 
         if (levelEditor != null) {
             levelEditor.dispose();
         }
-        levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
+
         if (edit) {
             gameView.clearListeners();
             gameView.addListener(levelEditor);
@@ -98,16 +109,8 @@ public class SymbiontMain extends ApplicationAdapter {
      * of doing it this way, but it appears to work.
      */
     public static void loadFileKeepListeners() {
-        if (world != null) {
-            world.dispose();
-        }
-        world = new World(new Vector2(0, -10), true);
-        world.setContactListener(new GameContactListener());
-
-        FileHandle gamestateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
-        String rawGameStateJSON = gamestateFile.readString();
-        gameState = GameState.fromJSON(rawGameStateJSON);
-        gameState.addToWorld(world);
+        FileHandle gameStateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
+        loadGameState(gameStateFile.readString());
     }
 
     @Override
@@ -161,12 +164,33 @@ public class SymbiontMain extends ApplicationAdapter {
 
     @Override
     public void pause() {
+        if (gameState.state == GameState.State.PLAYING) {
+            gameState.state = GameState.State.WAITING_TO_START;
+        }
 
+        Preferences prefs = Gdx.app.getPreferences("state");
+
+        prefs.putInteger("levelNum", currentLevelNum);
+        prefs.putString("levelFileName", currentLevelFileName);
+        prefs.putString("gameState", gameState.toJSON());
+        prefs.putBoolean("debug", debug);
+        prefs.putBoolean("edit", edit);
+
+        prefs.flush();
     }
 
     @Override
     public void resume() {
+        Preferences prefs = Gdx.app.getPreferences("state");
 
+        initialize();
+
+        currentLevelFileName = prefs.getString("levelFileName");
+        currentLevelNum = prefs.getInteger("levelNum");
+        debug = prefs.getBoolean("debug");
+        edit = prefs.getBoolean("edit");
+
+        loadGameState(prefs.getString("gameState"));
     }
 
 }

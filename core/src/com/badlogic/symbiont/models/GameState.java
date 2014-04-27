@@ -39,7 +39,7 @@ public class GameState {
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
 
-    public transient State state = State.WAITING_TO_START;
+    public State state = State.WAITING_TO_START;
 
     // TODO this probably shouldn't be done like this
     public void startIfWaiting() {
