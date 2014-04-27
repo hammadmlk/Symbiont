@@ -19,6 +19,8 @@ public class ConstantsConfigLoader {
      */
     public String[] listOfLevels;
 
+    public HashMap<String, AnimationModel> namesToAnimations;
+
     /**
      * private to force use of factory
      */

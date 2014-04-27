@@ -12,6 +12,14 @@
         "first",
         "second"
     ],
+    "namesToAnimations": {
+        "creatureanim": {
+            "numFrames": 9
+        },
+        "eating": {
+            "numFrames": 8
+        }
+    },
     "namesToConfigs": {
         "ball": {
             "bullet": true,

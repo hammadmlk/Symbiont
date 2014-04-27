@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.symbiont.models.AnimationModel;
 import com.badlogic.symbiont.models.ConstantsConfigLoader;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
@@ -19,6 +20,9 @@ public class Assets {
     private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
     private static Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
+
+    private static Map<String, TextureAtlas.AtlasRegion[]> atlasAnimationMap =
+            new HashMap<String, TextureAtlas.AtlasRegion[]>();
 
     private static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
 
@@ -69,6 +73,24 @@ public class Assets {
         TextureAtlas.AtlasRegion atlasRegion = textureAtlas.findRegion(name);
         atlasRegionMap.put(name, atlasRegion);
         return atlasRegion;
+    }
+
+    public static TextureAtlas.AtlasRegion[] loadAnimationByName(String name) {
+        if (atlasAnimationMap.containsKey(name)) {
+            return atlasAnimationMap.get(name);
+        }
+
+        AnimationModel animationMode = constantsConfigLoader.namesToAnimations.get(name);
+
+        TextureAtlas.AtlasRegion[] atlasRegions = new TextureAtlas.AtlasRegion[animationMode.numFrames];
+
+        for (int i = 0; i < animationMode.numFrames; i++) {
+            atlasRegions[i] = textureAtlas.findRegion(name, i);
+        }
+
+        atlasAnimationMap.put(name, atlasRegions);
+
+        return atlasRegions;
     }
 
     public static void dispose() {
