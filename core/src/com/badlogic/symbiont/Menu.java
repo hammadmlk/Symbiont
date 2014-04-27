@@ -50,8 +50,8 @@ public class Menu {
         //reload button --- TODO: different image down.
         TextureRegionDrawable reloadImageUp = new TextureRegionDrawable(Assets.loadAtlas("reload"));
         TextureRegionDrawable reloadImageDown = new TextureRegionDrawable(Assets.loadAtlas("reload"));
-        ImageButton loadFileButton = new ImageButton(reloadImageUp, reloadImageDown);
-        upperTable.add(loadFileButton).width(32).height(32);
+        ImageButton reloadButton = new ImageButton(reloadImageUp, reloadImageDown);
+        upperTable.add(reloadButton).width(32).height(32);
         
         //=== upperTable listeners
         menuImageButton.addListener(new ChangeListener() {
@@ -64,7 +64,7 @@ public class Menu {
             }
         });
 
-        loadFileButton.addListener(new ChangeListener() {
+        reloadButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 SymbiontMain.loadFile();
