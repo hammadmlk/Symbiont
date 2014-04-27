@@ -9,10 +9,14 @@
         "breakablebranch1": {},
         "breakablebranch2": {},
         "breakablebranch3": {},
-        "creatureanim": {},
+        "creatureanim": {
+            "numFrames": 9
+        },
         "crop_creature": {},
         "deflector": {},
-        "eating": {},
+        "eating": {
+            "numFrames": 8
+        },
         "levelselect": {},
         "mainmenu": {},
         "menu": {},

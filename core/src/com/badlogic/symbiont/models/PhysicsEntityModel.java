@@ -165,8 +165,8 @@ public class PhysicsEntityModel {
                 name,
                 fixtureDef,
                 scale,
-                getPhysicsImg().originalWidth,
-                getPhysicsImg().originalHeight,
+                getImg().originalWidth,
+                getImg().originalHeight,
                 flipHorizontal,
                 flipVertical
         );
@@ -190,15 +190,10 @@ public class PhysicsEntityModel {
         return getAnimator().getCurrentFrame();
     }
 
-    private TextureAtlas.AtlasRegion getPhysicsImg() {
-        String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
-        return Assets.loadAtlas(imgPath);
-    }
-
     public Vector2 getOrigin() {
         if (origin != null)
             return origin;
-        float combinedScale = getPhysicsImg().originalWidth;
+        float combinedScale = getImg().originalWidth;
         Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
         origin = new Vector2(
                 flipHorizontal ? 1 - unscaledOrigin.x : unscaledOrigin.x,
