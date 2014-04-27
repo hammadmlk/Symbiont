@@ -10,6 +10,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.symbiont.models.AnimationModel;
 import com.badlogic.symbiont.models.ConstantsConfigLoader;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
@@ -19,6 +20,9 @@ public class Assets {
     private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
     private static Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
+
+    private static Map<String, AnimationModel> atlasAnimationMap =
+            new HashMap<String, AnimationModel>();
 
     private static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
 
@@ -69,6 +73,30 @@ public class Assets {
         TextureAtlas.AtlasRegion atlasRegion = textureAtlas.findRegion(name);
         atlasRegionMap.put(name, atlasRegion);
         return atlasRegion;
+    }
+
+    public static AnimationModel loadAnimation(String name) {
+        if (atlasAnimationMap.containsKey(name)) {
+            return atlasAnimationMap.get(name);
+        }
+
+        AnimationModel animationModel = constantsConfigLoader.animations.get(name);
+
+        animationModel.frames = new TextureAtlas.AtlasRegion[animationModel.numFrames];
+
+        for (int i = 0; i < animationModel.numFrames; i++) {
+            TextureAtlas.AtlasRegion frame = textureAtlas.findRegion(name, i);
+            // hack so that we don't have to add _0 to the file names
+            // for our singleton animations
+            if (frame == null && i == 0) {
+                frame = textureAtlas.findRegion(name);
+            }
+            animationModel.frames[i] = frame;
+        }
+
+        atlasAnimationMap.put(name, animationModel);
+
+        return animationModel;
     }
 
     public static void dispose() {

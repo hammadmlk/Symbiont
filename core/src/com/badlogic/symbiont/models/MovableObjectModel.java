@@ -15,7 +15,7 @@ public class MovableObjectModel extends PhysicsEntityModel {
     private float lastDist = 0;
 
     @Override
-    public void update() {
+    public void update(float delta) {
         curPos.set(
                 body.getPosition().x * GameConstants.PIXELS_PER_METER,
                 body.getPosition().y * GameConstants.PIXELS_PER_METER
@@ -37,6 +37,6 @@ public class MovableObjectModel extends PhysicsEntityModel {
             lastDist = dist;
         }
         
-        super.update();
+        super.update(delta);
     }
 }

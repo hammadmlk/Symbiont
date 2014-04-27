@@ -10,7 +10,7 @@
             "movingPath": [
                 {
                     "x": 354,
-                    "y": 500
+                    "y": 596
                 },
                 {
                     "x": 354,
@@ -18,14 +18,14 @@
                 },
                 {
                     "x": 354,
-                    "y": 500
+                    "y": 596
                 }
             ],
             "movingSpeed": 2,
             "name": "branch",
             "position": {
                 "x": 354,
-                "y": 500
+                "y": 596
             },
             "scale": 1,
             "type": "KinematicBody"
@@ -38,45 +38,27 @@
             },
             "name": "ball",
             "position": {
-                "x": 192.53258,
-                "y": 653.32574
-            },
-            "scale": 0.5
+                "x": 177.90402,
+                "y": 655.15424
+            }
         },
         {
             "breakable": false,
-            "class": "com.badlogic.symbiont.models.MovableObjectModel",
             "entityType": "POWERUP_SPEED",
-            "movingPath": [
-                {
-                    "x": 354,
-                    "y": 500
-                },
-                {
-                    "x": 354,
-                    "y": 296
-                },
-                {
-                    "x": 354,
-                    "y": 500
-                }
-            ],
-            "movingSpeed": 2,
             "name": "bluepower",
             "position": {
-                "x": 63.505028,
+                "x": 40.64788,
                 "y": 428.6119
             },
-            "scale": 0.4,
-            "type": "KinematicBody"
+            "scale": 0.4
         },
         {
             "breakable": false,
             "entityType": "POWERUP_SHRINK",
             "name": "redpower",
             "position": {
-                "x": 353.4077,
-                "y": 327.41367
+                "x": 344.4077,
+                "y": 418.41367
             },
             "scale": 0.4
         },
@@ -110,7 +92,7 @@
             "mistModels": [
                 {
                     "position": {
-                        "x": 94.09465,
+                        "x": 73.98038,
                         "y": 623.8366
                     },
                     "rectangle": {
@@ -122,7 +104,7 @@
             ],
             "name": "plant",
             "position": {
-                "x": 94.09465,
+                "x": 73.98038,
                 "y": 623.8366
             },
             "scale": 0.4

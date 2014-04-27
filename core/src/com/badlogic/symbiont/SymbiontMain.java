@@ -84,6 +84,10 @@ public class SymbiontMain extends ApplicationAdapter {
         gameState = GameState.fromJSON(gs);
         gameState.addToWorld(world);
 
+        if (levelEditor != null) {
+            levelEditor.dispose();
+        }
+
         levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
     }
 
@@ -94,10 +98,6 @@ public class SymbiontMain extends ApplicationAdapter {
         FileHandle gameStateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
         String rawGameStateJSON = gameStateFile.readString();
         loadGameState(rawGameStateJSON);
-
-        if (levelEditor != null) {
-            levelEditor.dispose();
-        }
 
         if (edit) {
             gameView.clearListeners();

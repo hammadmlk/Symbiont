@@ -9,7 +9,6 @@
 			"x": 241.437,
 			"y": 293.40863
 		},
-		"scale": 0.5,
 		"name": "ball",
 		"breakable": false,
 		"entityType": "ALIEN"

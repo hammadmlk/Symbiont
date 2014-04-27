@@ -17,12 +17,8 @@ public class PhysicsEntityModel {
      */
     public enum Type {ALIEN, WALL, GROUND, PLANT, BRANCH, BROKEN, DEFLECTOR, POWERUP_SPEED, POWERUP_SHRINK}
 
-    /**
-     * All physics entities must have textures
-     * unless they're walls or grounds or the deflector, which aren't in
-     * the gameState's list of physics entities, so won't get drawn or loaded from JSON
-     */
-    private transient TextureAtlas.AtlasRegion atlasRegion;
+    private transient Animator animator;
+
     /**
      * used to look up texture, shape, physics constants, etc
      */
@@ -93,7 +89,7 @@ public class PhysicsEntityModel {
     /**
      * use this in the game loop to keep position, linearVelocity, angle, angularVelocity up to date
      */
-    public void update() {
+    public void update(float delta) {
         if (entityType == Type.BROKEN) {
             type = BodyDef.BodyType.DynamicBody;
             body.setType(BodyDef.BodyType.DynamicBody);
@@ -103,7 +99,9 @@ public class PhysicsEntityModel {
 
             body.setFixedRotation(false);
         }
-        
+
+        getAnimator().update(delta);
+
         position.set(
                 body.getPosition().x * GameConstants.PIXELS_PER_METER,
                 body.getPosition().y * GameConstants.PIXELS_PER_METER
@@ -174,18 +172,22 @@ public class PhysicsEntityModel {
         );
     }
 
+    public Animator getAnimator() {
+        if (animator != null) {
+            return animator;
+        }
+        AnimationModel animationModel = Assets.loadAnimation(Assets.constantsConfigLoader.getConfig(name).animation);
+        assert animationModel.frames != null;
+        animator = new Animator(animationModel);
+        return animator;
+    }
+
     /**
      * get current texture. Should add animation logic here
      * @return
      */
     public TextureAtlas.AtlasRegion getImg() {
-        if (atlasRegion != null) {
-            return atlasRegion;
-        }
-        String imgPath = Assets.physicsLoader.getRigidBody(name).imagePath;
-        atlasRegion = Assets.loadAtlas(imgPath);
-        assert atlasRegion != null;
-        return atlasRegion;
+        return getAnimator().getCurrentFrame();
     }
 
     public Vector2 getOrigin() {
