@@ -1,11 +1,15 @@
 package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
@@ -46,9 +50,9 @@ public class GameView extends Actor {
         deflectorView.render(batch);
 
         if (gameState.state == GameState.State.WON) {
-            drawTextCentered(batch, "YOU WON!");
+            drawImageCentered(batch, "youwin");
         } else if (gameState.state == GameState.State.LOST) {
-            drawTextCentered(batch, "YOU LOST!");
+            drawImageCentered(batch, "youlose");
         }
 
         energyBarView.draw(batch, gameState.currentEnergy / gameState.totalEnergy);
@@ -75,12 +79,24 @@ public class GameView extends Actor {
         float fontY = 50;
         bitmapFont.draw(batch, text, fontX, fontY);
     }
-
+    
+    //Prints text on screen center 
     private void drawTextCentered(SpriteBatch batch, String text) {
         BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
         float fontX = GameConstants.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
         float fontY = GameConstants.VIRTUAL_HEIGHT / 2 - bitmapFont.getBounds(text).height/2;
         bitmapFont.draw(batch, text, fontX, fontY);
+    }
+    
+    //Draws an image on screen center. Image width is (1/1.5) times screen width. 
+    // aspect ratio of image maintained
+    private void drawImageCentered(SpriteBatch batch, String imageName) {
+        TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas(imageName);
+        float width = GameConstants.VIRTUAL_WIDTH/1.5f;
+        float height = width * atlasRegion.packedHeight/atlasRegion.packedWidth;
+        float x = GameConstants.VIRTUAL_WIDTH / 2 - width/2;
+        float y = GameConstants.VIRTUAL_HEIGHT / 2 - height/2;
+        batch.draw(atlasRegion, x, y, width, height);
     }
 
     /*
