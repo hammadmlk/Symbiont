@@ -1,19 +1,18 @@
 package com.badlogic.symbiont.controllers;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.symbiont.SymbiontMain;
-import com.badlogic.symbiont.Util;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
-
-import java.util.Iterator;
 
 public class GameEngine {
     /**
@@ -67,14 +66,10 @@ public class GameEngine {
             }
             
             // Get deflector width and update energy meter
-			if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active) {
-				float length = Util.distance(gameState.deflectorEndpoints[1].x,
-						gameState.deflectorEndpoints[1].y,
-						gameState.deflectorEndpoints[0].x,
-						gameState.deflectorEndpoints[0].y);
-				gameState.currentEnergy -= length
-						* GameConstants.DEFLECTOR_ENERGY;
-  			}
+            if (gameState.deflector()) {
+                gameState.currentEnergy -= gameState.getDeflectorLength()
+                        * GameConstants.DEFLECTOR_ENERGY;
+            }
             if (gameState.currentEnergy < 0) {
                 gameState.energyBarParticleEffect.allowCompletion();
             }

@@ -17,9 +17,9 @@ public class GameInputListener extends InputListener {
     public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
         if(pointer < 2){
             SymbiontMain.gameState.deflectorEndpoints[pointer].active = false;
+            SymbiontMain.gameState.deflectorEndpoints[0].resetParticleEffect();
+            SymbiontMain.gameState.deflectorEndpoints[1].resetParticleEffect();
         }
-        SymbiontMain.gameState.deflectorEndpoints[0].resetParticleEffect();
-        SymbiontMain.gameState.deflectorEndpoints[1].resetParticleEffect();
     }
 
     @Override

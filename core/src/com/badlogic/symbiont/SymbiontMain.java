@@ -133,13 +133,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
         // set up deflector
         Body deflectorBody = null;
-        if (gameState.deflectorEndpoints[0].active && gameState.deflectorEndpoints[1].active &&
-                Util.distance(
-                        gameState.deflectorEndpoints[1].x,
-                        gameState.deflectorEndpoints[1].y,
-                        gameState.deflectorEndpoints[0].x,
-                        gameState.deflectorEndpoints[0].y
-                ) > 1) {
+        if (gameState.deflector() && gameState.getDeflectorLength() > 1) {
             deflectorBody = GameEngine.setUpDeflector();
         }
 

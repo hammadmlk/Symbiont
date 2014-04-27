@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.Util;
 import com.badlogic.symbiont.controllers.CollisionFilters;
 
 public class GameState {
@@ -61,10 +62,13 @@ public class GameState {
     }
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
-        if (x < 0 || x > GameConstants.VIRTUAL_WIDTH || y < 0 || y > GameConstants.VIRTUAL_HEIGHT)
+        if (currentEnergy <= 0
+                || x < 0 || x > GameConstants.VIRTUAL_WIDTH
+                || y < 0 || y > GameConstants.VIRTUAL_HEIGHT) {
             return;
-        for(MistModel mistModel : mistModels){
-            if(mistModel.contains(x, y)){
+        }
+        for (MistModel mistModel : mistModels) {
+            if (mistModel.contains(x, y) && !mistModel.fading) {
                 return;
             }
         }
@@ -73,8 +77,19 @@ public class GameState {
         deflectorEndpoints[pointer].active = true;
     }
 
+    /**
+     * @return Whether the deflector is active or not
+     */
     public boolean deflector() {
         return deflectorEndpoints[0].active && deflectorEndpoints[1].active;
+    }
+    
+    /**
+     * @return The length of the deflector
+     */
+    public float getDeflectorLength() {
+        return Util.distance(deflectorEndpoints[1].x, deflectorEndpoints[1].y,
+                deflectorEndpoints[0].x, deflectorEndpoints[0].y);
     }
 
     public GameState() {
