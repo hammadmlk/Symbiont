@@ -84,7 +84,7 @@
             "restitution": 1
         },
         "pivoting-branch": {
-            "animation": "branch",
+            "animation": "branch1",
             "entityType": "BRANCH",
             "restitution": 1
         },
