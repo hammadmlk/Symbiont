@@ -40,7 +40,7 @@ public class GameEngine {
                     physicsEntityModel.scale = physicsEntityModel.scale * GameConstants.powerupScale;
                     physicsEntityModel.addToWorld(world);
                 } else {
-                    physicsEntityModel.update();
+                    physicsEntityModel.update(delta);
                 }
             }
 

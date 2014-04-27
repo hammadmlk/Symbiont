@@ -7,6 +7,11 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
  */
 public class ConstantsConfig {
 
+    /**
+     * default animation
+     */
+    public String animation;
+
     public float scale = 1;
 
     public PhysicsEntityModel.Type entityType;

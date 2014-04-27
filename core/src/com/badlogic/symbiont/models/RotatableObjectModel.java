@@ -5,7 +5,7 @@ public class RotatableObjectModel extends PhysicsEntityModel {
     public float rotatingVelocity, startAngle, endAngle;
 
     @Override
-    public void update() {
+    public void update(float delta) {
         float curAngle = body.getAngle();
         if (body.getAngularVelocity() == 0 || curAngle < startAngle) {
             body.setAngularVelocity(rotatingVelocity);
@@ -13,6 +13,6 @@ public class RotatableObjectModel extends PhysicsEntityModel {
             body.setAngularVelocity(-rotatingVelocity);
         }
         
-        super.update();
+        super.update(delta);
     }
 }

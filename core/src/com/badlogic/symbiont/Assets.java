@@ -21,8 +21,8 @@ public class Assets {
 
     private static Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
 
-    private static Map<String, TextureAtlas.AtlasRegion[]> atlasAnimationMap =
-            new HashMap<String, TextureAtlas.AtlasRegion[]>();
+    private static Map<String, AnimationModel> atlasAnimationMap =
+            new HashMap<String, AnimationModel>();
 
     private static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
 
@@ -75,22 +75,28 @@ public class Assets {
         return atlasRegion;
     }
 
-    public static TextureAtlas.AtlasRegion[] loadAnimationByName(String name) {
+    public static AnimationModel loadAnimation(String name) {
         if (atlasAnimationMap.containsKey(name)) {
             return atlasAnimationMap.get(name);
         }
 
-        AnimationModel animationMode = constantsConfigLoader.namesToAnimations.get(name);
+        AnimationModel animationModel = constantsConfigLoader.animations.get(name);
 
-        TextureAtlas.AtlasRegion[] atlasRegions = new TextureAtlas.AtlasRegion[animationMode.numFrames];
+        animationModel.frames = new TextureAtlas.AtlasRegion[animationModel.numFrames];
 
-        for (int i = 0; i < animationMode.numFrames; i++) {
-            atlasRegions[i] = textureAtlas.findRegion(name, i);
+        for (int i = 0; i < animationModel.numFrames; i++) {
+            TextureAtlas.AtlasRegion frame = textureAtlas.findRegion(name, i);
+            // hack so that we don't have to add _0 to the file names
+            // for our singleton animations
+            if (frame == null && i == 0) {
+                frame = textureAtlas.findRegion(name);
+            }
+            animationModel.frames[i] = frame;
         }
 
-        atlasAnimationMap.put(name, atlasRegions);
+        atlasAnimationMap.put(name, animationModel);
 
-        return atlasRegions;
+        return animationModel;
     }
 
     public static void dispose() {

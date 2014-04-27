@@ -1,4 +1,31 @@
 {
+    "animations": {
+        "ball": {},
+        "bluepower": {},
+        "branch1": {},
+        "branch2": {},
+        "branch3": {},
+        "branchbreakable": {},
+        "breakablebranch1": {},
+        "breakablebranch2": {},
+        "breakablebranch3": {},
+        "creatureanim": {},
+        "crop_creature": {},
+        "deflector": {},
+        "eating": {},
+        "levelselect": {},
+        "mainmenu": {},
+        "menu": {},
+        "mist": {},
+        "onebyone": {},
+        "particle": {},
+        "plant": {},
+        "redpower": {},
+        "reload": {},
+        "restart": {},
+        "youlose": {},
+        "youwin": {}
+    },
     "listOfLevels": [
         "01",
         "02",
@@ -12,16 +39,9 @@
         "first",
         "second"
     ],
-    "namesToAnimations": {
-        "creatureanim": {
-            "numFrames": 9
-        },
-        "eating": {
-            "numFrames": 8
-        }
-    },
     "namesToConfigs": {
         "ball": {
+            "animation": "creatureanim",
             "bullet": true,
             "density": 0.5,
             "entityType": "ALIEN",
@@ -31,39 +51,47 @@
             "type": "DynamicBody"
         },
         "bluepower": {
+            "animation": "bluepower",
             "entityType": "POWERUP_SPEED",
             "isSensor": true,
             "scale": 1
         },
         "branch": {
+            "animation": "branch",
             "entityType": "BRANCH",
             "restitution": 0.5
         },
         "branch2": {
+            "animation": "branch2",
             "entityType": "BRANCH",
             "restitution": 1,
             "scale": 0.4
         },
         "branch3": {
+            "animation": "branch3",
             "entityType": "BRANCH",
             "restitution": 1,
             "scale": 0.4
         },
         "branchbreakable": {
+            "animation": "branchbreakable",
             "breakable": true,
             "entityType": "BRANCH",
             "restitution": 1
         },
         "pivoting-branch": {
+            "animation": "branch",
             "entityType": "BRANCH",
             "restitution": 1
         },
         "plant": {
+            "animation": "plant",
             "entityType": "PLANT",
             "isSensor": true,
             "scale": 0.4
         },
         "redpower": {
+            "animation": "redpower",
             "entityType": "POWERUP_SHRINK",
             "isSensor": true,
             "scale": 1

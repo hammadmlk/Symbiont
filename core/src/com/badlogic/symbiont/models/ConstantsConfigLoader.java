@@ -19,7 +19,10 @@ public class ConstantsConfigLoader {
      */
     public String[] listOfLevels;
 
-    public HashMap<String, AnimationModel> namesToAnimations;
+    /**
+     * never access directly! use Assets.loadAnimation
+     */
+    public HashMap<String, AnimationModel> animations;
 
     /**
      * private to force use of factory
@@ -35,7 +38,8 @@ public class ConstantsConfigLoader {
     public static ConstantsConfigLoader fromFileFactory(String file) {
         FileHandle fileHandle = Gdx.files.internal(file);
         Json json = new Json();
-        return json.fromJson(ConstantsConfigLoader.class, fileHandle.readString());
+        ConstantsConfigLoader constantsConfigLoader = json.fromJson(ConstantsConfigLoader.class, fileHandle.readString());
+        return constantsConfigLoader;
     }
 
     /**
