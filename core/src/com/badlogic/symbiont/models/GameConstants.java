@@ -19,4 +19,6 @@ public class GameConstants {
     public static final float powerupScale = 0.6f;
 
     public static String PREFERENCES = "symbiont-preferences";
+    
+    public static final float DEFAULT_MUSIC_VOLUME = 0.5f;
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
@@ -52,6 +53,7 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
+            Assets.playBeepEffect();
         	SymbiontMain.gameState.alien = alien;
         	SymbiontMain.gameState.deflected = true;
         }

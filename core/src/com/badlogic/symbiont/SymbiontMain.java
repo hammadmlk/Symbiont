@@ -59,7 +59,7 @@ public class SymbiontMain extends ApplicationAdapter {
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
-
+        
         gameView = new GameView();
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         gameView.addListener(gameInputListener);
@@ -68,6 +68,11 @@ public class SymbiontMain extends ApplicationAdapter {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         stage.addActor(Menu.createMenu(skin));
+        
+        // Play background music
+        // TODO this needs to change depending on the level or world
+        Assets.loadSoundEffects();
+        Assets.playSong("song1.wav");
     }
 
     private static void loadGameState(String gs) {
