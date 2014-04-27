@@ -51,7 +51,7 @@ public class GameState {
             state = GameState.State.PLAYING;
             SymbiontMain.loadFileKeepListeners();
         } else if (state == GameState.State.WON) {
-            if (SymbiontMain.currentLevelNum < Assets.constantsConfigLoader.listOfLevels.length) {
+            if (SymbiontMain.currentLevelNum + 1 < Assets.constantsConfigLoader.listOfLevels.length) {
                 state = GameState.State.PLAYING;
                 SymbiontMain.currentLevelNum++;
                 SymbiontMain.currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[SymbiontMain.currentLevelNum];
