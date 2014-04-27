@@ -38,21 +38,24 @@
             },
             "name": "ball",
             "position": {
-                "x": 192.53258,
-                "y": 653.32574
-            }
+                "x": 177.90402,
+                "y": 655.15424
+            },
+            "scale": 0.4
         },
         {
             "breakable": false,
+            "entityType": "POWERUP_SPEED",
             "name": "bluepower",
             "position": {
-                "x": 63.505028,
+                "x": 40.64788,
                 "y": 428.6119
             },
             "scale": 0.4
         },
         {
             "breakable": false,
+            "entityType": "POWERUP_SHRINK",
             "name": "redpower",
             "position": {
                 "x": 344.4077,
@@ -90,7 +93,7 @@
             "mistModels": [
                 {
                     "position": {
-                        "x": 94.09465,
+                        "x": 73.98038,
                         "y": 623.8366
                     },
                     "rectangle": {
@@ -102,7 +105,7 @@
             ],
             "name": "plant",
             "position": {
-                "x": 94.09465,
+                "x": 73.98038,
                 "y": 623.8366
             },
             "scale": 0.4
