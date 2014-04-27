@@ -43,16 +43,18 @@ public class Menu {
         
         // === add things to upperTable
         //menu button
-        final TextButton menuTextButton = new TextButton("Menu", skin);
-        upperTable.add(menuTextButton).expandX().left();//width(100).height(32);
-        //reload button
-        ImageButton.ImageButtonStyle style = new ImageButton.ImageButtonStyle(skin.get(Button.ButtonStyle.class));
-        style.imageUp = new TextureRegionDrawable(Assets.loadAtlas("restart"));
-        ImageButton loadFileButton = new ImageButton(style);
+        TextureRegionDrawable menuImageUp = new TextureRegionDrawable(Assets.loadAtlas("menu"));
+        final ImageButton menuImageButton = new ImageButton(menuImageUp);
+        upperTable.add(menuImageButton).width(100).height(32).expandX().left();
+        
+        //reload button --- TODO: different image down.
+        TextureRegionDrawable reloadImageUp = new TextureRegionDrawable(Assets.loadAtlas("reload"));
+        TextureRegionDrawable reloadImageDown = new TextureRegionDrawable(Assets.loadAtlas("reload"));
+        ImageButton loadFileButton = new ImageButton(reloadImageUp, reloadImageDown);
         upperTable.add(loadFileButton).width(32).height(32);
         
         //=== upperTable listeners
-        menuTextButton.addListener(new ChangeListener() {
+        menuImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuIsVisible = true;
