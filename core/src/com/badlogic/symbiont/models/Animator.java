@@ -47,6 +47,7 @@ public class Animator {
     public void overrideAnimation(AnimationModel newAnimation) {
         assert newAnimation.frames != null;
         this.newAnimation = newAnimation;
+        currentFrame = 0;
     }
 
 }
