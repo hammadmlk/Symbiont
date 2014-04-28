@@ -129,7 +129,7 @@ public class InGameMenu extends Table {
         
         elasticDeflectorCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-            	SymbiontMain.elasticDeflector = !SymbiontMain.elasticDeflector;
+            	gameEngine.elasticDeflector = !gameEngine.elasticDeflector;
             }
         });
 

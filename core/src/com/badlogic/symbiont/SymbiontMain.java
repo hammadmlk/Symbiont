@@ -5,11 +5,6 @@ import com.badlogic.symbiont.controllers.GameEngine;
 
 public class SymbiontMain extends Game {
 
-    /**
-     * when true we the deflector is elastic
-     */
-    public static boolean elasticDeflector = false;
-
     private GameEngine gameScreen;
 
     @Override

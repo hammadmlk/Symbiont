@@ -34,7 +34,12 @@ public class GameEngine implements Screen {
     public GameView gameView;
     private Stage stage;
     public GameInputListener gameInputListener;
-    
+
+    /**
+     * when true we the deflector is elastic
+     */
+    public boolean elasticDeflector = false;
+
     /**
      * when true we draw debug polygons and fps
      */
