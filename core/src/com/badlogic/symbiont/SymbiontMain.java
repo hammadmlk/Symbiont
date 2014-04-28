@@ -28,7 +28,12 @@ public class SymbiontMain extends ApplicationAdapter {
     public static World world;
 
     public static Skin skin;
-
+    
+    /**
+     * when true we the deflector is elastic
+     */
+    public static boolean elasticDeflector = false;
+    
     /**
      * when true we draw debug polygons and fps
      */
@@ -38,7 +43,7 @@ public class SymbiontMain extends ApplicationAdapter {
      * when true the level editor is our main
      */
     public static boolean edit = false;
-
+    
     public static LevelEditor levelEditor;
 
     public static GameInputListener gameInputListener;

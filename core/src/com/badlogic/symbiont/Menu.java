@@ -86,6 +86,8 @@ public class Menu {
         menuWindow.setModal(menuIsVisible);
         
         //===add things to menuwindow
+        final CheckBox elasticDeflectorCheckBox = new CheckBox("ElasticDeflector", skin);
+        menuWindow.add(elasticDeflectorCheckBox);
         final CheckBox debugCheckBox = new CheckBox("Debug", skin);
         menuWindow.add(debugCheckBox);
         menuWindow.row();
@@ -120,6 +122,12 @@ public class Menu {
             }
         });
         
+        elasticDeflectorCheckBox.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+            	SymbiontMain.elasticDeflector = !SymbiontMain.elasticDeflector;
+            }
+        });
+
         debugCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 SymbiontMain.debug = !SymbiontMain.debug;
