@@ -26,6 +26,8 @@ public class SymbiontMain extends Game {
     
     @Override
     public void dispose() {
+        gameScreen.dispose();
+        mainMenuScreen.dispose();
     }
     
     public void showGameScreen() {
