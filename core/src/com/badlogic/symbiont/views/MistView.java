@@ -17,21 +17,17 @@ import com.badlogic.symbiont.models.MistModel;
  */
 public class MistView {
 
-	final ShapeRenderer shapes;
+	private final ShapeRenderer shapes = new ShapeRenderer();
 
-    private Texture mistLayer = Assets.loadTexture("non-git/mistlayer.png");
-
-    public MistView() {
-        shapes = new ShapeRenderer();
-    }
+    private final Texture mistLayer = Assets.loadTexture("non-git/mistlayer.png");
 
     /**
      * render all the mist in gamestate
      * @param batch
      * @param gamestate
      */
-    public void render(SpriteBatch batch, GameState gamestate) {
-        for (MistModel mistModel : gamestate.mistModels) {
+    public void render(SpriteBatch batch, GameState gameState) {
+        for (MistModel mistModel : gameState.mistModels) {
             renderMist(batch, mistModel);
         }
     }

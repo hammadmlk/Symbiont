@@ -7,46 +7,40 @@ import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameConstants;
+import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class DeflectorView {
 
-    private TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
+    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
 
     /**
      * render the deflector
+     * 
      * @param batch
      */
-    public void render(SpriteBatch batch) {
-        if (SymbiontMain.edit) {
-            return;
-        }
-        if (SymbiontMain.gameState.deflector()) {
-        	
-        	//if not-elastic
-        	if(!SymbiontMain.elasticDeflector){
-	        	float x1 = SymbiontMain.gameState.deflectorEndpoints[0].x;
-	            float y1 = SymbiontMain.gameState.deflectorEndpoints[0].y;
-	            float x2 = SymbiontMain.gameState.deflectorEndpoints[1].x;
-	            float y2 = SymbiontMain.gameState.deflectorEndpoints[1].y;
+    public void render(SpriteBatch batch, GameState gameState, boolean elastic) {
+        if (gameState.deflector()) {
+        	if(!elastic){
+	        	float x1 = gameState.deflectorEndpoints[0].x;
+	            float y1 = gameState.deflectorEndpoints[0].y;
+	            float x2 = gameState.deflectorEndpoints[1].x;
+	            float y2 = gameState.deflectorEndpoints[1].y;
 	            
 	            drawline(batch, x1,y1, x2, y2);
-
-            }
-            // if elastic
-            else{
+            } else {
             	// TODO: Perhaps find alien only once? 
             	// find the alien in entities array
-            	for(PhysicsEntityModel e: SymbiontMain.gameState.entities){
+            	for(PhysicsEntityModel e: gameState.entities){
             		if (e.entityType == PhysicsEntityModel.Type.ALIEN) {
             			//ALIEN FOUND, call the elastic method
-            			elastic(batch, SymbiontMain.gameState.deflectorEndpoints[0], 
-            					SymbiontMain.gameState.deflectorEndpoints[1],
+            			elastic(batch, gameState.deflectorEndpoints[0], 
+            					gameState.deflectorEndpoints[1],
             					e);
             		}
             	 }            
             }
-            for (DeflectorEndpoint deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
+            for (DeflectorEndpoint deflectorEndpointInfo : gameState.deflectorEndpoints) {
                 deflectorEndpointInfo.getParticleEffect().setPosition(deflectorEndpointInfo.x, deflectorEndpointInfo.y);
                 deflectorEndpointInfo.getParticleEffect().draw(batch);
             }

@@ -8,16 +8,21 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class GameContactListener implements ContactListener {
+    
+    private final GameEngine gameEngine;
+    
+    public GameContactListener(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+    }
 
     @Override
     public void beginContact(Contact contact) {
-    	SymbiontMain.gameState.deflected = false; // for sanity
+        gameEngine.gameState.deflected = false; // for sanity
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
         PhysicsEntityModel a = (PhysicsEntityModel) fixtureA.getBody().getUserData();
@@ -51,40 +56,40 @@ public class GameContactListener implements ContactListener {
             alien.getAnimator().overrideAnimation(Assets.loadAnimation("eating"));
         }
         if (other.entityType == PhysicsEntityModel.Type.GROUND) {
-            SymbiontMain.gameState.state = GameState.State.LOST;
+            gameEngine.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
         	//TODO: Do same when deflected by elastic deflector??
         	//deflected = true is used in endcontact function below
             Assets.playBeepEffect();
-        	SymbiontMain.gameState.alien = alien;
-        	SymbiontMain.gameState.deflected = true;
+            gameEngine.gameState.alien = alien;
+            gameEngine.gameState.deflected = true;
         }
         if (other.entityType == PhysicsEntityModel.Type.POWERUP_SPEED) {
             other.toBeDestroyed = true;
-            SymbiontMain.gameState.alien = alien;
-            SymbiontMain.gameState.spedUp = true;
+            gameEngine.gameState.alien = alien;
+            gameEngine.gameState.spedUp = true;
         }
         if (other.entityType == PhysicsEntityModel.Type.POWERUP_SHRINK) {
             other.toBeDestroyed = true;
             alien.toBeShrunk = true;
-            SymbiontMain.gameState.alien = alien;
+            gameEngine.gameState.alien = alien;
         }
     }
 
     @Override
     public void endContact(Contact contact) {
-    	if (SymbiontMain.gameState.deflected) {
-    		//TODO: this block can be removed when elastic deflector is used
-    		// If we keep it, the rope length should affect the 
-    		// power (in deflectorView), no need to do it here
-    		SymbiontMain.gameState.deflected = false;
-    		PhysicsEntityModel alien = SymbiontMain.gameState.alien;
+    	if (gameEngine.gameState.deflected) {
+            //TODO: this block can be removed when elastic deflector is used
+            // If we keep it, the rope length should affect the 
+            // power (in deflectorView), no need to do it here
+    	    gameEngine.gameState.deflected = false;
+    		PhysicsEntityModel alien = gameEngine.gameState.alien;
     		
-    		float xdiff = SymbiontMain.gameState.deflectorEndpoints[1].x
-					- SymbiontMain.gameState.deflectorEndpoints[0].x;
-			float ydiff = SymbiontMain.gameState.deflectorEndpoints[1].y
-					- SymbiontMain.gameState.deflectorEndpoints[0].y;
+    		float xdiff = gameEngine.gameState.deflectorEndpoints[1].x
+					- gameEngine.gameState.deflectorEndpoints[0].x;
+			float ydiff = gameEngine.gameState.deflectorEndpoints[1].y
+					- gameEngine.gameState.deflectorEndpoints[0].y;
 			
 			// Always assume we're trying to bounce it upwards
 			// Weird corner case is if alien hits deflector from underneath,
@@ -103,9 +108,9 @@ public class GameContactListener implements ContactListener {
 			impulseDir.nor().scl(imp);
     		alien.body.applyLinearImpulse(impulseDir, alien.body.getWorldCenter(), true);
         }
-    	if (SymbiontMain.gameState.spedUp) {
-    	    SymbiontMain.gameState.spedUp = false;
-    	    PhysicsEntityModel alien = SymbiontMain.gameState.alien;
+    	if (gameEngine.gameState.spedUp) {
+    	    gameEngine.gameState.spedUp = false;
+    	    PhysicsEntityModel alien = gameEngine.gameState.alien;
     	    
             float desiredVel = GameConstants.powerupSpeed;
             Vector2 vel = alien.body.getLinearVelocity();
