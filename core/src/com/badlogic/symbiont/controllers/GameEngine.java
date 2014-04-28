@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.InGameMenu;
+import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.controllers.levelEditor.LevelEditor;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
 import com.badlogic.symbiont.models.GameConstants;
@@ -23,8 +23,11 @@ import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.MistModel;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 import com.badlogic.symbiont.views.GameView;
+import com.badlogic.symbiont.views.InGameMenu;
 
 public class GameEngine implements Screen {
+    
+    private final SymbiontMain game;
 
     private int currentLevelNum = 0;
 
@@ -52,9 +55,8 @@ public class GameEngine implements Screen {
 
     public LevelEditor levelEditor;
 
-    public GameEngine() {
-        initialize();
-        loadLevel(0);
+    public GameEngine(final SymbiontMain game) {
+        this.game = game;
     }
 
     private void initialize() {
@@ -72,11 +74,9 @@ public class GameEngine implements Screen {
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         stage.addActor(new InGameMenu(skin, this));
-
-        // Play background music
-        // TODO this needs to change depending on the level or world
+        
+        // Preload sound effects
         Assets.loadSoundEffects();
-        Assets.playSong("song1.wav");
     }
     
     @Override
@@ -183,10 +183,14 @@ public class GameEngine implements Screen {
 
     @Override
     public void show() {
+        initialize();
+        loadLevel(currentLevelNum);
+        Assets.playSong("song1.wav");
     }
 
     @Override
     public void hide() {
+        Assets.pauseSong();
     }
 
     @Override
