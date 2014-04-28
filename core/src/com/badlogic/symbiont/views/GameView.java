@@ -8,18 +8,28 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
+import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 import com.badlogic.symbiont.models.PhysicsEntityModel;
 
 public class GameView extends Actor {
+    
+    private final GameEngine gameEngine;
 
-    private MistView mistView = new MistView();
-    private DeflectorView deflectorView = new DeflectorView();
+    private MistView mistView;
+    private DeflectorView deflectorView;
+    private EnergyBarView energyBarView;
+
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-    private EnergyBarView energyBarView = new EnergyBarView();
-
+    
+    public GameView(GameEngine gameEngine) {
+        this.gameEngine = gameEngine;
+        mistView = new MistView();
+        deflectorView = new DeflectorView();
+        energyBarView = new EnergyBarView();
+    }
+    
     /**
      * render the game. calls the other views
      * @param batch
@@ -27,9 +37,8 @@ public class GameView extends Actor {
      */
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
-        GameState gameState = SymbiontMain.edit ? SymbiontMain.levelEditor.editorGameState : SymbiontMain.gameState;
-        World world = SymbiontMain.edit ? SymbiontMain.levelEditor.editorWorld : SymbiontMain.world;
-
+        GameState gameState = gameEngine.edit ? gameEngine.levelEditor.editorGameState : gameEngine.gameState;
+        World world = gameEngine.edit ? gameEngine.levelEditor.editorWorld : gameEngine.world;
 
         // render background
         // disable blending optimization as recommended here
@@ -45,7 +54,9 @@ public class GameView extends Actor {
 
         mistView.render(batch, gameState);
 
-        deflectorView.render(batch);
+        if (!gameEngine.edit) {
+            deflectorView.render(batch, gameState);
+        }
 
         if (gameState.state == GameState.State.WON) {
             drawImageCentered(batch, "youwin");
@@ -53,10 +64,10 @@ public class GameView extends Actor {
             drawImageCentered(batch, "youlose");
         }
 
-        energyBarView.draw(batch, gameState.currentEnergy / gameState.totalEnergy);
+        energyBarView.render(batch, gameState);
 
         // debug render
-        if (SymbiontMain.debug) {
+        if (gameEngine.debug) {
             batch.end();
             debugRenderer.render(world, batch.getProjectionMatrix().cpy().scale(
                     GameConstants.PIXELS_PER_METER,
@@ -72,14 +83,19 @@ public class GameView extends Actor {
     }
 
     private void drawTextCenteredBottom(SpriteBatch batch, String text) {
-        BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
+        BitmapFont bitmapFont = gameEngine.skin.getFont("default-font");
         float fontX = GameConstants.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
         float fontY = 50;
         bitmapFont.draw(batch, text, fontX, fontY);
     }
     
-    //Draws an image on screen center. Image width is (1/1.5) times screen width. 
-    // aspect ratio of image maintained
+    /**
+     * Draws an image on screen center. Image width is (1/1.5) times screen width. Aspect ratio of
+     * image is maintained
+     * 
+     * @param batch
+     * @param imageName
+     */
     private void drawImageCentered(SpriteBatch batch, String imageName) {
         TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas(imageName);
         float width = GameConstants.VIRTUAL_WIDTH/1.5f;
@@ -89,7 +105,7 @@ public class GameView extends Actor {
         batch.draw(atlasRegion, x, y, width, height);
     }
 
-    /*
+    /**
      * This allows us to receive touch events from outside this actor
      */
     @Override

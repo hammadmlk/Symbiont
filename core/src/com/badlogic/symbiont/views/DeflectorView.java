@@ -3,28 +3,25 @@ package com.badlogic.symbiont.views;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.DeflectorEndpoint;
+import com.badlogic.symbiont.models.GameState;
 
 public class DeflectorView {
 
-    private TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
+    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
 
     /**
      * render the deflector
+     * 
      * @param batch
      */
-    public void render(SpriteBatch batch) {
-        if (SymbiontMain.edit) {
-            return;
-        }
-
+    public void render(SpriteBatch batch, GameState gameState) {
         //push to the batch
-        if (SymbiontMain.gameState.deflector()) {
-            float x1 = SymbiontMain.gameState.deflectorEndpoints[0].x;
-            float y1 = SymbiontMain.gameState.deflectorEndpoints[0].y;
-            float x2 = SymbiontMain.gameState.deflectorEndpoints[1].x;
-            float y2 = SymbiontMain.gameState.deflectorEndpoints[1].y;
+        if (gameState.deflector()) {
+            float x1 = gameState.deflectorEndpoints[0].x;
+            float y1 = gameState.deflectorEndpoints[0].y;
+            float x2 = gameState.deflectorEndpoints[1].x;
+            float y2 = gameState.deflectorEndpoints[1].y;
 
             float angle = (float) Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
 
@@ -41,7 +38,7 @@ public class DeflectorView {
                     angle                                                                // float rotation
             );
 
-            for (DeflectorEndpoint deflectorEndpointInfo : SymbiontMain.gameState.deflectorEndpoints) {
+            for (DeflectorEndpoint deflectorEndpointInfo : gameState.deflectorEndpoints) {
                 deflectorEndpointInfo.getParticleEffect().setPosition(deflectorEndpointInfo.x, deflectorEndpointInfo.y);
                 deflectorEndpointInfo.getParticleEffect().draw(batch);
             }

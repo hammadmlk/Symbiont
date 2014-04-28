@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.Util;
 import com.badlogic.symbiont.controllers.CollisionFilters;
 
@@ -41,23 +40,6 @@ public class GameState {
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
 
     public State state = State.WAITING_TO_START;
-
-    // TODO this probably shouldn't be done like this
-    public void startIfWaiting() {
-        if (state == GameState.State.PLAYING) {
-            return;
-        } else if (state == GameState.State.WAITING_TO_START) {
-            state = GameState.State.PLAYING;
-        } else if (state == GameState.State.LOST) {
-            state = GameState.State.PLAYING;
-            SymbiontMain.reloadLevel();
-        } else if (state == GameState.State.WON) {
-            if (SymbiontMain.getCurrentLevelNum() + 1 < SymbiontMain.getNumberOfLevels()) {
-                state = GameState.State.PLAYING;
-                SymbiontMain.loadLevel(SymbiontMain.getCurrentLevelNum() + 1);
-            }
-        }
-    }
 
     public void setDeflectorEndpoint(float x, float y, int pointer) {
         if (currentEnergy <= 0

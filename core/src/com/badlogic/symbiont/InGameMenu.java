@@ -5,37 +5,42 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.controllers.GameContactListener;
+import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
 
-public class Menu {
+public class InGameMenu extends Table {
+    
     /**
      * is the menu visible
      */
-    public static boolean menuIsVisible = false;
+    private boolean menuIsVisible = false;
 
-    /**
-     * create the menu
-     * @param skin
-     * @return
-     */
-    public static Actor createMenu(Skin skin) {
+    public InGameMenu(Skin skin, final GameEngine gameEngine) {
+        super(skin);
+        
         // Create a table (mainTable) consisting of upperTable and menuwindow 
-    	// that fills the screen. Everything else will go inside this table.
+        // that fills the screen. Everything else will go inside this table.
         // A good table guide at: 
-    	//  	https://github.com/EsotericSoftware/tablelayout
-    	// TODO padding needs to get updated on resize
-    	
-    	
-    	final Window menuWindow = new Window("Menu", skin);
+        //      https://github.com/EsotericSoftware/tablelayout
+        // TODO padding needs to get updated on resize
+        
+        
+        final Window menuWindow = new Window("Menu", skin);
         final Table upperTable = new Table();
         
         
-    	//========== upperTable
+        //========== upperTable
         upperTable.setWidth(GameConstants.VIRTUAL_WIDTH);
         upperTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
         upperTable.setPosition(0,0);
@@ -67,7 +72,7 @@ public class Menu {
         reloadButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.reloadLevel();
+                gameEngine.reloadLevel();
             }
         });
         //============ end upperTable
@@ -118,7 +123,7 @@ public class Menu {
         levelPath.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.loadLevel(levelPath.getSelectedIndex());
+                gameEngine.loadLevel(levelPath.getSelectedIndex());
             }
         });
         
@@ -130,26 +135,26 @@ public class Menu {
 
         debugCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.debug = !SymbiontMain.debug;
+                gameEngine.debug = !gameEngine.debug;
             }
         });
 
         editCheckBox.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.edit = !SymbiontMain.edit;
-                if (!SymbiontMain.edit) {
-                    if (SymbiontMain.world != null) {
-                        SymbiontMain.world.dispose();
+                gameEngine.edit = !gameEngine.edit;
+                if (!gameEngine.edit) {
+                    if (gameEngine.world != null) {
+                        gameEngine.world.dispose();
                     }
-                    SymbiontMain.world = new World(new Vector2(0, -10), true);
-                    SymbiontMain.world.setContactListener(new GameContactListener());
-                    SymbiontMain.gameState = GameState.fromJSON(SymbiontMain.levelEditor.editorGameState.toJSON());
-                    SymbiontMain.gameState.addToWorld(SymbiontMain.world);
-                    SymbiontMain.gameView.clearListeners();
-                    SymbiontMain.gameView.addListener(SymbiontMain.gameInputListener);
+                    gameEngine.world = new World(new Vector2(0, -10), true);
+                    gameEngine.world.setContactListener(new GameContactListener(gameEngine));
+                    gameEngine.gameState = GameState.fromJSON(gameEngine.levelEditor.editorGameState.toJSON());
+                    gameEngine.gameState.addToWorld(gameEngine.world);
+                    gameEngine.gameView.clearListeners();
+                    gameEngine.gameView.addListener(gameEngine.gameInputListener);
                 } else {
-                    SymbiontMain.gameView.clearListeners();
-                    SymbiontMain.gameView.addListener(SymbiontMain.levelEditor);
+                    gameEngine.gameView.clearListeners();
+                    gameEngine.gameView.addListener(gameEngine.levelEditor);
                 }
             }
         });
@@ -158,30 +163,22 @@ public class Menu {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 FileHandle fileHandle = Gdx.files.local("levels/"
-                        + SymbiontMain.getCurrentLevelName() + ".json");
+                        + gameEngine.getCurrentLevelName() + ".json");
                 fileHandle.writeString(
-                        SymbiontMain.levelEditor.editorGameState.toJSON(),
+                        gameEngine.levelEditor.editorGameState.toJSON(),
                         false);
             }
         });
         //======== end menuWindow
         
-
+        this.setWidth(GameConstants.VIRTUAL_WIDTH);
+        this.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        this.setPosition(0,0);
+        this.left().top(); //internal left top align
         
-        //=== mainTable
-        Table mainTable = new Table();
-        
-        mainTable.setWidth(GameConstants.VIRTUAL_WIDTH);
-        mainTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
-        mainTable.setPosition(0,0);
-        mainTable.left().top(); //internal left top align
-        
-        int w=GameConstants.VIRTUAL_WIDTH;
-        mainTable.add(upperTable).width(w).height(50);
-        mainTable.row();
-        mainTable.add(menuWindow).width(w).expandY();
-        
-        return mainTable;
-        //return upperTable;
+        int w = GameConstants.VIRTUAL_WIDTH;
+        this.add(upperTable).width(w).height(50);
+        this.row();
+        this.add(menuWindow).width(w).expandY();
     }
 }
