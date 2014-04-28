@@ -41,8 +41,7 @@
         "08",
         "middleStrip",
         "climbing",
-        "first",
-        "second"
+        "demo"
     ],
     "namesToConfigs": {
         "ball": {
@@ -78,8 +77,14 @@
             "restitution": 1,
             "scale": 0.4
         },
-        "branchbreakable": {
-            "animation": "branchbreakable",
+        "breakablebranch": {
+            "animation": "breakablebranch1",
+            "breakable": true,
+            "entityType": "BRANCH",
+            "restitution": 1
+        },
+        "breakablebranch2": {
+            "animation": "breakablebranch2",
             "breakable": true,
             "entityType": "BRANCH",
             "restitution": 1

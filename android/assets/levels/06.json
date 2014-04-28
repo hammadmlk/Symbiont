@@ -2,12 +2,13 @@
 "currentEnergy": 100,
 "entities": [
 	{
+		"flipVertical": true,
 		"position": {
-			"x": 353,
-			"y": 647.1388
+			"x": 359.7989,
+			"y": 802.3795
 		},
-		"scale": 1,
-		"name": "branchbreakable",
+		"scale": 0.4,
+		"name": "breakablebranch2",
 		"flipHorizontal": true,
 		"breakable": true,
 		"entityType": "BRANCH"
@@ -17,17 +18,18 @@
 			"y": -250
 		},
 		"position": {
-			"x": 212.53258,
-			"y": 584.32574
+			"x": 237.46175,
+			"y": 511.8045
 		},
+		"scale": 0.4,
 		"name": "ball",
 		"breakable": false,
 		"entityType": "ALIEN"
 	},
 	{
 		"position": {
-			"x": 92.50503,
-			"y": 407.6119
+			"x": 91.37189,
+			"y": 373.61758
 		},
 		"scale": 0.4,
 		"name": "bluepower",
@@ -39,20 +41,19 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 392.4051,
-					"y": 725.3371
+					"x": 410.5354,
+					"y": 731.0028
 				},
 				"rectangle": {
 					"width": 480,
 					"height": 150,
-					"x": 0,
 					"y": 650
 				}
 			}
 		],
 		"position": {
-			"x": 392.4051,
-			"y": 725.3371
+			"x": 410.5354,
+			"y": 731.0028
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -63,8 +64,8 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 316.09467,
-					"y": 546.9074
+					"x": 342.15698,
+					"y": 515.1793
 				},
 				"rectangle": {
 					"width": 480,
@@ -74,8 +75,8 @@
 			}
 		],
 		"position": {
-			"x": 316.09467,
-			"y": 546.9074
+			"x": 342.15698,
+			"y": 515.1793
 		},
 		"scale": 0.4,
 		"name": "plant",
