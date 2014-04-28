@@ -54,6 +54,8 @@ public class GameContactListener implements ContactListener {
             SymbiontMain.gameState.state = GameState.State.LOST;
         }
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
+        	//TODO: Do same when deflected by elastic deflector??
+        	//deflected = true is used in endcontact function below
             Assets.playBeepEffect();
         	SymbiontMain.gameState.alien = alien;
         	SymbiontMain.gameState.deflected = true;
@@ -73,6 +75,9 @@ public class GameContactListener implements ContactListener {
     @Override
     public void endContact(Contact contact) {
     	if (SymbiontMain.gameState.deflected) {
+    		//TODO: this block can be removed when elastic deflector is used
+    		// If we keep it, the rope length should affect the 
+    		// power (in deflectorView), no need to do it here
     		SymbiontMain.gameState.deflected = false;
     		PhysicsEntityModel alien = SymbiontMain.gameState.alien;
     		
