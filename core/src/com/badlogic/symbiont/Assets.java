@@ -17,27 +17,37 @@ import com.badlogic.symbiont.models.physicsEditorLoader.Loader;
 
 public class Assets {
 
-    private static Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
+    protected final Map<String, Texture> textureDictionary = new HashMap<String, Texture>();
 
-    private static Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
+    protected final Map<String, TextureAtlas.AtlasRegion> atlasRegionMap = new HashMap<String, TextureAtlas.AtlasRegion>();
 
-    private static Map<String, AnimationModel> atlasAnimationMap =
+    protected final Map<String, AnimationModel> atlasAnimationMap =
             new HashMap<String, AnimationModel>();
 
-    private static TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
+    protected final TextureAtlas textureAtlas = new TextureAtlas(Gdx.files.internal("non-git/textures-packed/pack.atlas"));
 
-    public static final Loader physicsLoader = new Loader("physics.json");
+    public final Loader physicsLoader = new Loader("physics.json");
 
-    public static final ConstantsConfigLoader constantsConfigLoader = ConstantsConfigLoader.fromFileFactory("constants.json");
+    public final ConstantsConfigLoader constantsConfigLoader = ConstantsConfigLoader.fromFileFactory("constants.json");
     
-    private static Music music;
-    private static String currentSong;
+    protected Music music;
+
+    protected String currentSong;
     
-    private static Map<String, Sound> soundBank = new HashMap<String, Sound>();
+    protected Map<String, Sound> soundBank = new HashMap<String, Sound>();
+
+    private static Assets instance;
+
+    public static Assets getInstance() {
+        if (instance == null) {
+            instance = new Assets();
+        }
+        return instance;
+    }
 
     public static ParticleEffect getParticleEffect(String name) {
         ParticleEffect particleEffect = new ParticleEffect();
-        particleEffect.load(Gdx.files.internal("particles/" + name + ".p"), textureAtlas);
+        particleEffect.load(Gdx.files.internal("particles/" + name + ".p"), getInstance().textureAtlas);
         return particleEffect;
     }
 
@@ -52,11 +62,11 @@ public class Assets {
      * @return
      */
     public static Texture loadTexture(String path) {
-        if (textureDictionary.containsKey(path)) {
-            return textureDictionary.get(path);
+        if (getInstance().textureDictionary.containsKey(path)) {
+            return getInstance().textureDictionary.get(path);
         }
         Texture texture = new Texture(Gdx.files.internal(path));
-        textureDictionary.put(path, texture);
+        getInstance().textureDictionary.put(path, texture);
         return texture;
     }
 
@@ -68,43 +78,53 @@ public class Assets {
      */
     public static TextureAtlas.AtlasRegion loadAtlas(String path) {
         String name = Gdx.files.internal(path).nameWithoutExtension();
-        if (atlasRegionMap.containsKey(name)) {
-            return atlasRegionMap.get(name);
+        if (getInstance().atlasRegionMap.containsKey(name)) {
+            return getInstance().atlasRegionMap.get(name);
         }
-        TextureAtlas.AtlasRegion atlasRegion = textureAtlas.findRegion(name);
-        atlasRegionMap.put(name, atlasRegion);
+        TextureAtlas.AtlasRegion atlasRegion = getInstance().textureAtlas.findRegion(name);
+        getInstance().atlasRegionMap.put(name, atlasRegion);
         return atlasRegion;
     }
 
     public static AnimationModel loadAnimation(String name) {
-        if (atlasAnimationMap.containsKey(name)) {
-            return atlasAnimationMap.get(name);
+        if (getInstance().atlasAnimationMap.containsKey(name)) {
+            return getInstance().atlasAnimationMap.get(name);
         }
 
-        AnimationModel animationModel = constantsConfigLoader.animations.get(name);
+        AnimationModel animationModel = getInstance().constantsConfigLoader.animations.get(name);
 
         animationModel.frames = new TextureAtlas.AtlasRegion[animationModel.numFrames];
 
         for (int i = 0; i < animationModel.numFrames; i++) {
-            TextureAtlas.AtlasRegion frame = textureAtlas.findRegion(name, i);
+            TextureAtlas.AtlasRegion frame = getInstance().textureAtlas.findRegion(name, i);
             // hack so that we don't have to add _0 to the file names
             // for our singleton animations
             if (frame == null && i == 0) {
-                frame = textureAtlas.findRegion(name);
+                frame = getInstance().textureAtlas.findRegion(name);
             }
             animationModel.frames[i] = frame;
         }
 
-        atlasAnimationMap.put(name, animationModel);
+        getInstance().atlasAnimationMap.put(name, animationModel);
 
         return animationModel;
     }
 
     public static void dispose() {
+        if (instance != null) {
+            instance._dispose();
+        }
+        instance = null;
+    }
+
+    protected void _dispose() {
         for (Texture texture : textureDictionary.values()) {
             texture.dispose();
         }
-        textureDictionary = new HashMap<String, Texture>();
+
+        if (textureAtlas != null) {
+            textureAtlas.dispose();
+        }
 
         if (music != null) {
             music.dispose();
@@ -124,6 +144,10 @@ public class Assets {
      *            the name of the file (with file extension)
      */
     public static void playSong(String filename) {
+        getInstance()._playSong(filename);
+    }
+
+    protected void _playSong(String filename) {
         if (music != null && currentSong != null) {
             if (currentSong.equals(filename)) {
                 if (!music.isPlaying()) {
@@ -141,10 +165,10 @@ public class Assets {
         music.setLooping(true);
         music.play();
     }
-    
+
     public static void pauseSong() {
-        if (music != null && music.isPlaying()) {
-            music.pause();
+        if (getInstance().music != null && getInstance().music.isPlaying()) {
+            getInstance().music.pause();
         }
     }
     
@@ -154,9 +178,9 @@ public class Assets {
     public static void loadSoundEffects() {
         // TODO make this use JSON
         Sound effect1 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce1.ogg"));
-        soundBank.put("bounce1.ogg", effect1);
+        getInstance().soundBank.put("bounce1.ogg", effect1);
         Sound effect2 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce2.ogg"));
-        soundBank.put("bounce2.ogg", effect2);   
+        getInstance().soundBank.put("bounce2.ogg", effect2);
     }
     
     /**
@@ -164,7 +188,7 @@ public class Assets {
      * @param filename the name of the file (with file extension)
      */
     public static void playEffect(String filename) {
-        soundBank.get(filename).play();
+        getInstance().soundBank.get(filename).play();
     }
 
     private static final Random rand = new Random();

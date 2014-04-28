@@ -297,14 +297,14 @@ public class GameEngine implements Screen {
      * @return The filename of the current level
      */
     public String getCurrentLevelName() {
-        return Assets.constantsConfigLoader.listOfLevels[currentLevelNum];
+        return Assets.getInstance().constantsConfigLoader.listOfLevels[currentLevelNum];
     }
 
     /**
      * @return The number of total levels in the game
      */
     public int getNumberOfLevels() {
-        return Assets.constantsConfigLoader.listOfLevels.length;
+        return Assets.getInstance().constantsConfigLoader.listOfLevels.length;
     }
     
 

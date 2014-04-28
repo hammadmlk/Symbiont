@@ -103,7 +103,7 @@ public class InGameMenu extends Table {
         final TextButton saveFileButton = new TextButton("Save", skin);
         menuWindow.add(saveFileButton);
         menuWindow.row();
-        final List levelPath = new List(Assets.constantsConfigLoader.listOfLevels, skin);
+        final List levelPath = new List(Assets.getInstance().constantsConfigLoader.listOfLevels, skin);
         menuWindow.add(levelPath);
         menuWindow.row();
         final TextButton returnTextButton = new TextButton("Return", skin);

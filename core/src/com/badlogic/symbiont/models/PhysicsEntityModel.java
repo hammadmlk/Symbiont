@@ -122,7 +122,7 @@ public class PhysicsEntityModel {
     public void addToWorld(World world) {
         BodyDef bodyDef = new BodyDef();
         FixtureDef fixtureDef = new FixtureDef();
-        ConstantsConfig constantsConfig = Assets.constantsConfigLoader.getConfig(name);
+        ConstantsConfig constantsConfig = Assets.getInstance().constantsConfigLoader.getConfig(name);
         bodyDef.position.set(position.x / GameConstants.PIXELS_PER_METER, position.y / GameConstants.PIXELS_PER_METER);
         if (type != null) {
             bodyDef.type = type;
@@ -160,7 +160,7 @@ public class PhysicsEntityModel {
 
         this.body = body;
 
-        Assets.physicsLoader.attach(
+        Assets.getInstance().physicsLoader.attach(
                 body,
                 name,
                 fixtureDef,
@@ -176,7 +176,7 @@ public class PhysicsEntityModel {
         if (animator != null) {
             return animator;
         }
-        AnimationModel animationModel = Assets.loadAnimation(Assets.constantsConfigLoader.getConfig(name).animation);
+        AnimationModel animationModel = Assets.loadAnimation(Assets.getInstance().constantsConfigLoader.getConfig(name).animation);
         assert animationModel.frames != null;
         animator = new Animator(animationModel);
         return animator;
@@ -194,7 +194,7 @@ public class PhysicsEntityModel {
         if (origin != null)
             return origin;
         float combinedScale = getImg().originalWidth;
-        Vector2 unscaledOrigin = Assets.physicsLoader.getRigidBody(name).origin;
+        Vector2 unscaledOrigin = Assets.getInstance().physicsLoader.getRigidBody(name).origin;
         origin = new Vector2(
                 flipHorizontal ? 1 - unscaledOrigin.x : unscaledOrigin.x,
                 flipVertical ? 1 - unscaledOrigin.y : unscaledOrigin.y
