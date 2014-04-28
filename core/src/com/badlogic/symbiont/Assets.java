@@ -31,6 +31,7 @@ public class Assets {
     public static final ConstantsConfigLoader constantsConfigLoader = ConstantsConfigLoader.fromFileFactory("constants.json");
     
     private static Music music;
+    private static String currentSong;
     
     private static Map<String, Sound> soundBank = new HashMap<String, Sound>();
 
@@ -115,18 +116,36 @@ public class Assets {
     }
     
     /**
-     * Plays a song, specified by it's filename. Stops any currently playing song.
-     * @param filename the name of the file (with file extension)
+     * Plays a song, specified by it's filename. If a different song is
+     * currently playing, it stops that one first. If the same song is already
+     * playing, it does nothing.
+     * 
+     * @param filename
+     *            the name of the file (with file extension)
      */
     public static void playSong(String filename) {
-        if (music != null) {
-            music.stop();
-            music.dispose();
+        if (music != null && currentSong != null) {
+            if (currentSong.equals(filename)) {
+                if (!music.isPlaying()) {
+                    music.play();
+                }
+                return;
+            } else {
+                music.stop();
+                music.dispose();
+            }
         }
+        currentSong = filename;
         music = Gdx.audio.newMusic(Gdx.files.internal("non-git/audio/"+filename));
         music.setVolume(GameConstants.DEFAULT_MUSIC_VOLUME);
         music.setLooping(true);
         music.play();
+    }
+    
+    public static void pauseSong() {
+        if (music != null && music.isPlaying()) {
+            music.pause();
+        }
     }
     
     /**
