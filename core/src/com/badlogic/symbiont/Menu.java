@@ -67,7 +67,7 @@ public class Menu {
         reloadButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.loadFile();
+                SymbiontMain.reloadLevel();
             }
         });
         //============ end upperTable
@@ -116,9 +116,7 @@ public class Menu {
         levelPath.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                SymbiontMain.currentLevelNum = levelPath.getSelectedIndex();
-                SymbiontMain.currentLevelFileName = levelPath.getSelection();
-                SymbiontMain.loadFile();
+                SymbiontMain.loadLevel(levelPath.getSelectedIndex());
             }
         });
         
@@ -151,8 +149,11 @@ public class Menu {
         saveFileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                FileHandle fileHandle = Gdx.files.local("levels/" + SymbiontMain.currentLevelFileName + ".json");
-                fileHandle.writeString(SymbiontMain.levelEditor.editorGameState.toJSON(), false);
+                FileHandle fileHandle = Gdx.files.local("levels/"
+                        + SymbiontMain.getCurrentLevelName() + ".json");
+                fileHandle.writeString(
+                        SymbiontMain.levelEditor.editorGameState.toJSON(),
+                        false);
             }
         });
         //======== end menuWindow

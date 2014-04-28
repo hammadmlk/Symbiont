@@ -20,12 +20,11 @@ import com.badlogic.symbiont.views.GameView;
 
 public class SymbiontMain extends ApplicationAdapter {
 
-    public static int currentLevelNum = 0;
+    private static int currentLevelNum = 0;
     private Stage stage;
     public static GameView gameView;
 
     public static GameState gameState;
-    public static String currentLevelFileName;
     public static World world;
 
     public static Skin skin;
@@ -47,11 +46,8 @@ public class SymbiontMain extends ApplicationAdapter {
     @Override
     public void create() {
         initialize();
-
-        currentLevelNum = 0;
-        currentLevelFileName = Assets.constantsConfigLoader.listOfLevels[0];
         
-        loadFile();
+        loadLevel(0);
     }
 
     private void initialize() {
@@ -90,32 +86,45 @@ public class SymbiontMain extends ApplicationAdapter {
 
         levelEditor = new LevelEditor(GameState.fromJSON(gameState.toJSON()));
     }
-
+    
     /**
-     * loads currentLevelFileName
+     * Loads a particular level, specified by its number.
+     * @param levelNum 
      */
-    public static void loadFile() {
-        FileHandle gameStateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
+    public static void loadLevel(int levelNum) {
+        currentLevelNum = levelNum;
+        FileHandle gameStateFile = Gdx.files.internal("levels/"
+                + getCurrentLevelName() + ".json");
         String rawGameStateJSON = gameStateFile.readString();
         loadGameState(rawGameStateJSON);
-
-        if (edit) {
-            gameView.clearListeners();
-            gameView.addListener(levelEditor);
-        } else {
-            gameView.clearListeners();
-            gameView.addListener(gameInputListener);
-        }
     }
 
     /**
-     * loads currentLevelFileName without clearing listeners. If we called the regular loadFile
-     * from where we call this it would crash the game. Not sure if there are any side effects
-     * of doing it this way, but it appears to work.
+     * Reloads the current level
      */
-    public static void loadFileKeepListeners() {
-        FileHandle gameStateFile = Gdx.files.internal("levels/" + currentLevelFileName + ".json");
-        loadGameState(gameStateFile.readString());
+    public static void reloadLevel() {
+        loadLevel(currentLevelNum);
+    }
+    
+    /**
+     * @return The number of the current level (begins at 0)
+     */
+    public static int getCurrentLevelNum() {
+        return currentLevelNum;
+    }
+    
+    /**
+     * @return The filename of the current level
+     */
+    public static String getCurrentLevelName() {
+        return Assets.constantsConfigLoader.listOfLevels[currentLevelNum];
+    }
+    
+    /**
+     * @return The number of total levels in the game
+     */
+    public static int getNumberOfLevels() {
+        return Assets.constantsConfigLoader.listOfLevels.length;
     }
 
     @Override
@@ -176,7 +185,6 @@ public class SymbiontMain extends ApplicationAdapter {
         Preferences prefs = Gdx.app.getPreferences(GameConstants.PREFERENCES);
 
         prefs.putInteger("levelNum", currentLevelNum);
-        prefs.putString("levelFileName", currentLevelFileName);
         prefs.putString("gameState", gameState.toJSON());
         prefs.putBoolean("debug", debug);
         prefs.putBoolean("edit", edit);
@@ -190,7 +198,6 @@ public class SymbiontMain extends ApplicationAdapter {
 
         initialize();
 
-        currentLevelFileName = prefs.getString("levelFileName");
         currentLevelNum = prefs.getInteger("levelNum");
         debug = prefs.getBoolean("debug");
         edit = prefs.getBoolean("edit");

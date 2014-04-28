@@ -78,14 +78,6 @@ public class GameView extends Actor {
         bitmapFont.draw(batch, text, fontX, fontY);
     }
     
-    //Prints text on screen center 
-    private void drawTextCentered(SpriteBatch batch, String text) {
-        BitmapFont bitmapFont = SymbiontMain.skin.getFont("default-font");
-        float fontX = GameConstants.VIRTUAL_WIDTH / 2 - bitmapFont.getBounds(text).width/2;
-        float fontY = GameConstants.VIRTUAL_HEIGHT / 2 - bitmapFont.getBounds(text).height/2;
-        bitmapFont.draw(batch, text, fontX, fontY);
-    }
-    
     //Draws an image on screen center. Image width is (1/1.5) times screen width. 
     // aspect ratio of image maintained
     private void drawImageCentered(SpriteBatch batch, String imageName) {
