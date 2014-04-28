@@ -27,7 +27,7 @@ public class DeflectorView {
 	            float x2 = gameState.deflectorEndpoints[1].x;
 	            float y2 = gameState.deflectorEndpoints[1].y;
 	            
-	            drawline(batch, x1,y1, x2, y2);
+	            drawline(batch,atlasRegion.originalHeight, x1,y1, x2, y2);
             } else {
             	// TODO: Perhaps find alien only once? 
             	// find the alien in entities array
@@ -146,12 +146,15 @@ public class DeflectorView {
 
 	    	//Change in velocity x and y 
 	    	float dvx = (float) Math.cos(accAngle) * power;
-	    	float dvy = (float) Math.sin(accAngle) * power;
+	    	float dvy = (float) Math.sin(accAngle) * power*2;
 
 	    	//
 	    	Vector2 velo = alien.body.getLinearVelocity();
 	    	velo.x-=dvx;
 	    	velo.y-=dvy;
+	    	// maximum speed limit
+	    	velo.x = (velo.x<0)? Math.max(-25, velo.x):Math.min(25, velo.x);
+	    	velo.y = (velo.y<0)? Math.max(-25, velo.y):Math.min(25, velo.y);	    	
 	    	alien.body.setLinearVelocity(velo.x, velo.y);
 
 	    	/*
@@ -165,26 +168,26 @@ public class DeflectorView {
 	    	*/
 
 	    	// Draw lines
-	    	drawline(batch, x1, y1, ix1, iy1);   	
-	    	drawline(batch, x2, y2, ix2, iy2);
+	    	drawline(batch, atlasRegion.originalHeight/2, x1, y1, ix1, iy1);   	
+	    	drawline(batch, atlasRegion.originalHeight/2, x2, y2, ix2, iy2);
     	} else{
     		// No collision detected... simply draw a line from pointA to pointB
-    		drawline(batch, x1, y1, x2, y2);
+    		drawline(batch, atlasRegion.originalHeight/2, x1, y1, x2, y2);
     	}
     }
     
     //draws a line between the two points (x1,y1) and (ix1, iy1).
-    private void drawline(SpriteBatch batch, float x1, float y1, float ix1, float iy1){
+    private void drawline(SpriteBatch batch, float height, float x1, float y1, float ix1, float iy1){
     	float angle = (float) Math.toDegrees(Math.atan2(iy1 - y1, ix1 - x1));
         
         batch.draw(
                 atlasRegion,                                                         // Texture atlasRegion
                 x1,                                                                  // float x
-                y1 - atlasRegion.originalHeight / 2,                                 // float y
+                y1 - height,						                                 // float y
                 0,                                                                   // float originX
-                atlasRegion.originalHeight / 2,                                      // float originY
-                (float) Math.sqrt((x1 - ix1)*(x1 - ix1) + (y1 - iy1)*(y1 - iy1)),        // float width
-                atlasRegion.originalHeight/2,                                          // float height
+                height,                     						                 // float originY
+                (float) Math.sqrt((x1 - ix1)*(x1 - ix1) + (y1 - iy1)*(y1 - iy1)),    // float width
+                height,						                                         // float height
                 1,                                                                   // float scaleX
                 1,                                                                   // float scaleY
                 angle                                                                // float rotation
