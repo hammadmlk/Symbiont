@@ -1,0 +1,122 @@
+{
+"currentEnergy": 100,
+"entities": [
+	{
+		"position": {
+			"x": 303.61752,
+			"y": 445.0114
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 0.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 390.86954,
+			"y": 447.27756
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 0.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 86.05383,
+			"y": 554.92633
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": 0.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 98.73372,
+			"y": 271.32864
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": -0.5,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"linearVelocity": {
+			"y": -300
+		},
+		"position": {
+			"x": 323.7535,
+			"y": 265.01416
+		},
+		"scale": 0.4,
+		"name": "ball",
+		"breakable": false,
+		"entityType": "ALIEN"
+	},
+	{
+		"position": {
+			"x": -4.935028,
+			"y": 199.86693
+		},
+		"scale": 0.4,
+		"name": "redpower",
+		"breakable": false,
+		"entityType": "POWERUP_SHRINK"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 400.59772,
+					"y": 650.08777
+				},
+				"rectangle": {
+					"width": 180,
+					"height": 600,
+					"x": 300,
+					"y": 200
+				}
+			}
+		],
+		"position": {
+			"x": 400.59772,
+			"y": 650.08777
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 107.09183,
+					"y": 709.0037
+				},
+				"rectangle": {
+					"width": 180,
+					"height": 600,
+					"y": 200
+				}
+			}
+		],
+		"position": {
+			"x": 107.09183,
+			"y": 709.0037
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	}
+],
+"backgroundPath": "non-git/level4bg.png"
+}

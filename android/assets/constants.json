@@ -42,6 +42,7 @@
         "middleStrip",
         "climbing",
         "falling",
+        "wallbounce",
         "demo"
     ],
     "namesToConfigs": {
