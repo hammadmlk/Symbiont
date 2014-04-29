@@ -41,6 +41,7 @@
         "08",
         "middleStrip",
         "climbing",
+        "falling",
         "demo"
     ],
     "namesToConfigs": {
