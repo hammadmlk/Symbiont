@@ -62,11 +62,12 @@ public class Assets {
      * @return
      */
     public static Texture loadTexture(String path) {
-        if (getInstance().textureDictionary.containsKey(path)) {
-            return getInstance().textureDictionary.get(path);
+        Assets assets = getInstance();
+        if (assets.textureDictionary.containsKey(path)) {
+            return assets.textureDictionary.get(path);
         }
         Texture texture = new Texture(Gdx.files.internal(path));
-        getInstance().textureDictionary.put(path, texture);
+        assets.textureDictionary.put(path, texture);
         return texture;
     }
 
@@ -78,34 +79,37 @@ public class Assets {
      */
     public static TextureAtlas.AtlasRegion loadAtlas(String path) {
         String name = Gdx.files.internal(path).nameWithoutExtension();
-        if (getInstance().atlasRegionMap.containsKey(name)) {
-            return getInstance().atlasRegionMap.get(name);
+        Assets assets = getInstance();
+        if (assets.atlasRegionMap.containsKey(name)) {
+            return assets.atlasRegionMap.get(name);
         }
-        TextureAtlas.AtlasRegion atlasRegion = getInstance().textureAtlas.findRegion(name);
-        getInstance().atlasRegionMap.put(name, atlasRegion);
+        TextureAtlas.AtlasRegion atlasRegion = assets.textureAtlas.findRegion(name);
+        assets.atlasRegionMap.put(name, atlasRegion);
         return atlasRegion;
     }
 
     public static AnimationModel loadAnimation(String name) {
-        if (getInstance().atlasAnimationMap.containsKey(name)) {
-            return getInstance().atlasAnimationMap.get(name);
+        Assets assets = getInstance();
+
+        if (assets.atlasAnimationMap.containsKey(name)) {
+            return assets.atlasAnimationMap.get(name);
         }
 
-        AnimationModel animationModel = getInstance().constantsConfigLoader.animations.get(name);
+        AnimationModel animationModel = assets.constantsConfigLoader.animations.get(name);
 
         animationModel.frames = new TextureAtlas.AtlasRegion[animationModel.numFrames];
 
         for (int i = 0; i < animationModel.numFrames; i++) {
-            TextureAtlas.AtlasRegion frame = getInstance().textureAtlas.findRegion(name, i);
+            TextureAtlas.AtlasRegion frame = assets.textureAtlas.findRegion(name, i);
             // hack so that we don't have to add _0 to the file names
             // for our singleton animations
             if (frame == null && i == 0) {
-                frame = getInstance().textureAtlas.findRegion(name);
+                frame = assets.textureAtlas.findRegion(name);
             }
             animationModel.frames[i] = frame;
         }
 
-        getInstance().atlasAnimationMap.put(name, animationModel);
+        assets.atlasAnimationMap.put(name, animationModel);
 
         return animationModel;
     }
@@ -167,8 +171,9 @@ public class Assets {
     }
 
     public static void pauseSong() {
-        if (getInstance().music != null && getInstance().music.isPlaying()) {
-            getInstance().music.pause();
+        Assets assets = getInstance();
+        if (assets.music != null && assets.music.isPlaying()) {
+            assets.music.pause();
         }
     }
     
@@ -177,10 +182,11 @@ public class Assets {
      */
     public static void loadSoundEffects() {
         // TODO make this use JSON
+        Assets assets = getInstance();
         Sound effect1 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce1.ogg"));
-        getInstance().soundBank.put("bounce1.ogg", effect1);
+        assets.soundBank.put("bounce1.ogg", effect1);
         Sound effect2 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce2.ogg"));
-        getInstance().soundBank.put("bounce2.ogg", effect2);
+        assets.soundBank.put("bounce2.ogg", effect2);
     }
     
     /**
