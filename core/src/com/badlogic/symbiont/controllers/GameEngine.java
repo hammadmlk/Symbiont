@@ -62,8 +62,16 @@ public class GameEngine implements Screen {
     private void initialize() {
         gameInputListener = new GameInputListener(this);
 
+        if (stage != null) {
+            stage.dispose();
+        }
         stage = new Stage();
+
         Gdx.input.setInputProcessor(stage);
+
+        if (gameView != null) {
+            gameView.dispose();
+        }
 
         gameView = new GameView(this);
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH,
@@ -71,14 +79,24 @@ public class GameEngine implements Screen {
         gameView.addListener(gameInputListener);
         stage.addActor(gameView);
 
+        if (skin != null) {
+            skin.dispose();
+        }
+
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
 
         stage.addActor(new InGameMenu(skin, this));
-        
+
+        if (deflectorBox != null) {
+            deflectorBox.dispose();
+        }
+
+        deflectorBox = new PolygonShape();
+
         // Preload sound effects
         Assets.loadSoundEffects();
     }
-    
+
     @Override
     public void render(float delta) {
         // clear the window
@@ -224,11 +242,11 @@ public class GameEngine implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
-        skin.dispose();
-        gameView.dispose();
-        world.dispose();
-        deflectorBox.dispose();
+        if (stage != null) stage.dispose();
+        if (skin != null) skin.dispose();
+        if (gameView != null) gameView.dispose();
+        if (world != null) world.dispose();
+        if (deflectorBox != null) deflectorBox.dispose();
         Assets.dispose();
     }
 
@@ -279,21 +297,22 @@ public class GameEngine implements Screen {
      * @return The filename of the current level
      */
     public String getCurrentLevelName() {
-        return Assets.constantsConfigLoader.listOfLevels[currentLevelNum];
+        return Assets.getInstance().constantsConfigLoader.listOfLevels[currentLevelNum];
     }
 
     /**
      * @return The number of total levels in the game
      */
     public int getNumberOfLevels() {
-        return Assets.constantsConfigLoader.listOfLevels.length;
+        return Assets.getInstance().constantsConfigLoader.listOfLevels.length;
     }
     
 
     private static BodyDef deflectorDef = new BodyDef();
     private static Vector2[] deflectorPoints = new Vector2[4];
     private static Vector2 deflectorNormal = new Vector2();
-    private static PolygonShape deflectorBox = new PolygonShape();
+    private PolygonShape deflectorBox;
+
     static {
         for (int i = 0; i < 4; i++) {
             deflectorPoints[i] = new Vector2();
