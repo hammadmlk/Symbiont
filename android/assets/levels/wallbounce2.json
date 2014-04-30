@@ -1,0 +1,123 @@
+{
+"currentEnergy": 100,
+"entities": [
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 338.74493,
+			"y": 602.3607
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": -0.1,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 441.86102,
+			"y": 436.8953
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 0.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 56.592087,
+			"y": 560.59204
+		},
+		"scale": 0.4,
+		"name": "branch2",
+		"angle": 0.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 54.541115,
+			"y": 320.05386
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": -0.7,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"linearVelocity": {
+			"y": -300
+		},
+		"position": {
+			"x": 241.03398,
+			"y": 366.9972
+		},
+		"scale": 0.4,
+		"name": "ball",
+		"breakable": false,
+		"entityType": "ALIEN"
+	},
+	{
+		"position": {
+			"x": 5.3421326,
+			"y": 197.36418
+		},
+		"scale": 0.4,
+		"name": "redpower",
+		"breakable": false,
+		"entityType": "POWERUP_SHRINK"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 366.9745,
+					"y": 599.07324
+				},
+				"rectangle": {
+					"width": 240,
+					"height": 400,
+					"x": 240,
+					"y": 400
+				}
+			}
+		],
+		"position": {
+			"x": 366.9745,
+			"y": 599.07324
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 50.487167,
+					"y": 676.2477
+				},
+				"rectangle": {
+					"width": 240,
+					"height": 500,
+					"y": 300
+				}
+			}
+		],
+		"position": {
+			"x": 50.487167,
+			"y": 676.2477
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	}
+],
+"backgroundPath": "non-git/level4bg.png"
+}
