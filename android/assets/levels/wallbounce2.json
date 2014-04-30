@@ -31,8 +31,8 @@
 			"x": 56.592087,
 			"y": 560.59204
 		},
-		"scale": 1,
-		"name": "branch",
+		"scale": 0.4,
+		"name": "branch2",
 		"angle": 0.6,
 		"breakable": false,
 		"entityType": "BRANCH"
