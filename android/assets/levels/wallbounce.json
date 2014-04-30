@@ -28,6 +28,18 @@
 	},
 	{
 		"position": {
+			"x": 442.99414,
+			"y": 713.3825
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 2.3,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
 			"x": 56.592087,
 			"y": 560.59204
 		},
@@ -76,20 +88,20 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 366.9745,
-					"y": 599.07324
+					"x": 347.71103,
+					"y": 612.67096
 				},
 				"rectangle": {
-					"width": 240,
+					"width": 280,
 					"height": 400,
-					"x": 240,
+					"x": 200,
 					"y": 400
 				}
 			}
 		],
 		"position": {
-			"x": 366.9745,
-			"y": 599.07324
+			"x": 347.71103,
+			"y": 612.67096
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -104,7 +116,7 @@
 					"y": 676.2477
 				},
 				"rectangle": {
-					"width": 240,
+					"width": 200,
 					"height": 500,
 					"y": 300
 				}
