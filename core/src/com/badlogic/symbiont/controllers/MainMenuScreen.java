@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -20,28 +21,43 @@ public class MainMenuScreen implements Screen {
     
     public MainMenuScreen(final SymbiontMain game) {
         this.game = game;
-
-        stage = new Stage();
+ stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
+        stage.addActor(getBackgroundActor());
         stage.addActor(getMenuActor());
+    }
+
+    private Actor getBackgroundActor() {
+        final Table table = new Table();
+
+        table.setWidth(GameConstants.VIRTUAL_WIDTH);
+        table.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        table.setPosition(0, 0);
+        table.center();
+
+        Image splashScreen = new Image(Assets.loadTexture("non-git/mainscreen.png"));
+
+        table.add(splashScreen);
+
+        return table;
     }
     
     private Actor getMenuActor() {
-        final Table upperTable = new Table();
+        final Table table = new Table();
         
         
         //========== upperTable
-        upperTable.setWidth(GameConstants.VIRTUAL_WIDTH);
-        upperTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
-        upperTable.setPosition(0,0);
-        upperTable.center();
+        table.setWidth(GameConstants.VIRTUAL_WIDTH);
+        table.setHeight(GameConstants.VIRTUAL_HEIGHT);
+        table.setPosition(0, 0);
+        table.center();
         
         // === add things to upperTable
         //menu button
         TextureRegionDrawable menuImageUp = new TextureRegionDrawable(Assets.loadAtlas("mainmenu"));
         final ImageButton menuImageButton = new ImageButton(menuImageUp);
-        upperTable.add(menuImageButton);
+        table.add(menuImageButton);
         
         //=== upperTable listeners
         menuImageButton.addListener(new ChangeListener() {
@@ -51,7 +67,7 @@ public class MainMenuScreen implements Screen {
             }
         });
         
-        return upperTable;
+        return table;
     }
 
     @Override
