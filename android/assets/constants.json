@@ -22,11 +22,15 @@
         "homescreen_animation/mainscreen": {
             "numFrames": 4
         },
-        "tutorials/tutOne": {
+        "tutorials/tutorialOne": {
             "numFrames": 2,
             "delta": 0.5
         },
-        "tutorials/tutTwo": {
+        "tutorials/tutorialMist": {
+            "numFrames": 2,
+            "delta": 0.5
+        },
+        "tutorials/tutorialShrink": {
             "numFrames": 2,
             "delta": 0.5
         },

@@ -1,6 +1,6 @@
 {
     "tutorialModel": {
-        "animation": "tutorials/tutTwo"
+        "animation": "tutorials/tutorialMist"
     },
     "backgroundPath": "non-git/level1bg.png",
     "currentEnergy": 75,

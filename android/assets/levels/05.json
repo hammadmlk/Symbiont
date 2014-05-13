@@ -1,4 +1,7 @@
 {
+    "tutorialModel": {
+        "animation": "tutorials/tutorialShrink"
+    },
 "currentEnergy": 100,
 "entities": [
 	{
