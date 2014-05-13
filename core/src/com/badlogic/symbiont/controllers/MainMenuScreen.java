@@ -21,7 +21,7 @@ public class MainMenuScreen implements Screen {
     
     public MainMenuScreen(final SymbiontMain game) {
         this.game = game;
- stage = new Stage();
+        stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
         stage.addActor(getBackgroundActor());
@@ -112,8 +112,9 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        // TODO Auto-generated method stub
-        
+        if (stage != null) {
+            stage.dispose();
+        }
     }
 
 }
