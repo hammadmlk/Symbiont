@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -13,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
+import com.badlogic.symbiont.views.SplashScreenView;
 
 public class MainMenuScreen implements Screen {
     
@@ -36,9 +36,9 @@ public class MainMenuScreen implements Screen {
         table.setPosition(0, 0);
         table.center();
 
-        Image splashScreen = new Image(Assets.loadTexture("non-git/mainscreen.png"));
-
-        table.add(splashScreen);
+        SplashScreenView splashScreenView = new SplashScreenView();
+        splashScreenView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+        table.add(splashScreenView);
 
         return table;
     }
@@ -75,6 +75,7 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+        stage.act(delta);
         stage.draw();
     }
 

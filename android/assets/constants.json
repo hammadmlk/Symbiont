@@ -19,6 +19,9 @@
         },
         "levelselect": {},
         "mainmenu": {},
+        "homescreen_animation/mainscreen": {
+            "numFrames": 4
+        },
         "menu": {},
         "mist": {},
         "onebyone": {},
