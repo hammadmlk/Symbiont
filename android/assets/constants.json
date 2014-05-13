@@ -22,6 +22,14 @@
         "homescreen_animation/mainscreen": {
             "numFrames": 4
         },
+        "tutorials/tutOne": {
+            "numFrames": 2,
+            "delta": 0.5
+        },
+        "tutorials/tutTwo": {
+            "numFrames": 2,
+            "delta": 0.5
+        },
         "menu": {},
         "mist": {},
         "onebyone": {},

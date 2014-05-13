@@ -41,6 +41,8 @@ public class GameState {
 
     public State state = State.WAITING_TO_START;
 
+    public TutorialModel tutorialModel;
+
     public void setDeflectorEndpoint(float x, float y, int pointer) {
         if (currentEnergy <= 0
                 || x < 0 || x > GameConstants.VIRTUAL_WIDTH

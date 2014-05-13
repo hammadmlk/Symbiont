@@ -1,4 +1,7 @@
 {
+    "tutorialModel": {
+        "animation": "tutorials/tutOne"
+    },
     "backgroundPath": "non-git/level1bg.png",
     "currentEnergy": 75,
     "entities": [

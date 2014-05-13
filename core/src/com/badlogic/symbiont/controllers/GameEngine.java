@@ -189,6 +189,8 @@ public class GameEngine implements Screen {
             if (allFading) {
                 gameState.state = GameState.State.WON;
             }
+        } else if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
+            gameState.tutorialModel.update(delta);
         }
     }
 

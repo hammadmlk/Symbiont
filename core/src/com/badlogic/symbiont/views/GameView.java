@@ -80,6 +80,10 @@ public class GameView extends Actor {
 
             drawTextCenteredBottom(batch, String.format("fps: %d", Gdx.graphics.getFramesPerSecond()));
         }
+
+        if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
+            batch.draw(gameState.tutorialModel.getFrame(), 0, 0);
+        }
     }
 
     private void drawTextCenteredBottom(SpriteBatch batch, String text) {
