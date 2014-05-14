@@ -3,6 +3,7 @@
         "animation": "tutorials/tutorialShrink"
     },
 "currentEnergy": 100,
+"totalEnergy": 100,
 "entities": [
 	{
 		"position": {
