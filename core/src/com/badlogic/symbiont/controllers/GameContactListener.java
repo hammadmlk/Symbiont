@@ -49,7 +49,7 @@ public class GameContactListener implements ContactListener {
     private void handleAlienContact(PhysicsEntityModel alien, PhysicsEntityModel other) {
         if (other.breakable) {
             if ((alien.linearVelocity.len() / GameConstants.PIXELS_PER_METER) >=
-                (GameConstants.powerupSpeed * 0.7)) {
+                (GameConstants.powerupSpeed * 0.75)) {
                 other.entityType = PhysicsEntityModel.Type.BROKEN;
             } else {
                 other.getAnimator().shake(5f, 0f, .1f, .5f);

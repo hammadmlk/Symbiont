@@ -62,6 +62,7 @@
         "wallbounce",
         "wallbounce2",
         "breakingSpree",
+        "choices",
         "demo"
     ],
     "namesToConfigs": {
