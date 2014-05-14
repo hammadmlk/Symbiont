@@ -127,69 +127,70 @@ public class GameEngine implements Screen {
     private void step(float delta) {
         if (gameState.state == GameState.State.PLAYING) {
             world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
+        }
 
-            // update physics entities
-            Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
-            while (physicsEntityModelIterator.hasNext()) {
-                PhysicsEntityModel physicsEntityModel = physicsEntityModelIterator.next();
-                if (physicsEntityModel.toBeDestroyed) {
-                    physicsEntityModel.cleanUP();
-                    physicsEntityModelIterator.remove();
-                    world.destroyBody(physicsEntityModel.body);
-                } else if (physicsEntityModel.toBeShrunk) {
-                    physicsEntityModel.toBeShrunk = false;
-                    world.destroyBody(physicsEntityModel.body);
-                    physicsEntityModel.scale = physicsEntityModel.scale * GameConstants.powerupScale;
-                    physicsEntityModel.addToWorld(world);
-                } else {
-                    physicsEntityModel.update(delta);
+        // update physics entities
+        Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
+        while (physicsEntityModelIterator.hasNext()) {
+            PhysicsEntityModel physicsEntityModel = physicsEntityModelIterator.next();
+            if (physicsEntityModel.toBeDestroyed) {
+                physicsEntityModel.cleanUP();
+                physicsEntityModelIterator.remove();
+                world.destroyBody(physicsEntityModel.body);
+            } else if (physicsEntityModel.toBeShrunk) {
+                physicsEntityModel.toBeShrunk = false;
+                world.destroyBody(physicsEntityModel.body);
+                physicsEntityModel.scale = physicsEntityModel.scale * GameConstants.powerupScale;
+                physicsEntityModel.addToWorld(world);
+            } else {
+                physicsEntityModel.update(delta);
+            }
+        }
+        //TODO: use same logic to add leaves anim
+
+        // update mist, and clean up mist. Also checks for win condition
+        boolean allFading = true;
+        Iterator<MistModel> mistModelIterator = gameState.mistModels.iterator();
+        while (mistModelIterator.hasNext()) {
+            MistModel mistModel = mistModelIterator.next();
+            mistModel.update(delta);
+            if (mistModel.fading) {
+                mistModel.secondsLeft -= delta;
+                if (mistModel.secondsLeft <= 0) {
+                    mistModel.getMistEffect().dispose();
+                    mistModelIterator.remove();
                 }
+            } else {
+                allFading = false;
             }
-            //TODO: use same logic to add leaves anim
+        }
 
-            // update mist, and clean up mist. Also checks for win condition
-            boolean allFading = true;
-            Iterator<MistModel> mistModelIterator = gameState.mistModels.iterator();
-            while (mistModelIterator.hasNext()) {
-                MistModel mistModel = mistModelIterator.next();
-                mistModel.update(delta);
-                if (mistModel.fading) {
-                    mistModel.secondsLeft -= delta;
-                    if (mistModel.secondsLeft <= 0) {
-                        mistModel.getMistEffect().dispose();
-                        mistModelIterator.remove();
-                    }
-                } else {
-                    allFading = false;
-                }
-            }
+        // update deflector endpoints
+        for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
+            deflectorEndpoint.update(delta);
+        }
 
-            // update deflector endpoints
-            for (DeflectorEndpoint deflectorEndpoint : gameState.deflectorEndpoints) {
-                deflectorEndpoint.update(delta);
-            }
-            
-            // Get deflector width and update energy meter
-            if (gameState.deflector()) {
-                gameState.currentEnergy -= gameState.getDeflectorLength()
-                        * GameConstants.DEFLECTOR_ENERGY;
-            }
-            if (gameState.currentEnergy < 0) {
-                gameState.energyBarParticleEffect.allowCompletion();
-            }
-            gameState.energyBarParticleEffect.update(delta);
+        // Get deflector width and update energy meter
+        if (gameState.deflector()) {
+            gameState.currentEnergy -= gameState.getDeflectorLength()
+                    * GameConstants.DEFLECTOR_ENERGY;
+        }
+        if (gameState.currentEnergy < 0) {
+            gameState.energyBarParticleEffect.allowCompletion();
+        }
+        gameState.energyBarParticleEffect.update(delta);
 
-            // check if energy depleted
-            if (gameState.currentEnergy <= 0) {
-                gameState.deflectorEndpoints[0].active = false;
-                gameState.deflectorEndpoints[1].active = false;
-            }
+        // check if energy depleted
+        if (gameState.currentEnergy <= 0) {
+            gameState.deflectorEndpoints[0].active = false;
+            gameState.deflectorEndpoints[1].active = false;
+        }
 
-            // Check win conditions
-            if (allFading) {
-                gameState.state = GameState.State.WON;
-            }
-        } else if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
+        // Check win conditions
+        if (allFading) {
+            gameState.state = GameState.State.WON;
+        }
+        if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
             gameState.tutorialModel.update(delta);
         }
     }
