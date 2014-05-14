@@ -3,7 +3,7 @@
         "animation": "tutorials/tutorialMist"
     },
     "backgroundPath": "non-git/level1bg.png",
-    "currentEnergy": 75,
+    "currentEnergy": 2000,
     "entities": [
         {
             "linearVelocity": {
