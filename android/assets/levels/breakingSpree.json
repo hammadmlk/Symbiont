@@ -1,0 +1,146 @@
+{
+"currentEnergy": 100,
+"entities": [
+	{
+		"position": {
+			"x": 364.7989,
+			"y": 434.37952
+		},
+		"scale": 0.4,
+		"name": "breakablebranch2",
+		"flipHorizontal": true,
+		"breakable": true,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 124.798904,
+			"y": 238.37949
+		},
+		"scale": 0.4,
+		"name": "breakablebranch2",
+		"breakable": true,
+		"entityType": "BRANCH"
+	},
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 116.79891,
+			"y": 750.3795
+		},
+		"scale": 0.4,
+		"name": "breakablebranch2",
+		"breakable": true,
+		"entityType": "BRANCH"
+	},
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 359.79892,
+			"y": 807.3795
+		},
+		"scale": 0.4,
+		"name": "breakablebranch2",
+		"flipHorizontal": true,
+		"breakable": true,
+		"entityType": "BRANCH"
+	},
+	{
+		"linearVelocity": {
+			"y": -250
+		},
+		"position": {
+			"x": 371.46176,
+			"y": 312.80447
+		},
+		"scale": 0.4,
+		"name": "ball",
+		"breakable": false,
+		"entityType": "ALIEN"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.MovableObjectModel",
+		"position": {
+			"x": 90,
+			"y": 320
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED",
+		"movingPath": [
+			{
+				"x": 90,
+				"y": 320
+			},
+			{
+				"x": 90,
+				"y": 450
+			},
+			{
+				"x": 90,
+				"y": 320
+			}
+		],
+		"movingSpeed": 2,
+		"type": "KinematicBody"
+	},
+	{
+		"position": {
+			"x": 257,
+			"y": 499
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 58.5354,
+					"y": 720.0028
+				},
+				"rectangle": {
+					"width": 480,
+					"height": 150,
+					"y": 650
+				}
+			}
+		],
+		"position": {
+			"x": 58.535404,
+			"y": 720.0028
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 398.15698,
+					"y": 545.1793
+				},
+				"rectangle": {
+					"width": 480,
+					"height": 350,
+					"y": 300
+				}
+			}
+		],
+		"position": {
+			"x": 398.15698,
+			"y": 545.1793
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	}
+],
+"backgroundPath": "non-git/level3bg.png"
+}
