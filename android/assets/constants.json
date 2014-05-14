@@ -20,7 +20,8 @@
         "levelselect": {},
         "mainmenu": {},
         "homescreen_animation/mainscreen": {
-            "numFrames": 4
+            "numFrames": 4,
+            "delta": 1
         },
         "tutorials/tutorialOne": {
             "numFrames": 2,
