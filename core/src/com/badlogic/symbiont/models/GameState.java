@@ -26,6 +26,9 @@ public class GameState {
     public transient float totalEnergy;
     public List<PhysicsEntityModel> entities = new ArrayList<PhysicsEntityModel>();
     
+    //deflector beam
+    public float deflectorTime = 0;
+    
     // References for collision handling (alien and other are also in entities)
     public transient PhysicsEntityModel alien;
     public transient boolean deflected;
@@ -38,7 +41,7 @@ public class GameState {
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
-
+    
     public State state = State.WAITING_TO_START;
 
     public TutorialModel tutorialModel;
@@ -77,7 +80,7 @@ public class GameState {
     public GameState() {
         for (int i = 0; i < 2; i++) {
             deflectorEndpoints[i] = new DeflectorEndpoint();
-        }
+        }        
     }
 
     public static GameState fromJSON(String serialized) {
