@@ -1,7 +1,4 @@
 {
-    "tutorialModel": {
-        "animation": "tutorials/tutorialOne"
-    },
     "backgroundPath": "non-git/level1bg.png",
     "currentEnergy": 75,
     "entities": [
@@ -19,16 +16,8 @@
             "class": "com.badlogic.symbiont.models.PlantModel",
             "mistModels": [
                 {
-                    "position": {
-                        "x": 107.18923,
-                        "y": 620.5473
-                    },
-                    "rectangle": {
-                        "height": 600,
-                        "width": 480,
-                        "x": 0,
-                        "y": 200
-                    }
+                    "position": {},
+                    "rectangle": {}
                 }
             ],
             "name": "plant",
@@ -37,5 +26,8 @@
                 "y": 620.5473
             }
         }
-    ]
+    ],
+    "tutorialModel": {
+        "animation": "tutorials/tutorialOne"
+    }
 }
