@@ -1,5 +1,6 @@
 {
 "currentEnergy": 50,
+"totalEnergy": 50,
 "entities": [
 	{
 		"linearVelocity": {

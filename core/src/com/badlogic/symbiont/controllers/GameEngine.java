@@ -142,7 +142,8 @@ public class GameEngine implements Screen {
                 world.destroyBody(physicsEntityModel.body);
                 physicsEntityModel.scale = physicsEntityModel.scale * GameConstants.powerupScale;
                 physicsEntityModel.addToWorld(world);
-            } else {
+            } else if (gameState.state != GameState.State.WAITING_TO_START || 
+                    physicsEntityModel.type != BodyDef.BodyType.KinematicBody) {
                 physicsEntityModel.update(delta);
             }
         }

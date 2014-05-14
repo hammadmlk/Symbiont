@@ -1,6 +1,7 @@
 {
     "backgroundPath": "non-git/level2bg.png",
     "currentEnergy": 100,
+    "totalEnergy": 100,
     "entities": [
         {
             "breakable": false,
