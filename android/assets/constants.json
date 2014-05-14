@@ -15,7 +15,8 @@
         "crop_creature": {},
         "deflector": {},
         "eating": {
-            "numFrames": 8
+            "numFrames": 8,
+            "delta": 0.075
         },
         "levelselect": {},
         "mainmenu": {},
