@@ -13,8 +13,10 @@ public class PhysicsEntityView {
      */
     public static void render(SpriteBatch batch, PhysicsEntityModel entity) {
         Vector2 origin = entity.getOrigin();
-        float adjustedX = entity.position.x - origin.x;
-        float adjustedY = entity.position.y - origin.y;
+        Vector2 shakerDisplacement = entity.getAnimator().getShakerDisplacement();
+
+        float adjustedX = entity.position.x + shakerDisplacement.x - origin.x;
+        float adjustedY = entity.position.y + shakerDisplacement.y - origin.y;
 
         TextureAtlas.AtlasRegion atlasRegion = entity.getImg();
 
