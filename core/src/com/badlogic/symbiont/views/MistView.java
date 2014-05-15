@@ -94,10 +94,10 @@ public class MistView {
 
         batch.setColor(oldColor);
 
-        mistModel.getMistEffect().draw(batch);
-
         // turn off masking so that the rest of the scene doesn't get nuked
         Gdx.gl.glDisable(GL10.GL_DEPTH_TEST);
+
+        mistModel.getMistEffect().draw(batch);
 	}
 	
 	public void dispose() {
