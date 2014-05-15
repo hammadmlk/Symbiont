@@ -65,7 +65,7 @@ public class GameContactListener implements ContactListener {
         if (other.entityType == PhysicsEntityModel.Type.DEFLECTOR) {
         	//TODO: Do same when deflected by elastic deflector??
         	//deflected = true is used in endcontact function below
-            Assets.playBeepEffect();
+            Assets.playBounceEffect();
             gameEngine.gameState.alien = alien;
             gameEngine.gameState.deflected = true;
         }

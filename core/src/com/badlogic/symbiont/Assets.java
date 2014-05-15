@@ -187,6 +187,8 @@ public class Assets {
         assets.soundBank.put("bounce1.ogg", effect1);
         Sound effect2 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce2.ogg"));
         assets.soundBank.put("bounce2.ogg", effect2);
+        Sound effect3 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/buzz3.ogg"));
+        assets.soundBank.put("buzz3.ogg", effect3);
     }
     
     /**
@@ -203,11 +205,26 @@ public class Assets {
      * Helper function to play different sounds, quasi-randomly.
      * Maybe should be refactored elsewhere.
      */
-    public static void playBeepEffect() {
+    public static void playBounceEffect() {
         if (rand.nextBoolean()) {
             playEffect("bounce1.ogg");
         } else {
             playEffect("bounce2.ogg");
+        }
+    }
+    
+    private static long buzzId = -1;
+    
+    public static void playBuzzEffect() {
+        if (buzzId == -1) {
+            buzzId = getInstance().soundBank.get("buzz3.ogg").loop();
+        }
+    }
+    
+    public static void stopBuzzEffect() {
+        if (buzzId >= 0) {
+            getInstance().soundBank.get("buzz3.ogg").stop(buzzId);
+            buzzId = -1;
         }
     }
 

@@ -175,6 +175,9 @@ public class GameEngine implements Screen {
         if (gameState.deflector()) {
             gameState.currentEnergy -= gameState.getDeflectorLength()
                     * GameConstants.DEFLECTOR_ENERGY;
+            Assets.playBuzzEffect();
+        } else {
+            Assets.stopBuzzEffect();
         }
         if (gameState.currentEnergy < 0) {
             gameState.energyBarParticleEffect.allowCompletion();
