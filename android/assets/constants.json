@@ -64,6 +64,7 @@
         "breakingSpree",
         "choices",
         "maze",
+        "bounceOver",
         "demo"
     ],
     "namesToConfigs": {
