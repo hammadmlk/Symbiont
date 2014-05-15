@@ -2,8 +2,8 @@
     "tutorialModel": {
         "animation": "tutorials/tutorialShrink"
     },
-"currentEnergy": 100,
-"totalEnergy": 100,
+"currentEnergy": 50,
+"totalEnergy": 50,
 "entities": [
 	{
 		"position": {

@@ -1,7 +1,7 @@
 {
     "backgroundPath": "non-git/level2bg.png",
-    "currentEnergy": 100,
-    "totalEnergy": 100,
+    "currentEnergy": 50,
+    "totalEnergy": 50,
     "entities": [
         {
             "angle": 0.6,
