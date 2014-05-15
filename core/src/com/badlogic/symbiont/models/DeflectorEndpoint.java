@@ -13,6 +13,19 @@ public class DeflectorEndpoint {
 
     private ParticleEffect particleEffect;
 
+    
+	public DeflectorEndpoint(){
+		
+	}
+	
+	public DeflectorEndpoint(DeflectorEndpoint point){
+		this.x = point.x;
+		this.y = point.y;
+		this.active = point.active; 
+		this.particleEffect = point.particleEffect;
+	}
+    
+    
     public ParticleEffect getParticleEffect() {
         if (particleEffect != null) {
             return particleEffect;

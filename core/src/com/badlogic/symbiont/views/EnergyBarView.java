@@ -19,7 +19,7 @@ public class EnergyBarView {
     		barWidth, 
     		barHeight);
 
-    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");
+    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("energybar");
 
     /**
      * Draws the energy bar and the glowing particles on right corner
