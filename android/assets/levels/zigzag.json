@@ -3,13 +3,36 @@
 "totalEnergy": 100,
 "entities": [
 	{
-		"flipVertical": true,
 		"position": {
-			"x": 287.64865,
-			"y": 678.187
+			"x": 219.65997,
+			"y": 418.69687
 		},
 		"scale": 1,
 		"name": "branch",
+		"angle": 0.1,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 245.32578,
+			"y": 585.2692
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": 5.75,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 153.93758,
+			"y": 801.6997
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": -0.25,
 		"breakable": false,
 		"entityType": "BRANCH"
 	},
@@ -28,96 +51,44 @@
 	},
 	{
 		"position": {
-			"x": 181.13312,
-			"y": 316.71387
-		},
-		"scale": 1,
-		"name": "branch",
-		"flipHorizontal": true,
-		"angle": 1.6,
-		"breakable": false,
-		"entityType": "BRANCH"
-	},
-	{
-		"flipVertical": true,
-		"position": {
-			"x": 15.694107,
-			"y": 488.9518
-		},
-		"scale": 1,
-		"name": "branch",
-		"flipHorizontal": true,
-		"angle": 1.6,
-		"breakable": false,
-		"entityType": "BRANCH"
-	},
-	{
-		"position": {
-			"x": 172.06793,
-			"y": 671.3881
-		},
-		"scale": 1,
-		"name": "branch",
-		"flipHorizontal": true,
-		"angle": 1.6,
-		"breakable": false,
-		"entityType": "BRANCH"
-	},
-	{
-		"position": {
-			"x": 457.22372,
-			"y": 609.06525
-		},
-		"scale": 1,
-		"name": "branch",
-		"flipHorizontal": true,
-		"breakable": false,
-		"entityType": "BRANCH"
-	},
-	{
-		"position": {
-			"x": 287.2521,
-			"y": 220.39664
-		},
-		"scale": 0.4,
-		"name": "branch3",
-		"breakable": false,
-		"entityType": "BRANCH"
-	},
-	{
-		"class": "com.badlogic.symbiont.models.MovableObjectModel",
-		"position": {
-			"x": 28,
-			"y": 488
+			"x": 19.093384,
+			"y": 284.98584
 		},
 		"scale": 0.4,
 		"name": "branch2",
+		"angle": 0.2,
 		"breakable": false,
-		"entityType": "BRANCH",
-		"movingPath": [
-				{
-					"x": 28,
-					"y": 488
-				},
-				{
-					"x": -102,
-					"y": 488
-				},
-				{
-					"x": 28,
-					"y": 488
-				}
-			],
-		"movingSpeed": 1.4,
-		"type": "KinematicBody"
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 98.41368,
+			"y": 415.29742
+		},
+		"scale": 1,
+		"name": "branch",
+		"angle": -0.4,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 192.06816,
+			"y": 248.19263
+		},
+		"scale": 0.4,
+		"name": "branch3",
+		"angle": -1.6,
+		"breakable": false,
+		"entityType": "BRANCH"
 	},
 	{
 		"linearVelocity": {
 			"y": -250
 		},
 		"position": {
-			"x": 83.85301,
-			"y": 178.10036
+			"x": 86.11931,
+			"y": 725.4091
 		},
 		"scale": 0.4,
 		"name": "ball",
@@ -126,8 +97,8 @@
 	},
 	{
 		"position": {
-			"x": 217.49556,
-			"y": 201.98308
+			"x": 240.15839,
+			"y": 589.51843
 		},
 		"scale": 0.4,
 		"name": "redpower",
@@ -139,19 +110,19 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 93.983,
-					"y": 691.19257
+					"x": 182.36826,
+					"y": 718.38794
 				},
 				"rectangle": {
-					"width": 320,
-					"height": 280,
-					"y": 520
+					"width": 300,
+					"height": 200,
+					"y": 600
 				}
 			}
 		],
 		"position": {
-			"x": 93.983,
-			"y": 691.19257
+			"x": 182.36826,
+			"y": 718.38794
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -166,10 +137,10 @@
 					"y": 719.5212
 				},
 				"rectangle": {
-					"width": 160,
-					"height": 210,
-					"x": 320,
-					"y": 590
+					"width": 180,
+					"height": 200,
+					"x": 300,
+					"y": 600
 				}
 			}
 		],
@@ -186,19 +157,88 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 128.37128,
-					"y": 359.81393
+					"x": 418.0623,
+					"y": 420.37103
 				},
 				"rectangle": {
-					"width": 480,
-					"height": 320,
-					"y": 200
+					"width": 180,
+					"height": 330,
+					"x": 300,
+					"y": 270
 				}
 			}
 		],
 		"position": {
-			"x": 128.37128,
-			"y": 359.81393
+			"x": 418.0623,
+			"y": 420.37103
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 86.05101,
+					"y": 86.093414
+				},
+				"rectangle": {
+					"width": 240,
+					"height": 270
+				}
+			}
+		],
+		"position": {
+			"x": 86.05101,
+			"y": 86.093414
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 354.60623,
+					"y": 90.62604
+				},
+				"rectangle": {
+					"width": 240,
+					"height": 270,
+					"x": 240
+				}
+			}
+		],
+		"position": {
+			"x": 354.60623,
+			"y": 90.62604
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 136.30328,
+					"y": 464.0632
+				},
+				"rectangle": {
+					"width": 300,
+					"height": 330,
+					"y": 270
+				}
+			}
+		],
+		"position": {
+			"x": 136.30328,
+			"y": 464.0632
 		},
 		"scale": 0.4,
 		"name": "plant",

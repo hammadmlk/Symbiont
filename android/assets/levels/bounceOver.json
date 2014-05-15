@@ -1,5 +1,6 @@
 {
-"currentEnergy": 100,
+"currentEnergy": 75,
+"totalEnergy": 75,
 "entities": [
 	{
 		"position": {
