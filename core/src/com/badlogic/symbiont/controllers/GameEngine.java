@@ -129,6 +129,10 @@ public class GameEngine implements Screen {
             world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
         }
 
+        if (gameState.state == GameState.State.WON && gameState.timeElapsedSinceWon < Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+            gameState.timeElapsedSinceWon += delta;
+        }
+
         // update physics entities
         Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
         while (physicsEntityModelIterator.hasNext()) {

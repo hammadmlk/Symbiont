@@ -58,12 +58,6 @@ public class GameView extends Actor {
             deflectorView.render(batch, gameState, gameEngine.elasticDeflector);
         }
 
-        if (gameState.state == GameState.State.WON) {
-            drawImageCentered(batch, "youwin");
-        } else if (gameState.state == GameState.State.LOST) {
-            drawImageCentered(batch, "youlose");
-        }
-
         energyBarView.render(batch, gameState);
 
         // debug render
@@ -83,6 +77,20 @@ public class GameView extends Actor {
 
         if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
             batch.draw(gameState.tutorialModel.getFrame(), 0, 0);
+        }
+
+        if (gameState.state == GameState.State.WON) {
+            float y = GameConstants.VIRTUAL_HEIGHT -
+                    (gameState.timeElapsedSinceWon /
+                    Assets.getInstance().constantsConfigLoader.winAnimationDuration)
+                            * GameConstants.VIRTUAL_HEIGHT;
+            batch.draw(Assets.loadAtlas("leavesImg"), 0, y, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+        }
+
+        if (gameState.state == GameState.State.WON) {
+            drawImageCentered(batch, "youwin");
+        } else if (gameState.state == GameState.State.LOST) {
+            drawImageCentered(batch, "youlose");
         }
     }
 

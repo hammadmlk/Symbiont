@@ -43,7 +43,11 @@ public class GameState {
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
     public transient ParticleEffect[] levelTransitionParticleEffect = new ParticleEffect[5];
-    
+
+    /**
+     * stops updating at winAnimationDuration. #shouldberefactored
+     */
+    public transient float timeElapsedSinceWon = 0;
     
     public State state = State.WAITING_TO_START;
 
