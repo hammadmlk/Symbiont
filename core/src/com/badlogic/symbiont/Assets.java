@@ -167,8 +167,8 @@ public class Assets {
         assets.soundBank.put("bounce1.ogg", effect1);
         Sound effect2 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/bounce2.ogg"));
         assets.soundBank.put("bounce2.ogg", effect2);
-        Sound effect3 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/buzz3.ogg"));
-        assets.soundBank.put("buzz3.ogg", effect3);
+        Sound effect3 = Gdx.audio.newSound(Gdx.files.internal("non-git/audio/buzz.ogg"));
+        assets.soundBank.put("buzz.ogg", effect3);
     }
     
     /**
@@ -197,13 +197,13 @@ public class Assets {
     
     public static void playBuzzEffect() {
         if (buzzId == -1) {
-            buzzId = getInstance().soundBank.get("buzz3.ogg").loop();
+            buzzId = getInstance().soundBank.get("buzz.ogg").loop();
         }
     }
     
     public static void stopBuzzEffect() {
         if (buzzId >= 0) {
-            getInstance().soundBank.get("buzz3.ogg").stop(buzzId);
+            getInstance().soundBank.get("buzz.ogg").stop(buzzId);
             buzzId = -1;
         }
     }
