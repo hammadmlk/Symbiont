@@ -44,6 +44,12 @@ public class EnergyBarView {
         		region.x + region.width*energyFraction ,  // 
         		region.y+region.height/2);
         gameState.energyBarParticleEffect.draw(batch);
+        
+        for (int i = 0; i < 5; i++) {
+        	gameState.levelTransitionParticleEffect[i].setPosition((GameConstants.VIRTUAL_WIDTH/5)*i+20, GameConstants.VIRTUAL_HEIGHT+40);
+        	gameState.levelTransitionParticleEffect[i].draw(batch);
+        } 
+        
     }
 
 }

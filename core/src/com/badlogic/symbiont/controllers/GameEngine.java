@@ -183,7 +183,11 @@ public class GameEngine implements Screen {
             gameState.energyBarParticleEffect.allowCompletion();
         }
         gameState.energyBarParticleEffect.update(delta);
-
+        
+        for (int i = 0; i < 5; i++) {
+        	gameState.levelTransitionParticleEffect[i].update(delta);
+        } 
+        
         // check if energy depleted
         if (gameState.currentEnergy <= 0) {
             gameState.deflectorEndpoints[0].active = false;

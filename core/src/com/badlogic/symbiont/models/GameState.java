@@ -42,6 +42,8 @@ public class GameState {
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
+    public transient ParticleEffect[] levelTransitionParticleEffect = new ParticleEffect[5];
+    
     
     public State state = State.WAITING_TO_START;
 
@@ -81,7 +83,10 @@ public class GameState {
     public GameState() {
         for (int i = 0; i < 2; i++) {
             deflectorEndpoints[i] = new DeflectorEndpoint();
-        }        
+        }
+        for (int i = 0; i < 5; i++) {
+        	levelTransitionParticleEffect[i] = Assets.getParticleEffect("leaves2");  
+        } 
     }
 
     public static GameState fromJSON(String serialized) {
