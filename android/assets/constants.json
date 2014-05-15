@@ -1,5 +1,5 @@
 {
-    "winAnimationDuration": 1,
+    "winAnimationDuration": 5,
     "animations": {
         "ball": {},
         "bluepower": {},

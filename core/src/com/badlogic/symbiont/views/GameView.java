@@ -80,11 +80,27 @@ public class GameView extends Actor {
         }
 
         if (gameState.state == GameState.State.WON) {
-            float y = GameConstants.VIRTUAL_HEIGHT -
-                    (gameState.timeElapsedSinceWon /
+            float y = (float) (GameConstants.VIRTUAL_HEIGHT -
+                    1.25*(gameState.timeElapsedSinceWon /
                     Assets.getInstance().constantsConfigLoader.winAnimationDuration)
-                            * GameConstants.VIRTUAL_HEIGHT;
-            batch.draw(Assets.loadAtlas("leavesImg"), 0, y, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+                            * GameConstants.VIRTUAL_HEIGHT);
+            
+            //draw(Assets.loadAtlas("leavesImg"), 0, y, GameConstants.VIRTUAL_WIDTH, float height);
+            
+            float ratio = (float)Assets.loadAtlas("leavesImg").originalHeight/(float)Assets.loadAtlas("leavesImg").originalWidth;
+            
+            
+            batch.draw(Assets.loadAtlas("black"), 0, y+GameConstants.VIRTUAL_WIDTH*ratio, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+            
+            batch.draw(Assets.loadAtlas("leavesImg"), 0, y, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_WIDTH*ratio);
+            
+            
+            for (int i = 0; i < 5; i++) {
+            	gameState.levelTransitionParticleEffect[i].setPosition((GameConstants.VIRTUAL_WIDTH/5)*i+20, y+GameConstants.VIRTUAL_WIDTH*ratio);
+            	gameState.levelTransitionParticleEffect[i].draw(batch);
+            }
+            
+            
         }
 
         if (gameState.state == GameState.State.WON) {
