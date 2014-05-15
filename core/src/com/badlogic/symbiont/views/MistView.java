@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.symbiont.Assets;
@@ -19,12 +20,12 @@ public class MistView {
 
 	private final ShapeRenderer shapes = new ShapeRenderer();
 
-    private final Texture mistLayer = Assets.loadTexture("non-git/mistlayer.png");
+    private final TextureAtlas.AtlasRegion mistLayer = Assets.loadAtlas("mistlayer");
 
     /**
      * render all the mist in gamestate
      * @param batch
-     * @param gamestate
+     * @param gameState
      */
     public void render(SpriteBatch batch, GameState gameState) {
         for (MistModel mistModel : gameState.mistModels) {

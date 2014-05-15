@@ -51,26 +51,6 @@ public class Assets {
         return particleEffect;
     }
 
-    static {
-        Texture.setEnforcePotImages(false);
-    }
-
-    /**
-     * loads textures. Should only be used for backgrounds,
-     * as they are too big to be texture packed
-     * @param path
-     * @return
-     */
-    public static Texture loadTexture(String path) {
-        Assets assets = getInstance();
-        if (assets.textureDictionary.containsKey(path)) {
-            return assets.textureDictionary.get(path);
-        }
-        Texture texture = new Texture(Gdx.files.internal(path));
-        assets.textureDictionary.put(path, texture);
-        return texture;
-    }
-
     /**
      * loads an AtlasRegion. This lets the spriteBatch
      * batch better, and is preferred

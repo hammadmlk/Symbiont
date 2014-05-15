@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -37,7 +38,7 @@ public class GameState {
     /*
      * private/transient (don't get serialized)
      */
-    private transient Texture backgroundTexture;
+    private transient TextureAtlas.AtlasRegion backgroundTexture;
     public transient List<MistModel> mistModels = new ArrayList<MistModel>();
     public transient DeflectorEndpoint[] deflectorEndpoints = new DeflectorEndpoint[2];
     public transient ParticleEffect energyBarParticleEffect = Assets.getParticleEffect("energybar");
@@ -177,11 +178,11 @@ public class GameState {
         rightFixture.setRestitution(1);
     }
 
-    public Texture getBackgroundTexture() {
+    public TextureAtlas.AtlasRegion getBackgroundTexture() {
         if (backgroundTexture != null) {
             return backgroundTexture;
         }
-        backgroundTexture = Assets.loadTexture(backgroundPath);
+        backgroundTexture = Assets.loadAtlas(backgroundPath);
         return backgroundTexture;
     }
 }
