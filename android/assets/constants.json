@@ -33,7 +33,15 @@
             "delta": 0.5
         },
         "tutorials/tutorialShrink": {
-            "numFrames": 2,
+            "numFrames": 1,
+            "delta": 0.5
+        },
+        "tutorials/tutorialSpeed": {
+            "numFrames": 1,
+            "delta": 0.5
+        },
+        "tutorials/tutorialBreakable": {
+            "numFrames": 1,
             "delta": 0.5
         },
         "menu": {},
@@ -56,8 +64,8 @@
         "06_Shrink",
         "07_Falling",
         "08_MiddleStrip",
-        "09_Break",
-        "10_LowCeiling",
+        "09_LowCeiling",
+        "10_Break",
         "11_BreakingSpree",
         "12_Choices",
         "13_BounceOver",

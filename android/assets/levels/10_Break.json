@@ -1,4 +1,7 @@
 {
+    "tutorialModel": {
+        "animation": "tutorials/tutorialBreakable"
+    },
 "currentEnergy": 75,
 "totalEnergy": 75,
 "entities": [
