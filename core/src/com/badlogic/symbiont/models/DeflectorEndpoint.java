@@ -13,6 +13,10 @@ public class DeflectorEndpoint {
 
     private ParticleEffect particleEffect;
 
+    public DeflectorEndpoint(float x, float y){
+		this.x = x;
+		this.y = y;
+	}
     
 	public DeflectorEndpoint(){
 		
