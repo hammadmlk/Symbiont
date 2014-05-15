@@ -51,6 +51,7 @@ public class GameContactListener implements ContactListener {
             if ((alien.linearVelocity.len() / GameConstants.PIXELS_PER_METER) >=
                 (GameConstants.powerupSpeed * 0.75)) {
                 other.entityType = PhysicsEntityModel.Type.BROKEN;
+                other.getAnimator().fade(.5f);
             } else {
                 other.getAnimator().shake(5f, 0f, .1f, .5f);
             }
