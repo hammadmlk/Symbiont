@@ -82,7 +82,7 @@ public class GameView extends Actor {
         }
 
         if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
-            batch.draw(gameState.tutorialModel.getFrame(), 0, 0);
+            batch.draw(gameState.tutorialModel.getFrame(), 0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         }
     }
 
