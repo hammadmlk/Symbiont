@@ -1,0 +1,209 @@
+{
+"currentEnergy": 150,
+"entities": [
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 287.64865,
+			"y": 678.187
+		},
+		"scale": 1,
+		"name": "branch",
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 122.209656,
+			"y": 794.90076
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 1.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 181.13312,
+			"y": 316.71387
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 1.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"flipVertical": true,
+		"position": {
+			"x": 15.694107,
+			"y": 488.9518
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 1.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 172.06793,
+			"y": 671.3881
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"angle": 1.6,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 457.22372,
+			"y": 609.06525
+		},
+		"scale": 1,
+		"name": "branch",
+		"flipHorizontal": true,
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"position": {
+			"x": 287.2521,
+			"y": 220.39664
+		},
+		"scale": 0.4,
+		"name": "branch3",
+		"breakable": false,
+		"entityType": "BRANCH"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.MovableObjectModel",
+		"position": {
+			"x": 28,
+			"y": 488
+		},
+		"scale": 0.4,
+		"name": "branch2",
+		"breakable": false,
+		"entityType": "BRANCH",
+		"movingPath": [
+				{
+					"x": 28,
+					"y": 488
+				},
+				{
+					"x": -102,
+					"y": 488
+				},
+				{
+					"x": 28,
+					"y": 488
+				}
+			],
+		"movingSpeed": 1.4,
+		"type": "KinematicBody"
+	},
+	{
+		"linearVelocity": {
+			"y": -250
+		},
+		"position": {
+			"x": 83.85301,
+			"y": 178.10036
+		},
+		"scale": 0.4,
+		"name": "ball",
+		"breakable": false,
+		"entityType": "ALIEN"
+	},
+	{
+		"position": {
+			"x": 217.49556,
+			"y": 201.98308
+		},
+		"scale": 0.4,
+		"name": "redpower",
+		"breakable": false,
+		"entityType": "POWERUP_SHRINK"
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 93.983,
+					"y": 691.19257
+				},
+				"rectangle": {
+					"width": 320,
+					"height": 280,
+					"y": 520
+				}
+			}
+		],
+		"position": {
+			"x": 93.983,
+			"y": 691.19257
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 403.33142,
+					"y": 719.5212
+				},
+				"rectangle": {
+					"width": 160,
+					"height": 210,
+					"x": 320,
+					"y": 590
+				}
+			}
+		],
+		"position": {
+			"x": 403.33142,
+			"y": 719.5212
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	},
+	{
+		"class": "com.badlogic.symbiont.models.PlantModel",
+		"mistModels": [
+			{
+				"position": {
+					"x": 128.37128,
+					"y": 359.81393
+				},
+				"rectangle": {
+					"width": 480,
+					"height": 320,
+					"y": 200
+				}
+			}
+		],
+		"position": {
+			"x": 128.37128,
+			"y": 359.81393
+		},
+		"scale": 0.4,
+		"name": "plant",
+		"breakable": false
+	}
+],
+"totalEnergy": 100,
+"backgroundPath": "non-git/level2bg.png"
+}
