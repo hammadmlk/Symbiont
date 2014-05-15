@@ -8,10 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.symbiont.Assets;
@@ -129,10 +126,30 @@ public class GameEngine implements Screen {
             world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
         }
 
+        float alienRadius = 64 / GameConstants.PIXELS_PER_METER;
+
         // update physics entities
         Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
         while (physicsEntityModelIterator.hasNext()) {
             PhysicsEntityModel physicsEntityModel = physicsEntityModelIterator.next();
+            if (physicsEntityModel.entityType == PhysicsEntityModel.Type.ALIEN) {
+                final PhysicsEntityModel alien = physicsEntityModel;
+                // check to see if we should start the eating animation
+                world.QueryAABB(new QueryCallback() {
+                                    @Override
+                                    public boolean reportFixture(Fixture fixture) {
+                                        PhysicsEntityModel physicsEntityModel = (PhysicsEntityModel) fixture.getBody().getUserData();
+                                        if (physicsEntityModel.entityType == PhysicsEntityModel.Type.PLANT) {
+                                            alien.getAnimator().overrideAnimation(Assets.loadAnimation("eating"));
+                                        }
+                                        return true;
+                                    }
+                                },
+                        alien.body.getPosition().x - alienRadius,
+                        alien.body.getPosition().y - alienRadius,
+                        alien.body.getPosition().x + alienRadius,
+                        alien.body.getPosition().y + alienRadius);
+            }
             if (physicsEntityModel.toBeDestroyed) {
                 physicsEntityModel.cleanUP();
                 physicsEntityModelIterator.remove();
@@ -147,6 +164,7 @@ public class GameEngine implements Screen {
                 physicsEntityModel.update(delta);
             }
         }
+
         //TODO: use same logic to add leaves anim
 
         // update mist, and clean up mist. Also checks for win condition

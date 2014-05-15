@@ -104,6 +104,10 @@ public class Animator {
     }
 
     public void overrideAnimation(AnimationModel newAnimation) {
+        // can't override an animation if it's already being overridden
+        if (this.newAnimation != null) {
+            return;
+        }
         assert newAnimation.frames != null;
         this.newAnimation = newAnimation;
         currentFrame = 0;
