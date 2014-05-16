@@ -63,7 +63,8 @@ public class MistView {
 		//6. render your primitive shapes
 		shapes.begin(ShapeType.Filled);
 
-        shapes.setColor(0.44f, 0.28f, 0.79f, 0.10f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
+        shapes.setColor(mistModel.color.r, mistModel.color.g, mistModel.color.b, 
+                mistModel.color.a * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
 
         shapes.rect(mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
 
