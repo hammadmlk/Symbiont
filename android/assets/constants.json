@@ -25,6 +25,10 @@
             "numFrames": 4,
             "delta": 1
         },
+        "intro_story/intro_story": {
+            "numFrames": 4,
+            "delta": 1
+        },
         "tutorials/tutorialOne": {
             "numFrames": 2,
             "delta": 0.5

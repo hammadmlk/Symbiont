@@ -24,4 +24,6 @@ public class GameConstants {
     public static String PREFERENCES = "symbiont-preferences";
     
     public static final float DEFAULT_MUSIC_VOLUME = 0.5f;
+    
+    public static final int NUM_STORY_PAGES = 5;
 }
