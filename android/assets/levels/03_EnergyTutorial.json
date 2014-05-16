@@ -9,7 +9,7 @@
 		{
 			"position": {
 				"x": 354,
-				"y": 627.7281
+				"y": 575
 			},
 			"scale": 1,
 			"name": "branch",
@@ -39,15 +39,15 @@
 					},
 					"rectangle": {
 						"width": 240,
-						"height": 600,
+						"height": 550,
 						"x": 240,
-						"y": 200
+						"y": 250
 					}
 				}
 			],
 			"position": {
 				"x": 392,
-				"y": 700.2578
+				"y": 690
 			},
 			"scale": 0.4,
 			"name": "plant",
@@ -63,8 +63,8 @@
 					},
 					"rectangle": {
 						"width": 260,
-						"height": 600,
-						"y": 200
+						"height": 550,
+						"y": 250
 					}
 				}
 			],
