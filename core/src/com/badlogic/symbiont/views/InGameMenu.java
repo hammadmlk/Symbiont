@@ -23,6 +23,8 @@ public class InGameMenu extends Table {
 
     private EnergyBarView energyBarView;
     private GameEngine gameEngine;
+    
+    private final Table menuWindow;
 
     public InGameMenu(Skin skin, final GameEngine gameEngine) {
         super(skin);
@@ -37,7 +39,7 @@ public class InGameMenu extends Table {
         // TODO padding needs to get updated on resize
         
         
-        final Window menuWindow = new Window("Menu", skin);
+        menuWindow = new Table();
         final Table upperTable = new Table();
         
         //========== upperTable
@@ -63,10 +65,7 @@ public class InGameMenu extends Table {
         menuImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                menuIsVisible = true;
-                upperTable.setVisible(!menuIsVisible);
-                menuWindow.setVisible(menuIsVisible);
-                menuWindow.setModal(menuIsVisible);
+                toggleMenu();
             }
         });
 
@@ -87,9 +86,7 @@ public class InGameMenu extends Table {
         menuWindow.center(); //internal left top align
         
         //menuWindow.setPosition(0, 0);
-        menuWindow.setMovable(false);
         menuWindow.setVisible(menuIsVisible);
-        menuWindow.setModal(menuIsVisible);
         
         //===add things to menuwindow
 //        final CheckBox elasticDeflectorCheckBox = new CheckBox("ElasticDeflector", skin);
@@ -104,24 +101,10 @@ public class InGameMenu extends Table {
 //        menuWindow.add(saveFileButton);
 //        menuWindow.row();
         
-        final LevelSelectView levelSelect = new LevelSelectView(gameEngine);
+        final LevelSelectView levelSelect = new LevelSelectView(gameEngine, this);
         menuWindow.add(levelSelect);
         menuWindow.row();
         
-        final TextButton returnTextButton = new TextButton("Return", skin);
-        menuWindow.add(returnTextButton);
-        menuWindow.row();
-        
-        // === MenuWindow Listeners         
-        returnTextButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                menuIsVisible = false;
-                upperTable.setVisible(!menuIsVisible);
-                menuWindow.setVisible(menuIsVisible);
-                menuWindow.setModal(menuIsVisible);
-            }
-        });
         
 //        elasticDeflectorCheckBox.addListener(new ChangeListener() {
 //            public void changed(ChangeEvent event, Actor actor) {
@@ -176,6 +159,12 @@ public class InGameMenu extends Table {
         this.add(upperTable).width(w).height(GameConstants.MENU_BAR_HEIGHT);
         this.row();
         this.add(menuWindow).width(w).expandY();
+    }
+    
+    
+    public void toggleMenu() {
+        menuIsVisible = !menuIsVisible;
+        menuWindow.setVisible(menuIsVisible);
     }
     
     @Override

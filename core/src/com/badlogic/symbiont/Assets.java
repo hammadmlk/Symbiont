@@ -35,6 +35,8 @@ public class Assets {
     protected String currentSong;
     
     protected Map<String, Sound> soundBank = new HashMap<String, Sound>();
+    
+    private boolean muted = false;
 
     private static Assets instance;
 
@@ -157,6 +159,16 @@ public class Assets {
         }
     }
     
+    public static void mute(Boolean b) {
+        Assets assets = getInstance();
+        assets.muted = b;
+        if (assets.muted) {
+            pauseSong();
+        } else {
+            playSong(assets.currentSong);
+        }
+    }
+    
     /**
      * Preload and cache sound effects to prevent lag.
      */
@@ -176,7 +188,11 @@ public class Assets {
      * @param filename the name of the file (with file extension)
      */
     public static void playEffect(String filename) {
-        getInstance().soundBank.get(filename).play();
+        Assets assets = getInstance();
+        if (assets.muted) {
+            return;
+        }
+        assets.soundBank.get(filename).play();
     }
 
     private static final Random rand = new Random();
@@ -186,6 +202,9 @@ public class Assets {
      * Maybe should be refactored elsewhere.
      */
     public static void playBounceEffect() {
+        if (getInstance().muted) {
+            return;
+        }
         if (rand.nextBoolean()) {
             playEffect("bounce1.ogg");
         } else {
@@ -196,14 +215,22 @@ public class Assets {
     private static long buzzId = -1;
     
     public static void playBuzzEffect() {
+        Assets assets = getInstance();
+        if (assets.muted) {
+            return;
+        }
         if (buzzId == -1) {
-            buzzId = getInstance().soundBank.get("buzz.ogg").loop();
+            buzzId = assets.soundBank.get("buzz.ogg").loop();
         }
     }
     
     public static void stopBuzzEffect() {
+        Assets assets = getInstance();
+        if (assets.muted) {
+            return;
+        }
         if (buzzId >= 0) {
-            getInstance().soundBank.get("buzz.ogg").stop(buzzId);
+            assets.soundBank.get("buzz.ogg").stop(buzzId);
             buzzId = -1;
         }
     }

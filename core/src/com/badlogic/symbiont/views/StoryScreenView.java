@@ -34,4 +34,8 @@ public class StoryScreenView extends Actor {
         }
         return curPage;
     }
+    
+    public void reset() {
+        curPage = 0;
+    }
 }
