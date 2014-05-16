@@ -426,6 +426,7 @@ public class GameEngine implements Screen {
     }
     
     public void quitGame() {
+        currentLevelNum = 0;
         game.showMainMenuScreen();
     }
 
