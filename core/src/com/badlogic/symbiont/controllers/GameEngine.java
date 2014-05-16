@@ -38,7 +38,7 @@ public class GameEngine implements Screen {
     /**
      * when true we the deflector is elastic
      */
-    public boolean elasticDeflector = false;
+    public boolean elasticDeflector = true;
 
     /**
      * when true we draw debug polygons and fps
