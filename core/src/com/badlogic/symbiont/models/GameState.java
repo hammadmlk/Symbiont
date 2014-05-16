@@ -111,6 +111,7 @@ public class GameState {
 
     private void setUpWalls(World world) {
         float halfwidth = 50 / GameConstants.PIXELS_PER_METER;
+        float topMargin = GameConstants.MENU_BAR_HEIGHT / GameConstants.PIXELS_PER_METER;
 
         float groundHeight = - halfwidth - GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2;
 
@@ -145,7 +146,7 @@ public class GameState {
         BodyDef topWallDef = new BodyDef();
         topWallDef.position.set(new Vector2(
                     GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2,
-                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER + halfwidth
+                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER + halfwidth - topMargin
                 )
             );
         Body topWallBody = world.createBody(topWallDef);

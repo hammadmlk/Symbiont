@@ -1,15 +1,11 @@
 {
-    "tutorialModel": {
-        "animation": "tutorials/tutorialBreakable"
-    },
 "currentEnergy": 75,
-"totalEnergy": 75,
 "entities": [
 	{
 		"flipVertical": true,
 		"position": {
 			"x": 359.7989,
-			"y": 802.3795
+			"y": 794.4475
 		},
 		"scale": 0.4,
 		"name": "breakablebranch2",
@@ -45,8 +41,8 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 410.5354,
-					"y": 731.0028
+					"x": 411.66858,
+					"y": 719.6713
 				},
 				"rectangle": {
 					"width": 480,
@@ -56,8 +52,8 @@
 			}
 		],
 		"position": {
-			"x": 410.5354,
-			"y": 731.0028
+			"x": 411.66858,
+			"y": 719.6713
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -87,5 +83,9 @@
 		"breakable": false
 	}
 ],
+"tutorialModel": {
+	"animation": "tutorials/tutorialBreakable"
+},
+"totalEnergy": 75,
 "backgroundPath": "non-git/level3bg.png"
 }

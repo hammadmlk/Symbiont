@@ -11,11 +11,12 @@ public class EnergyBarView {
 
 	private static final int barWidth = GameConstants.VIRTUAL_WIDTH/2;
 	private static final int barHeight = 20;
+	private static final int topMargin = 5;
 	
 	//the energy bar region
     private final Rectangle region = new Rectangle(
     		GameConstants.VIRTUAL_WIDTH/2 - barWidth/2, 
-    		GameConstants.VIRTUAL_HEIGHT - barHeight, 
+    		GameConstants.VIRTUAL_HEIGHT - barHeight - topMargin, 
     		barWidth, 
     		barHeight);
 

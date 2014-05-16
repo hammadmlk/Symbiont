@@ -1,6 +1,5 @@
 {
 "currentEnergy": 100,
-"totalEnergy": 100,
 "entities": [
 	{
 		"flipVertical": true,
@@ -95,19 +94,19 @@
 		"breakable": false,
 		"entityType": "BRANCH",
 		"movingPath": [
-				{
-					"x": 28,
-					"y": 488
-				},
-				{
-					"x": -102,
-					"y": 488
-				},
-				{
-					"x": 28,
-					"y": 488
-				}
-			],
+			{
+				"x": 28,
+				"y": 488
+			},
+			{
+				"x": -102,
+				"y": 488
+			},
+			{
+				"x": 28,
+				"y": 488
+			}
+		],
 		"movingSpeed": 1.4,
 		"type": "KinematicBody"
 	},
@@ -162,8 +161,8 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 403.33142,
-					"y": 719.5212
+					"x": 404.46457,
+					"y": 709.3228
 				},
 				"rectangle": {
 					"width": 160,
@@ -174,8 +173,8 @@
 			}
 		],
 		"position": {
-			"x": 403.33142,
-			"y": 719.5212
+			"x": 404.46457,
+			"y": 709.3228
 		},
 		"scale": 0.4,
 		"name": "plant",

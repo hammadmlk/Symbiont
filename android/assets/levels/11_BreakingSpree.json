@@ -1,6 +1,5 @@
 {
 "currentEnergy": 100,
-"totalEnergy": 100,
 "entities": [
 	{
 		"position": {
@@ -101,8 +100,8 @@
 		"mistModels": [
 			{
 				"position": {
-					"x": 58.5354,
-					"y": 720.0028
+					"x": 64.201126,
+					"y": 707.53815
 				},
 				"rectangle": {
 					"width": 480,
@@ -112,8 +111,8 @@
 			}
 		],
 		"position": {
-			"x": 58.535404,
-			"y": 720.0028
+			"x": 64.201126,
+			"y": 707.53815
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -143,5 +142,6 @@
 		"breakable": false
 	}
 ],
+"totalEnergy": 100,
 "backgroundPath": "non-git/level3bg.png"
 }

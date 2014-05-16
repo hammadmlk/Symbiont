@@ -8,6 +8,8 @@ public class GameConstants {
     public static final int VIRTUAL_HEIGHT = 800;
     public static final float PIXELS_PER_METER = 50;
     
+    public static final int MENU_BAR_HEIGHT = 32;
+    
     public static final int VELOCITY_ITERATIONS = 6;
     public static final int POSITION_ITERATIONS = 2;
     
