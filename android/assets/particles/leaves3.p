@@ -105,19 +105,19 @@ timeline0: 0.0
 timeline1: 0.25342464
 - Rotation - 
 active: true
-lowMin: 45.0
-lowMax: 45.0
+lowMin: 0.0
+lowMax: 0.0
 highMin: 180.0
-highMax: 180.0
+highMax: 90.0
 relative: true
 scalingCount: 3
-scaling0: 0.0
-scaling1: 0.54901963
-scaling2: 1.0
+scaling0: 0.19607843
+scaling1: 0.5686275
+scaling2: 0.37254903
 timelineCount: 3
 timeline0: 0.0
-timeline1: 0.47260273
-timeline2: 0.9794521
+timeline1: 0.37671232
+timeline2: 0.9109589
 - Wind - 
 active: true
 lowMin: 0.0
