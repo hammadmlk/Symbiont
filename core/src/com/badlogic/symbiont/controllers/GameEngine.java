@@ -129,8 +129,20 @@ public class GameEngine implements Screen {
             world.step(delta, GameConstants.VELOCITY_ITERATIONS, GameConstants.POSITION_ITERATIONS);
         }
 
-        if (gameState.state == GameState.State.WON && gameState.timeElapsedSinceWon < Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+        if (gameState.state == GameState.State.WON && gameState.timeElapsedSinceWon <= Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
             gameState.timeElapsedSinceWon += delta;
+
+            for (int i = 0; i < 5; i++) {
+                gameState.levelTransitionParticleEffect[i].update(delta);
+            }
+
+            // gets called once per win #bestpractices
+            if (gameState.timeElapsedSinceWon > Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+                for (int i = 0; i < 5; i++) {
+                    gameState.levelTransitionParticleEffect[i].reset();
+                }
+            }
+
         }
 
         // update physics entities
@@ -187,10 +199,6 @@ public class GameEngine implements Screen {
             gameState.energyBarParticleEffect.allowCompletion();
         }
         gameState.energyBarParticleEffect.update(delta);
-        
-        for (int i = 0; i < 5; i++) {
-        	gameState.levelTransitionParticleEffect[i].update(delta);
-        } 
         
         // check if energy depleted
         if (gameState.currentEnergy <= 0) {
