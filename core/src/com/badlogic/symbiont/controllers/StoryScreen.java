@@ -4,28 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
-import com.badlogic.symbiont.views.SplashScreenView;
+import com.badlogic.symbiont.views.StoryScreenView;
 
-public class MainMenuScreen implements Screen {
+public class StoryScreen implements Screen {
     
     private final SymbiontMain game;
     private final Stage stage;
     
-    public MainMenuScreen(final SymbiontMain game) {
+    private StoryScreenView view;
+    
+    public StoryScreen(final SymbiontMain game) {
         this.game = game;
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
 
         stage.addActor(getBackgroundActor());
-        stage.addActor(getMenuActor());
+//        stage.addActor(getMenuActor());
     }
 
     private Actor getBackgroundActor() {
@@ -36,9 +39,17 @@ public class MainMenuScreen implements Screen {
         table.setPosition(0, 0);
         table.center();
 
-        SplashScreenView splashScreenView = new SplashScreenView();
-        splashScreenView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
-        table.add(splashScreenView);
+        view = new StoryScreenView();
+        view.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+        table.add(view);
+        table.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (view.nextPage() == GameConstants.NUM_STORY_PAGES) {
+                    game.showGameScreen();
+                }
+            }
+        });
 
         return table;
     }
@@ -63,7 +74,7 @@ public class MainMenuScreen implements Screen {
         menuImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.showStoryScreen();
+                // TODO
             }
         });
         
@@ -90,7 +101,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         // TODO Auto-generated method stub
-        
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -117,5 +128,4 @@ public class MainMenuScreen implements Screen {
             stage.dispose();
         }
     }
-
 }
