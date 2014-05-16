@@ -128,6 +128,23 @@ public class GameEngine implements Screen {
 
         float alienRadius = 64 / GameConstants.PIXELS_PER_METER;
 
+        if (gameState.state == GameState.State.WON && gameState.timeElapsedSinceWon <= Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+            gameState.timeElapsedSinceWon += delta;
+
+            for (int i = 0; i < 5; i++) {
+                gameState.levelTransitionParticleEffect[i].update(delta);
+            }
+
+            // gets called once per win #bestpractices
+            if (gameState.timeElapsedSinceWon > Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+                for (int i = 0; i < 5; i++) {
+                    gameState.levelTransitionParticleEffect[i].reset();
+                }
+            }
+
+        }
+
+
         // update physics entities
         Iterator<PhysicsEntityModel> physicsEntityModelIterator = gameState.entities.iterator();
         while (physicsEntityModelIterator.hasNext()) {
@@ -201,7 +218,7 @@ public class GameEngine implements Screen {
             gameState.energyBarParticleEffect.allowCompletion();
         }
         gameState.energyBarParticleEffect.update(delta);
-
+        
         // check if energy depleted
         if (gameState.currentEnergy <= 0) {
             gameState.deflectorEndpoints[0].active = false;

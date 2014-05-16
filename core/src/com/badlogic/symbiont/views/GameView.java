@@ -58,12 +58,6 @@ public class GameView extends Actor {
             deflectorView.render(batch, gameState, gameEngine.elasticDeflector);
         }
 
-        if (gameState.state == GameState.State.WON) {
-            drawImageCentered(batch, "youwin");
-        } else if (gameState.state == GameState.State.LOST) {
-            drawImageCentered(batch, "youlose");
-        }
-
         energyBarView.render(batch, gameState);
 
         // debug render
@@ -83,6 +77,36 @@ public class GameView extends Actor {
 
         if (gameState.state == GameState.State.WAITING_TO_START && gameState.tutorialModel != null) {
             batch.draw(gameState.tutorialModel.getFrame(), 0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+        }
+        
+        //level transition animation
+        if (gameState.state == GameState.State.WON) {
+            float y = (float) (GameConstants.VIRTUAL_HEIGHT -
+                    1.1*(gameState.timeElapsedSinceWon /
+                    Assets.getInstance().constantsConfigLoader.winAnimationDuration)
+                            * GameConstants.VIRTUAL_HEIGHT);
+            
+            //ratio of transition asset image
+            float ratio = (float)Assets.loadAtlas("leavesImg").originalHeight/(float)Assets.loadAtlas("leavesImg").originalWidth;
+            
+            //black background
+            batch.draw(Assets.loadAtlas("black"), 0, y+GameConstants.VIRTUAL_WIDTH*ratio, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
+            
+            batch.draw(Assets.loadAtlas("leavesImg"), 0, y, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_WIDTH*ratio);
+            
+            
+            for (int i = 0; i < 5; i++) {
+            	gameState.levelTransitionParticleEffect[i].setPosition((GameConstants.VIRTUAL_WIDTH/5)*i, (y+(GameConstants.VIRTUAL_WIDTH*ratio)/2));
+            	gameState.levelTransitionParticleEffect[i].draw(batch);
+            }
+            
+            
+        }
+
+        if (gameState.state == GameState.State.WON) {
+            drawImageCentered(batch, "youwin");
+        } else if (gameState.state == GameState.State.LOST) {
+            drawImageCentered(batch, "youlose");
         }
     }
 

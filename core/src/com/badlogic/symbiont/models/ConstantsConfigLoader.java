@@ -30,6 +30,11 @@ public class ConstantsConfigLoader {
     private ConstantsConfigLoader() {}
 
     /**
+     * duration of WIN leaf animation
+     */
+    public float winAnimationDuration;
+
+    /**
      * The only way instances of ConstantsConfigLoader can be
      * instantiated
      * @param file

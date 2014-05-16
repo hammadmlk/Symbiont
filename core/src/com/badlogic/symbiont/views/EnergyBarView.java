@@ -43,7 +43,7 @@ public class EnergyBarView {
         gameState.energyBarParticleEffect.setPosition(
         		region.x + region.width*energyFraction ,  // 
         		region.y+region.height/2);
-        gameState.energyBarParticleEffect.draw(batch);
+        gameState.energyBarParticleEffect.draw(batch);   
     }
 
 }
