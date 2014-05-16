@@ -13,6 +13,7 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useAccelerometer = false;
         config.useCompass = false;
+        config.hideStatusBar = true;
 		initialize(new SymbiontMain(), config);
 	}
 }
