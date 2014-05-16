@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
+import com.badlogic.symbiont.views.LevelSelectView;
 import com.badlogic.symbiont.views.SplashScreenView;
 
 public class LevelSelectScreen implements Screen {

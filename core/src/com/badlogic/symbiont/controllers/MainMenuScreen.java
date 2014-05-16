@@ -4,10 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
@@ -38,6 +39,12 @@ public class MainMenuScreen implements Screen {
         SplashScreenView splashScreenView = new SplashScreenView();
         splashScreenView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         table.add(splashScreenView);
+        table.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.showStoryScreen();
+            }
+        });
 
         return table;
     }
@@ -57,14 +64,13 @@ public class MainMenuScreen implements Screen {
         TextureRegionDrawable menuImageUp = new TextureRegionDrawable(Assets.loadAtlas("mainmenu"));
         final ImageButton menuImageButton = new ImageButton(menuImageUp);
         table.add(menuImageButton);
-        
-        //=== upperTable listeners
-        menuImageButton.addListener(new ChangeListener() {
+        table.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 game.showStoryScreen();
             }
         });
+        //=== upperTable listeners
         
         return table;
     }

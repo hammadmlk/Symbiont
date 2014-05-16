@@ -9,6 +9,7 @@ public class GameConstants {
     public static final float PIXELS_PER_METER = 50;
     
     public static final int MENU_BAR_HEIGHT = 32;
+    public static final int LVL_IMAGE_SIZE = 50;
     
     public static final int VELOCITY_ITERATIONS = 6;
     public static final int POSITION_ITERATIONS = 2;

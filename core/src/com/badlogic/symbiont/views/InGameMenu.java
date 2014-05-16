@@ -1,14 +1,8 @@
 package com.badlogic.symbiont.views;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -16,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
-import com.badlogic.symbiont.controllers.GameContactListener;
 import com.badlogic.symbiont.controllers.GameEngine;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.models.GameState;
@@ -99,20 +92,22 @@ public class InGameMenu extends Table {
         menuWindow.setModal(menuIsVisible);
         
         //===add things to menuwindow
-        final CheckBox elasticDeflectorCheckBox = new CheckBox("ElasticDeflector", skin);
-        menuWindow.add(elasticDeflectorCheckBox);
-        final CheckBox debugCheckBox = new CheckBox("Debug", skin);
-        menuWindow.add(debugCheckBox);
+//        final CheckBox elasticDeflectorCheckBox = new CheckBox("ElasticDeflector", skin);
+//        menuWindow.add(elasticDeflectorCheckBox);
+//        final CheckBox debugCheckBox = new CheckBox("Debug", skin);
+//        menuWindow.add(debugCheckBox);
+//        menuWindow.row();
+//        final CheckBox editCheckBox = new CheckBox("Edit", skin);
+//        menuWindow.add(editCheckBox);
+//        menuWindow.row();
+//        final TextButton saveFileButton = new TextButton("Save", skin);
+//        menuWindow.add(saveFileButton);
+//        menuWindow.row();
+        
+        final LevelSelectView levelSelect = new LevelSelectView(gameEngine);
+        menuWindow.add(levelSelect);
         menuWindow.row();
-        final CheckBox editCheckBox = new CheckBox("Edit", skin);
-        menuWindow.add(editCheckBox);
-        menuWindow.row();
-        final TextButton saveFileButton = new TextButton("Save", skin);
-        menuWindow.add(saveFileButton);
-        menuWindow.row();
-        final List levelPath = new List(Assets.getInstance().constantsConfigLoader.listOfLevels, skin);
-        menuWindow.add(levelPath);
-        menuWindow.row();
+        
         final TextButton returnTextButton = new TextButton("Return", skin);
         menuWindow.add(returnTextButton);
         menuWindow.row();
@@ -128,55 +123,48 @@ public class InGameMenu extends Table {
             }
         });
         
-        levelPath.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                gameEngine.loadLevel(levelPath.getSelectedIndex());
-            }
-        });
-        
-        elasticDeflectorCheckBox.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-            	gameEngine.elasticDeflector = !gameEngine.elasticDeflector;
-            }
-        });
-
-        debugCheckBox.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                gameEngine.debug = !gameEngine.debug;
-            }
-        });
-
-        editCheckBox.addListener(new ChangeListener() {
-            public void changed(ChangeEvent event, Actor actor) {
-                gameEngine.edit = !gameEngine.edit;
-                if (!gameEngine.edit) {
-                    if (gameEngine.world != null) {
-                        gameEngine.world.dispose();
-                    }
-                    gameEngine.world = new World(new Vector2(0, -10), true);
-                    gameEngine.world.setContactListener(new GameContactListener(gameEngine));
-                    gameEngine.gameState = GameState.fromJSON(gameEngine.levelEditor.editorGameState.toJSON());
-                    gameEngine.gameState.addToWorld(gameEngine.world);
-                    gameEngine.gameView.clearListeners();
-                    gameEngine.gameView.addListener(gameEngine.gameInputListener);
-                } else {
-                    gameEngine.gameView.clearListeners();
-                    gameEngine.gameView.addListener(gameEngine.levelEditor);
-                }
-            }
-        });
-        
-        saveFileButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                FileHandle fileHandle = Gdx.files.local("levels/"
-                        + gameEngine.getCurrentLevelName() + ".json");
-                fileHandle.writeString(
-                        gameEngine.levelEditor.editorGameState.toJSON(),
-                        false);
-            }
-        });
+//        elasticDeflectorCheckBox.addListener(new ChangeListener() {
+//            public void changed(ChangeEvent event, Actor actor) {
+//            	gameEngine.elasticDeflector = !gameEngine.elasticDeflector;
+//            }
+//        });
+//
+//        debugCheckBox.addListener(new ChangeListener() {
+//            public void changed(ChangeEvent event, Actor actor) {
+//                gameEngine.debug = !gameEngine.debug;
+//            }
+//        });
+//
+//        editCheckBox.addListener(new ChangeListener() {
+//            public void changed(ChangeEvent event, Actor actor) {
+//                gameEngine.edit = !gameEngine.edit;
+//                if (!gameEngine.edit) {
+//                    if (gameEngine.world != null) {
+//                        gameEngine.world.dispose();
+//                    }
+//                    gameEngine.world = new World(new Vector2(0, -10), true);
+//                    gameEngine.world.setContactListener(new GameContactListener(gameEngine));
+//                    gameEngine.gameState = GameState.fromJSON(gameEngine.levelEditor.editorGameState.toJSON());
+//                    gameEngine.gameState.addToWorld(gameEngine.world);
+//                    gameEngine.gameView.clearListeners();
+//                    gameEngine.gameView.addListener(gameEngine.gameInputListener);
+//                } else {
+//                    gameEngine.gameView.clearListeners();
+//                    gameEngine.gameView.addListener(gameEngine.levelEditor);
+//                }
+//            }
+//        });
+//        
+//        saveFileButton.addListener(new ChangeListener() {
+//            @Override
+//            public void changed(ChangeEvent event, Actor actor) {
+//                FileHandle fileHandle = Gdx.files.local("levels/"
+//                        + gameEngine.getCurrentLevelName() + ".json");
+//                fileHandle.writeString(
+//                        gameEngine.levelEditor.editorGameState.toJSON(),
+//                        false);
+//            }
+//        });
         //======== end menuWindow
         
         this.setWidth(GameConstants.VIRTUAL_WIDTH);
