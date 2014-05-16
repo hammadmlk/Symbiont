@@ -34,7 +34,8 @@ public class GameState {
     public transient PhysicsEntityModel alien;
     public transient boolean deflected;
     public transient boolean spedUp;
-
+    public transient boolean deflecterContacted;
+    
     /*
      * private/transient (don't get serialized)
      */

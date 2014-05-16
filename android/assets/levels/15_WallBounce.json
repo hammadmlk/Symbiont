@@ -1,6 +1,5 @@
 {
 "currentEnergy": 100,
-"totalEnergy": 100,
 "entities": [
 	{
 		"flipVertical": true,
@@ -76,6 +75,16 @@
 	},
 	{
 		"position": {
+			"x": 65.34212,
+			"y": 324.36417
+		},
+		"scale": 0.4,
+		"name": "bluepower",
+		"breakable": false,
+		"entityType": "POWERUP_SPEED"
+	},
+	{
+		"position": {
 			"x": 5.3421326,
 			"y": 197.36418
 		},
@@ -132,5 +141,6 @@
 		"breakable": false
 	}
 ],
+"totalEnergy": 100,
 "backgroundPath": "non-git/level4bg.png"
 }

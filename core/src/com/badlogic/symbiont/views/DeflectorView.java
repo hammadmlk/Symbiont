@@ -45,8 +45,8 @@ public class DeflectorView {
 	            DeflectorEndpoint pointC = pointAtThisTime(gameState, pointCenter, pointEnd, false);
 	            
 	            //draw the electric lines
-	            drawElectric(batch, pointStart, pointB, 0, 3, 0);
-	            drawElectric(batch, pointC, pointEnd, 0, 3, 0);
+	            drawElectricLine(batch, pointStart, pointB, 0, 3, 0);
+	            drawElectricLine(batch, pointC, pointEnd, 0, 3, 0);
 	            //drawline(batch,atlasRegion.originalHeight, pointStart.x,pointStart.y, pointB.x, pointB.y);	            
 	            //drawline(batch,atlasRegion.originalHeight, pointC.x,pointC.y, pointEnd.x, pointEnd.y);
 	            
@@ -56,6 +56,9 @@ public class DeflectorView {
             	for(PhysicsEntityModel e: gameState.entities){
             		if (e.entityType == PhysicsEntityModel.Type.ALIEN) {
             			//ALIEN FOUND, call the elastic method
+            			elasticController(gameState, batch, gameState.deflectorEndpoints[0], 
+            					gameState.deflectorEndpoints[1],
+            					e); //TODO:should not be in VIEW
             			drawElastic(gameState, batch, gameState.deflectorEndpoints[0], 
             					gameState.deflectorEndpoints[1],
             					e);
@@ -74,8 +77,13 @@ public class DeflectorView {
         }
     }
     
-    //comment
-    private void drawElectric(SpriteBatch batch, DeflectorEndpoint pointA, DeflectorEndpoint pointB, int currGen, int maxGen, int dist){
+    /*
+     * Draws electric line between two points. 
+     *	MaxGen: max subdivisions of line
+     *	currGen: use 0 to start.
+     *	dist: i forgot what it does. Perhaps controls the width of lines.   
+     */
+    private void drawElectricLine(SpriteBatch batch, DeflectorEndpoint pointA, DeflectorEndpoint pointB, int currGen, int maxGen, int dist){
     	if(currGen >= maxGen){
     		float width = (float)(((float)(maxGen-dist)/(float)maxGen)/4.0 + 0.25 );
     		//drawline(batch,atlasRegion.originalHeight*width, pointA.x,pointA.y, pointB.x, pointB.y);
@@ -91,19 +99,95 @@ public class DeflectorView {
     	if(Math.random()<0.5){
     		DeflectorEndpoint branch = pointAtThisFraction(mid, pointB, (float)0.75, true);
     		branch.y = branch.y + (float)((Math.random()-0.5)*10);
-    		drawElectric(batch, mid, branch, currGen+1, maxGen, dist+1);
+    		drawElectricLine(batch, mid, branch, currGen+1, maxGen, dist+1);
     	}
     	
     	//recurse
-    	drawElectric(batch, pointA, mid, currGen+1, maxGen, dist);
-    	drawElectric(batch, mid, pointB, currGen+1, maxGen, dist+1);
+    	drawElectricLine(batch, pointA, mid, currGen+1, maxGen, dist);
+    	drawElectricLine(batch, mid, pointB, currGen+1, maxGen, dist+1);
     	
     }
     
-    //comment    
+    /*
+     * Distance between line and point. -ve if line above point
+     */
+    private float getLinePointDistance(DeflectorEndpoint lineP1, DeflectorEndpoint lineP2, DeflectorEndpoint point){
+    	float X = point.x; //the point
+        float Y = point.y; //the point
+    	//y=mx+c
+        float M = (float)(lineP1.y-lineP2.y)/(float)(lineP1.x-lineP2.x);
+        float C = lineP1.y-M*lineP1.x;
+        //|-mx+y-c=0|/ sqrt((-m)^2+1)
+        //float D = (float) (Math.abs(-M*X+Y-C)/Math.sqrt((-M)*(-M)+1)); //distance from line
+        float D2 = (float) ((-M*X+Y-C)/Math.sqrt((-M)*(-M)+1)); //distance from line
+    	return D2;
+    }
+    
+    /*
+     * does the physics stuff. TODO: should not be in VIEW.
+     */
+    private void elasticController(GameState gameState, SpriteBatch batch, DeflectorEndpoint pointA, DeflectorEndpoint pointB,
+            PhysicsEntityModel alien){
+    	
+    	// swap points so pointA is always on right (bug fix)
+        if (pointA.x < pointB.x) {
+            DeflectorEndpoint temp = pointA;
+            pointA = pointB;
+            pointB = temp;
+        }
+    	
+    	DeflectorEndpoint alienPoint = createPoint(alien.position.x, alien.position.y);
+        float D2 = getLinePointDistance(pointA, pointB, alienPoint);//distance from rope
+        
+        float radius = alien.body.getFixtureList().first().getShape().getRadius()
+        * GameConstants.PIXELS_PER_METER;
+        
+        //in contact
+        if(Math.abs(D2)<radius && alien.position.x<pointA.x && alien.position.x>pointB.x){
+        	gameState.deflecterContacted = true;
+        }
+        //contact ending.
+        if( (D2<-radius/2   ) && gameState.deflecterContacted){
+        	gameState.deflected=true;
+        	gameState.deflecterContacted = false;
+        }
+        
+        if(gameState.deflected){
+        	gameState.deflected = false;
+        	alien.body.setLinearVelocity(0, 0);
+        	//deflect now
+        
+        	//apply impulse
+        	float xdiff = gameState.deflectorEndpoints[1].x
+    				- gameState.deflectorEndpoints[0].x;
+    		float ydiff = gameState.deflectorEndpoints[1].y
+    				- gameState.deflectorEndpoints[0].y;
+    		
+    		// Always assume we're trying to bounce it upwards
+    		// Weird corner case is if alien hits deflector from underneath,
+    		// it will still bounce upwards
+    		Vector2 impulseDir = new Vector2(ydiff, -xdiff);
+    		if (impulseDir.y < 0) {
+    			impulseDir.scl(-1);
+    		}
+    		
+    		float desiredVel = impulseDir.len()*GameConstants.DEFLECTOR_IMPULSE;
+    		Vector2 vel = alien.body.getLinearVelocity();
+
+    		float velChange = desiredVel - vel.len();
+    		float imp = alien.body.getMass() * velChange;
+
+    		impulseDir.nor().scl(imp);
+    		alien.body.applyLinearImpulse(impulseDir, alien.body.getWorldCenter(), true);
+        }
+    }
+    
+    
+    //draw beam from deflector end points to alien tangent points    
     private void drawElastic(GameState gameState, SpriteBatch batch, DeflectorEndpoint pointA, DeflectorEndpoint pointB,
             PhysicsEntityModel alien) {
-        // Ball radius
+    	
+    	// Ball radius
         float r = alien.body.getFixtureList().first().getShape().getRadius()
                 * GameConstants.PIXELS_PER_METER;
 
@@ -117,41 +201,32 @@ public class DeflectorView {
         // pointA coords
         float x1 = pointA.x;
         float y1 = pointA.y;
-
         // pointB coords
         float x2 = pointB.x;
         float y2 = pointB.y;
+        
+        ///=== detect if deflector is in contact
+        boolean deflectorInContact=false;
+        
+        DeflectorEndpoint alienPoint = createPoint(alien.position.x, alien.position.y);
+        float D2 = getLinePointDistance(pointA, pointB, alienPoint);
+        
+        float radius = alien.body.getFixtureList().first().getShape().getRadius()
+        * GameConstants.PIXELS_PER_METER;
+        
+        if(Math.abs(D2)<radius && alien.position.x<pointA.x && alien.position.x>pointB.x){
+        	deflectorInContact = true;
+        }
+        ///===
+        
+        if(deflectorInContact){
+            // Distances from alien to pointA
+            float dx1 = alien.position.x - x1;
+            float dy1 = alien.position.y - y1;
 
-        // Ball coords
-        float cx = alien.position.x;
-        float cy = alien.position.y;
-
-        // Gives you the angle between pointA and pointB
-        float angleAB = (float) Math.atan2(y2 - y1, x2 - x1);
-
-        // Precalculate cosine and sine
-        float cosine = (float) Math.cos(angleAB);
-        float sine = (float) Math.sin(angleAB);
-
-        // Distances between ball and elastic centre
-        float dbex = alien.position.x - (x2 + x1) / 2;
-        float dbey = alien.position.y - (y2 + y1) / 2;
-
-        // Find position of ball relative to the elastic (and it's rotation)
-        float px1 = cosine * dbex + sine * dbey;
-        float py1 = cosine * dbey - sine * dbex;
-
-        float maxPerpDist = (float) Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)) / 2;
-
-        // Check if distance to line surface is less than ball radius
-        if (-py1 < r && px1 > -maxPerpDist && px1 < maxPerpDist) {
-            // Distances from ball to pointA
-            float dx1 = cx - x1;
-            float dy1 = cy - y1;
-
-            // Distances from ball to pointB
-            float dx2 = cx - x2;
-            float dy2 = cy - y2;
+            // Distances from alien to pointB
+            float dx2 = alien.position.x - x2;
+            float dy2 = alien.position.y - y2;
 
             // Calculate exact distances (LEFT)
             float h1 = (float) Math.sqrt(dx1 * dx1 + dy1 * dy1);
@@ -161,9 +236,9 @@ public class DeflectorView {
             float h2 = (float) Math.sqrt(dx2 * dx2 + dy2 * dy2);
             float p2 = (float) Math.sqrt(h2 * h2 - r * r);
 
-            // Dont continue if the ball touches points
+            // Dont continue if the alien touches points
             if (h1 < r || h2 < r) {
-                return;
+                return; //TODO: check if you want this
             }
 
             // Calculate angles (LEFT)
@@ -184,46 +259,18 @@ public class DeflectorView {
             float ix2 = (float) Math.cos(a2 + b2) * p2 + x2;
             float iy2 = (float) Math.sin(a2 + b2) * p2 + y2;
 
-            // Midpoint between the two tangent points (ix1,iy1) and (ix2,iy2)
-            float mpx = (ix1 + ix2) / 2;
-            float mpy = (iy1 + iy2) / 2;
-            // Angle of acceleration
-            float accAngle = (float) Math.atan2(mpy - cy, mpx - cx);
-
-            // distance between pointA and pointB
-            float d = (float) Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-
-            // Power is dependent on how far the elastic's been stretched
-            // and the distance between pointA and pointB
-            float power = py1 / 50;// * (1+(10*d/GameConstants.VIRTUAL_WIDTH));
-
-            // Change in velocity x and y
-            float dvx = (float) Math.cos(accAngle) * power;
-            float dvy = (float) Math.sin(accAngle) * power * 2;
-
-            //
-            Vector2 velo = alien.body.getLinearVelocity();
-            velo.x -= dvx;
-            velo.y -= dvy;
-            // maximum speed limit
-            velo.x = (velo.x < 0) ? Math.max(-25, velo.x) : Math.min(25, velo.x);
-            velo.y = (velo.y < 0) ? Math.max(-25, velo.y) : Math.min(25, velo.y);
-            alien.body.setLinearVelocity(velo.x, velo.y);
-
-            // Draw lines
-            //drawline(batch, atlasRegion.originalHeight / 2, x1, y1, ix1, iy1);
             DeflectorEndpoint b = pointAtThisTime(gameState, createPoint(x1,y1), createPoint(ix1, iy1), true);
-            drawElectric(batch, b,createPoint(x1,y1), 0, 3, 0);
+            drawElectricLine(batch, b,createPoint(x1,y1), 0, 3, 0);
             
             //drawline(batch, atlasRegion.originalHeight / 2, x2, y2, ix2, iy2);
             DeflectorEndpoint c = pointAtThisTime(gameState, createPoint(ix2, iy2), createPoint(x2,y2), false);            
-            drawElectric(batch, createPoint(x2, y2), c , 0, 3, 0);
+            drawElectricLine(batch, createPoint(x2, y2), c , 0, 3, 0);
             
         } else {
             // No collision detected... simply draw a line from pointA to pointB
             //drawline(batch, atlasRegion.originalHeight / 2, x1, y1, x2, y2);
         	DeflectorEndpoint b = pointAtThisTime(gameState,createPoint(x1,y1), createPoint(x2, y2), true);
-        	drawElectric(batch, createPoint(x1,y1), b, 0, 3, 0);
+        	drawElectricLine(batch, createPoint(x1,y1), b, 0, 3, 0);
         	
         	DeflectorEndpoint pointCenter = pointAtThisFraction(pointA, pointB, (float)0.5, true); //center point
             
@@ -232,13 +279,11 @@ public class DeflectorView {
             DeflectorEndpoint point2 = pointAtThisTime(gameState, pointCenter, pointB, false);
             
             //draw the electric lines
-            drawElectric(batch, pointA, point1, 0, 3, 0);
-            drawElectric(batch, point2, pointB, 0, 3, 0);
+            drawElectricLine(batch, pointA, point1, 0, 3, 0);
+            drawElectricLine(batch, point2, pointB, 0, 3, 0);
         	
         }
-    }
-
-    
+    }    
     
     /*
      * returns a new point that is at a distanceFraction away from point A or Point B. 
@@ -261,8 +306,9 @@ public class DeflectorView {
     		return pointX;
     }
     
-    //based on the defector draw time, returns the position at which the point show be drawn.
-    //this givces the animation effect of growing beam.
+    /* Based on the defector draw time, returns the position at which the point show be drawn.
+     * this gives the animation effect of growing beam.
+     */
     private DeflectorEndpoint pointAtThisTime(GameState gameState, DeflectorEndpoint pointStart, DeflectorEndpoint pointEnd, boolean growToRight){
     	//the based on time since deflector tap
         float fraction = (float) Math.min(gameState.deflectorTime/GameConstants.DEFLECTOR_DRAW_TIME, 1.0);

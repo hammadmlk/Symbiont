@@ -11,7 +11,7 @@
 		"scale": 1,
 		"name": "pivoting-branch",
 		"startAngle": -0.6,
-		"rotatingVelocity": 0.7,
+		"rotatingVelocity": 0.5,
 		"endAngle": 0.6,
 		"breakable": false,
 		"type": "KinematicBody",
