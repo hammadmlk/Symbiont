@@ -108,7 +108,12 @@ public class GameView extends Actor {
         }
 
         if (gameState.state == GameState.State.WON) {
-            drawImageCentered(batch, "youwin");
+            if (gameEngine.getCurrentLevelNum() == Assets.getInstance().constantsConfigLoader.listOfLevels.length - 1 &&
+                    gameState.timeElapsedSinceWon >= Assets.getInstance().constantsConfigLoader.winAnimationDuration) {
+                batch.draw(Assets.loadAtlas("endstory"), 0, 0, getWidth(), getHeight());
+            } else {
+                drawImageCentered(batch, "youwin");
+            }
         } else if (gameState.state == GameState.State.LOST) {
             drawImageCentered(batch, "youlose");
         }
