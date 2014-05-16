@@ -76,9 +76,7 @@
         "13_BounceOver",
         "14_Maze",
         "15_WallBounce",
-        "16_Zigzag",
-        "n0",
-        "n1"
+        "16_Zigzag"
     ],
     "namesToConfigs": {
         "ball": {

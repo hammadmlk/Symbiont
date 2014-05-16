@@ -14,12 +14,12 @@ import com.badlogic.symbiont.SymbiontMain;
 import com.badlogic.symbiont.models.GameConstants;
 import com.badlogic.symbiont.views.SplashScreenView;
 
-public class MainMenuScreen implements Screen {
+public class LevelSelectScreen implements Screen {
     
     private final SymbiontMain game;
     private final Stage stage;
     
-    public MainMenuScreen(final SymbiontMain game) {
+    public LevelSelectScreen(final SymbiontMain game) {
         this.game = game;
         stage = new Stage();
 
@@ -88,9 +88,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
+        // TODO Auto-generated method stub
         Gdx.input.setInputProcessor(stage);
-
-        Assets.playSong("song0.mp3");
     }
 
     @Override
