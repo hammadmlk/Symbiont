@@ -1,5 +1,6 @@
 package com.badlogic.symbiont.views;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -26,6 +27,11 @@ public class PhysicsEntityView {
         // flip if necessary
         atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);
 
+        //push to the batch
+        Color oldColor = batch.getColor();
+
+        batch.setColor(1, 1, 1, entity.getAnimator().getAlpha());
+
         batch.draw(
                 atlasRegion,                                       // Texture atlasRegion
                 adjustedX,                                         // float x
@@ -38,6 +44,8 @@ public class PhysicsEntityView {
                 entity.scale,                                      // float scaleY
                 (float) Math.toDegrees(entity.angle)               // float rotation
         );
+
+        batch.setColor(oldColor);
 
         // flip back if necessary
         atlasRegion.flip(oldX != entity.flipHorizontal, oldY != entity.flipVertical);

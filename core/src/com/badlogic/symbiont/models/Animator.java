@@ -11,6 +11,30 @@ public class Animator {
     private float timeElapsed = 0;
 
     /*
+     * fading stuff
+     */
+    class Fader {
+        float duration, timeElapsed;
+
+        boolean fading, faded;
+
+        void update(float delta) {
+            if (!fading) {
+                return;
+            }
+            timeElapsed += delta;
+            if (timeElapsed > duration) {
+                fading = false;
+                faded = true;
+            }
+        }
+
+        float getAlpha() {
+            return fading ? 1 - timeElapsed / duration : faded ? 0 : 1;
+        }
+    }
+
+    /*
      * shaking stuff
      */
     class Shaker {
@@ -45,6 +69,8 @@ public class Animator {
 
     private Shaker shaker = new Shaker();
 
+    private Fader fader = new Fader();
+
     public Animator(AnimationModel defaultAnimation) {
 
         assert defaultAnimation.frames != null;
@@ -64,6 +90,7 @@ public class Animator {
 
     public void update(float delta) {
         shaker.update(delta);
+        fader.update(delta);
         timeElapsed += delta;
         if (timeElapsed > currentAnimation().delta) {
             timeElapsed -= currentAnimation().delta;
@@ -94,6 +121,29 @@ public class Animator {
         shaker.dy = dy;
         shaker.period = period;
         shaker.duration = duration;
+    }
+
+    /**
+     * start a fading effect
+     * @param duration
+     */
+    public void fade(float duration) {
+        fader.duration = duration;
+        fader.timeElapsed = 0;
+        fader.fading = true;
+        fader.faded = false;
+    }
+
+    /**
+     * done fading, and fade has been called at least once
+     * @return
+     */
+    public boolean faded(){
+        return fader.faded;
+    }
+
+    public float getAlpha() {
+        return fader.getAlpha();
     }
 
     /**

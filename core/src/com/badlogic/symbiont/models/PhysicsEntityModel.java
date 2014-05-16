@@ -101,6 +101,9 @@ public class PhysicsEntityModel {
         }
 
         getAnimator().update(delta);
+        if (getAnimator().faded()) {
+            toBeDestroyed = true;
+        }
 
         position.set(
                 body.getPosition().x * GameConstants.PIXELS_PER_METER,
