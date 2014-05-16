@@ -32,6 +32,10 @@
             "numFrames": 2,
             "delta": 0.5
         },
+        "tutorials/tutorialEnergy": {
+            "numFrames": 1,
+            "delta": 0.5
+        },
         "tutorials/tutorialShrink": {
             "numFrames": 1,
             "delta": 0.5
