@@ -56,7 +56,10 @@ public class GameState {
         }
         for (MistModel mistModel : mistModels) {
             if (mistModel.contains(x, y) && !mistModel.fading) {
+                if (deflector()) mistModel.color.set(0.74f, 0.18f, 0.29f, 0.25f);
                 return;
+            } else {
+                mistModel.color.set(0.44f, 0.28f, 0.79f, 0.10f);
             }
         }
         deflectorEndpoints[pointer].x = x;
