@@ -62,7 +62,12 @@ public class GameState {
         }
         for (MistModel mistModel : mistModels) {
             if (mistModel.contains(x, y) && !mistModel.fading) {
+                if (deflectorEndpoints[0].active || deflectorEndpoints[1].active) {
+                    mistModel.color.set(0.74f, 0.18f, 0.29f, 0.25f);
+                }
                 return;
+            } else {
+                mistModel.color.set(0.44f, 0.28f, 0.79f, 0.10f);
             }
         }
         deflectorEndpoints[pointer].x = x;
@@ -121,6 +126,7 @@ public class GameState {
 
     private void setUpWalls(World world) {
         float halfwidth = 50 / GameConstants.PIXELS_PER_METER;
+        float topMargin = GameConstants.MENU_BAR_HEIGHT / GameConstants.PIXELS_PER_METER;
 
         float groundHeight = - halfwidth - GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER / 2;
 
@@ -155,7 +161,7 @@ public class GameState {
         BodyDef topWallDef = new BodyDef();
         topWallDef.position.set(new Vector2(
                     GameConstants.VIRTUAL_WIDTH / GameConstants.PIXELS_PER_METER / 2,
-                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER + halfwidth
+                    GameConstants.VIRTUAL_HEIGHT / GameConstants.PIXELS_PER_METER + halfwidth - topMargin
                 )
             );
         Body topWallBody = world.createBody(topWallDef);

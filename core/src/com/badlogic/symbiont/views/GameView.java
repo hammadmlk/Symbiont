@@ -19,7 +19,6 @@ public class GameView extends Actor {
 
     private MistView mistView;
     private DeflectorView deflectorView;
-    private EnergyBarView energyBarView;
 
     private Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
     
@@ -27,7 +26,6 @@ public class GameView extends Actor {
         this.gameEngine = gameEngine;
         mistView = new MistView();
         deflectorView = new DeflectorView();
-        energyBarView = new EnergyBarView();
     }
     
     /**
@@ -58,7 +56,13 @@ public class GameView extends Actor {
             deflectorView.render(batch, gameState, gameEngine.elasticDeflector);
         }
 
-        energyBarView.render(batch, gameState);
+
+        if (gameState.state == GameState.State.WON) {
+            drawImageCentered(batch, "youwin");
+        } else if (gameState.state == GameState.State.LOST) {
+            drawImageCentered(batch, "youlose");
+        }
+
 
         // debug render
         if (gameEngine.debug) {

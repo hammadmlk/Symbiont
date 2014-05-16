@@ -1,6 +1,5 @@
 {
 "currentEnergy": 10,
-"totalEnergy": 10,
 "entities": [
 	{
 		"position": {
@@ -31,7 +30,7 @@
 		},
 		"position": {
 			"x": 243.53256,
-			"y": 731
+			"y": 726.46747
 		},
 		"scale": 0.4,
 		"name": "ball",
@@ -39,23 +38,7 @@
 		"entityType": "ALIEN"
 	},
 	{
-        "class": "com.badlogic.symbiont.models.MovableObjectModel",
-        "movingPath": [
-            {
-                "x": 200,
-                "y": 350
-            },
-            {
-                "x": 200,
-                "y": 450
-            },
-            {
-                "x": 200,
-                "y": 350
-            }
-        ],
-        "movingSpeed": 2,
-        "type": "KinematicBody",
+		"class": "com.badlogic.symbiont.models.MovableObjectModel",
 		"position": {
 			"x": 200,
 			"y": 350
@@ -63,7 +46,23 @@
 		"scale": 0.4,
 		"name": "redpower",
 		"breakable": false,
-		"entityType": "POWERUP_SHRINK"
+		"entityType": "POWERUP_SHRINK",
+		"movingPath": [
+			{
+				"x": 200,
+				"y": 350
+			},
+			{
+				"x": 200,
+				"y": 450
+			},
+			{
+				"x": 200,
+				"y": 350
+			}
+		],
+		"movingSpeed": 2,
+		"type": "KinematicBody"
 	},
 	{
 		"class": "com.badlogic.symbiont.models.PlantModel",
@@ -71,7 +70,7 @@
 			{
 				"position": {
 					"x": 404,
-					"y": 526
+					"y": 511.26913
 				},
 				"rectangle": {
 					"width": 600,
@@ -82,7 +81,7 @@
 		],
 		"position": {
 			"x": 404,
-			"y": 526
+			"y": 511.26913
 		},
 		"scale": 0.4,
 		"name": "plant",
@@ -111,5 +110,6 @@
 		"breakable": false
 	}
 ],
+"totalEnergy": 10,
 "backgroundPath": "non-git/level2bg.png"
 }

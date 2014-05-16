@@ -2,6 +2,7 @@ package com.badlogic.symbiont.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,8 +28,14 @@ public class InGameMenu extends Table {
      */
     private boolean menuIsVisible = false;
 
+    private EnergyBarView energyBarView;
+    private GameEngine gameEngine;
+
     public InGameMenu(Skin skin, final GameEngine gameEngine) {
         super(skin);
+        
+        this.gameEngine = gameEngine;
+        energyBarView = new EnergyBarView();
         
         // Create a table (mainTable) consisting of upperTable and menuwindow 
         // that fills the screen. Everything else will go inside this table.
@@ -40,24 +47,24 @@ public class InGameMenu extends Table {
         final Window menuWindow = new Window("Menu", skin);
         final Table upperTable = new Table();
         
-        
         //========== upperTable
-        upperTable.setWidth(GameConstants.VIRTUAL_WIDTH);
-        upperTable.setHeight(GameConstants.VIRTUAL_HEIGHT);
-        upperTable.setPosition(0,0);
+        TextureRegionDrawable blackBg = new TextureRegionDrawable(Assets.loadAtlas("blacksmall"));
+        upperTable.setBackground(blackBg);
+        upperTable.setPosition(0,GameConstants.VIRTUAL_HEIGHT-GameConstants.MENU_BAR_HEIGHT);
         upperTable.left().top(); //internal left top align
+        
         
         // === add things to upperTable
         //menu button
         TextureRegionDrawable menuImageUp = new TextureRegionDrawable(Assets.loadAtlas("menu"));
         final ImageButton menuImageButton = new ImageButton(menuImageUp);
-        upperTable.add(menuImageButton).width(100).height(32).expandX().left();
+        upperTable.add(menuImageButton).width(100).height(GameConstants.MENU_BAR_HEIGHT).expandX().left();
         
         //reload button --- TODO: different image down.
         TextureRegionDrawable reloadImageUp = new TextureRegionDrawable(Assets.loadAtlas("reload"));
         TextureRegionDrawable reloadImageDown = new TextureRegionDrawable(Assets.loadAtlas("reload"));
         ImageButton reloadButton = new ImageButton(reloadImageUp, reloadImageDown);
-        upperTable.add(reloadButton).width(32).height(32);
+        upperTable.add(reloadButton).width(GameConstants.MENU_BAR_HEIGHT).height(GameConstants.MENU_BAR_HEIGHT);
         
         //=== upperTable listeners
         menuImageButton.addListener(new ChangeListener() {
@@ -178,8 +185,16 @@ public class InGameMenu extends Table {
         this.left().top(); //internal left top align
         
         int w = GameConstants.VIRTUAL_WIDTH;
-        this.add(upperTable).width(w).height(50);
+        this.add(upperTable).width(w).height(GameConstants.MENU_BAR_HEIGHT);
         this.row();
         this.add(menuWindow).width(w).expandY();
+    }
+    
+    @Override
+    public void draw(SpriteBatch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        
+        GameState gameState = gameEngine.edit ? gameEngine.levelEditor.editorGameState : gameEngine.gameState;
+        energyBarView.render(batch, gameState);
     }
 }

@@ -72,8 +72,9 @@ public class GameEngine implements Screen {
 
         gameView = new GameView(this);
         gameView.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH,
-                GameConstants.VIRTUAL_HEIGHT);
+                GameConstants.VIRTUAL_HEIGHT - 32);
         gameView.addListener(gameInputListener);
+        gameView.setZIndex(0);
         stage.addActor(gameView);
 
         if (skin != null) {
@@ -81,8 +82,10 @@ public class GameEngine implements Screen {
         }
 
         skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-
-        stage.addActor(new InGameMenu(skin, this));
+        
+        InGameMenu menu = new InGameMenu(skin, this);
+        menu.setZIndex(1);
+        stage.addActor(menu);
 
         if (deflectorBox != null) {
             deflectorBox.dispose();
