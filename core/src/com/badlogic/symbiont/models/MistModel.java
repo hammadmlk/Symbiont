@@ -36,8 +36,11 @@ public class MistModel {
     public float secondsLeft = 2;
 
     private transient ParticleEffect mistEffect;
-    
-    public Color color = new Color(0.44f, 0.28f, 0.79f, 0.10f);
+
+    public static final Color NORMAL_COLOR = new Color(0.44f, 0.28f, 0.79f, 0.10f);
+    public static final Color FEEDBACK_COLOR = new Color(0.74f, 0.18f, 0.29f, 0.25f);
+
+    public Color color = NORMAL_COLOR;
 
     public ParticleEffect getMistEffect() {
         if (mistEffect != null) {

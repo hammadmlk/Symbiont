@@ -3,7 +3,6 @@ package com.badlogic.symbiont.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -89,8 +88,7 @@ public class MistView {
 		//push to the batch
         Color oldColor = batch.getColor();
 
-        // color roughly taken from `particles/mist.p` TODO keep up to date
-        batch.setColor(0.44f, 0.28f, 0.79f, 0.50f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
+        batch.setColor(mistModel.color.r, mistModel.color.g, mistModel.color.b, 0.5f * (mistModel.fading ? mistModel.secondsLeft / mistModel.fadeTime : 1));
 
         batch.draw(mistLayer, mistModel.rectangle.x, mistModel.rectangle.y, mistModel.rectangle.width, mistModel.rectangle.height);
 

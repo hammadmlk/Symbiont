@@ -25,6 +25,7 @@ public class GameInputListener extends InputListener {
             gameEngine.gameState.deflectorEndpoints[pointer].active = false;
             gameEngine.gameState.deflectorEndpoints[0].resetParticleEffect();
             gameEngine.gameState.deflectorEndpoints[1].resetParticleEffect();
+            gameEngine.gameState.resetMistColors();
         }
     }
 
