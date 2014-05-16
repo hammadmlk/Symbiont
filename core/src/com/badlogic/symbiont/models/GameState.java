@@ -60,19 +60,18 @@ public class GameState {
                 || y < 0 || y > GameConstants.VIRTUAL_HEIGHT) {
             return;
         }
+        boolean allMistsClear = true;
         for (MistModel mistModel : mistModels) {
             if (mistModel.contains(x, y) && !mistModel.fading) {
-                if (deflectorEndpoints[0].active || deflectorEndpoints[1].active) {
-                    mistModel.color.set(0.74f, 0.18f, 0.29f, 0.25f);
-                }
-                return;
-            } else {
-                mistModel.color.set(0.44f, 0.28f, 0.79f, 0.10f);
+                mistModel.color = MistModel.FEEDBACK_COLOR;
+                allMistsClear = false;
             }
         }
-        deflectorEndpoints[pointer].x = x;
-        deflectorEndpoints[pointer].y = y;
-        deflectorEndpoints[pointer].active = true;
+        if (allMistsClear) {
+            deflectorEndpoints[pointer].x = x;
+            deflectorEndpoints[pointer].y = y;
+            deflectorEndpoints[pointer].active = true;
+        }
     }
 
     /**
@@ -80,6 +79,12 @@ public class GameState {
      */
     public boolean deflector() {
         return deflectorEndpoints[0].active && deflectorEndpoints[1].active;
+    }
+
+    public void resetMistColors() {
+        for (MistModel mistModel : mistModels) {
+            mistModel.color = MistModel.NORMAL_COLOR;
+        }
     }
     
     /**
