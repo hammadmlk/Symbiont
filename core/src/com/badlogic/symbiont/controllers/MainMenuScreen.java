@@ -63,7 +63,7 @@ public class MainMenuScreen implements Screen {
         menuImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.showGameScreen();
+                game.showStoryScreen();
             }
         });
         

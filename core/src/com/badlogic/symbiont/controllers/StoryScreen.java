@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.symbiont.Assets;
 import com.badlogic.symbiont.SymbiontMain;
@@ -24,7 +26,6 @@ public class StoryScreen implements Screen {
     public StoryScreen(final SymbiontMain game) {
         this.game = game;
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
 
         stage.addActor(getBackgroundActor());
 //        stage.addActor(getMenuActor());
@@ -41,10 +42,12 @@ public class StoryScreen implements Screen {
         view = new StoryScreenView();
         view.setBounds(0, 0, GameConstants.VIRTUAL_WIDTH, GameConstants.VIRTUAL_HEIGHT);
         table.add(view);
-        table.addListener(new ChangeListener() {
+        table.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                game.showGameScreen();
+            public void clicked(InputEvent event, float x, float y) {
+                if (view.nextPage() == GameConstants.NUM_STORY_PAGES) {
+                    game.showGameScreen();
+                }
             }
         });
 
@@ -71,7 +74,7 @@ public class StoryScreen implements Screen {
         menuImageButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.showGameScreen();
+                // TODO
             }
         });
         
@@ -98,7 +101,7 @@ public class StoryScreen implements Screen {
     @Override
     public void show() {
         // TODO Auto-generated method stub
-        
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
