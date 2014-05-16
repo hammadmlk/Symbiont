@@ -20,7 +20,7 @@ public class EnergyBarView {
     		barWidth, 
     		barHeight);
 
-    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("energybar");
+    private final TextureAtlas.AtlasRegion atlasRegion = Assets.loadAtlas("deflector");//actuallyenergybar
 
     /**
      * Draws the energy bar and the glowing particles on right corner
@@ -28,6 +28,7 @@ public class EnergyBarView {
      * @param energyFraction 0 <= energyFraction <= 1
      */
     public void render(SpriteBatch batch, GameState gameState) {
+    	if(gameState.state!=gameState.state.WON){
         float energyFraction = gameState.currentEnergy / gameState.totalEnergy;
         assert (0 <= energyFraction && energyFraction <= 1);
         //draw the bar
@@ -45,6 +46,7 @@ public class EnergyBarView {
         		region.x + region.width*energyFraction ,  // 
         		region.y+region.height/2);
         gameState.energyBarParticleEffect.draw(batch);   
+    	}
     }
 
 }
