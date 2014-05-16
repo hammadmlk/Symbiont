@@ -384,9 +384,9 @@ public class GameEngine implements Screen {
             defPoint0 = new DeflectorEndpoint();
             defPoint1 = new DeflectorEndpoint();
             defPoint0.x = 0;
-            defPoint0.y = 2200;
+            defPoint0.y = 4200;
             defPoint1.x = GameConstants.VIRTUAL_WIDTH;
-            defPoint1.y = 2200;
+            defPoint1.y = 4200;
         }
         
         deflectorDef.position.set (
