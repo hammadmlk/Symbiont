@@ -46,6 +46,7 @@ public class StoryScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (view.nextPage() == GameConstants.NUM_STORY_PAGES) {
+                    view.reset();
                     game.showGameScreen();
                 }
             }

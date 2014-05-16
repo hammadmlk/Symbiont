@@ -424,5 +424,9 @@ public class GameEngine implements Screen {
     public void tearDownDeflector(Body deflectorBody) {
         world.destroyBody(deflectorBody);
     }
+    
+    public void quitGame() {
+        game.showMainMenuScreen();
+    }
 
 }
