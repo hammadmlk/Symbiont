@@ -129,6 +129,13 @@ public class DeflectorView {
     private void elasticController(GameState gameState, SpriteBatch batch, DeflectorEndpoint pointA, DeflectorEndpoint pointB,
             PhysicsEntityModel alien){
     	
+    	// swap points so pointA is always on right (bug fix)
+        if (pointA.x < pointB.x) {
+            DeflectorEndpoint temp = pointA;
+            pointA = pointB;
+            pointB = temp;
+        }
+    	
     	DeflectorEndpoint alienPoint = createPoint(alien.position.x, alien.position.y);
         float D2 = getLinePointDistance(pointA, pointB, alienPoint);//distance from rope
         
@@ -136,11 +143,11 @@ public class DeflectorView {
         * GameConstants.PIXELS_PER_METER;
         
         //in contact
-        if(Math.abs(D2)<radius){
+        if(Math.abs(D2)<radius && alien.position.x<pointA.x && alien.position.x>pointB.x){
         	gameState.deflecterContacted = true;
         }
         //contact ending.
-        if(D2<-radius/2 && gameState.deflecterContacted){
+        if( (D2<-radius/2   ) && gameState.deflecterContacted){
         	gameState.deflected=true;
         	gameState.deflecterContacted = false;
         }
@@ -207,7 +214,7 @@ public class DeflectorView {
         float radius = alien.body.getFixtureList().first().getShape().getRadius()
         * GameConstants.PIXELS_PER_METER;
         
-        if(Math.abs(D2)<radius){
+        if(Math.abs(D2)<radius && alien.position.x<pointA.x && alien.position.x>pointB.x){
         	deflectorInContact = true;
         }
         ///===
