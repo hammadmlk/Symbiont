@@ -1,4 +1,5 @@
 package com.badlogic.symbiont.models;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
 import com.badlogic.gdx.math.Rectangle;
@@ -35,6 +36,8 @@ public class MistModel {
     public float secondsLeft = 2;
 
     private transient ParticleEffect mistEffect;
+    
+    public Color color = new Color(0.44f, 0.28f, 0.79f, 0.10f);
 
     public ParticleEffect getMistEffect() {
         if (mistEffect != null) {
